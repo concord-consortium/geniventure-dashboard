@@ -1,0 +1,10 @@
+node_modules
+
+# App packaged
+dist
+
+# Compiled binary addons
+.eslintcache
+
+# OSX
+.DS_Store
