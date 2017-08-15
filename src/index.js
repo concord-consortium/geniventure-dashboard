@@ -12,5 +12,6 @@ function renderApp(data) {
 
 renderApp();
 
-getData().then((data) => renderApp(data))
+getData()
+  .then((data) => renderApp(data))
   .catch(console.log.bind(console));
