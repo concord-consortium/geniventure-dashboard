@@ -28,27 +28,22 @@ const fbConfig = {
 };
 firebase.initializeApp(fbConfig);
 
-function getFirebaseData(classData) {
-  const classId = classData.clazz_id;
-  const students = classData.students;
-
-  return firebase.database()
-    .ref(`${fbClassPath}${classId}`)
-    .once('value').then((snapshot) => {
-      const fbData = snapshot.val();
-      const studentFbData = {};
-      students.forEach((s) => {
-        studentFbData[s.username] = fbData[`${fbStudentPath}${s.user_id}`];
-      });
-      return studentFbData;
-    })
-    .catch(console.log.bind(console));
-}
-
-export default function getData() {
+export default function addStudentDataListener(callback) {
   return fetch(OFFERING_URL, {headers: {Authorization: AUTH_HEADER}})
     .then((res) => res.json())
-    .then(getFirebaseData)
+    .then((classData) => {
+      const classId = classData.clazz_id;
+      const students = classData.students;
+      firebase.database().ref(`${fbClassPath}${classId}`)
+        .on('value', (snapshot) => {
+          const fbData = snapshot.val();
+          const studentFbData = {};
+          students.forEach((s) => {
+            studentFbData[s.username] = fbData[`${fbStudentPath}${s.user_id}`];
+          });
+          callback(studentFbData);
+        });
+    })
     .catch(console.log.bind(console));
 }
 
