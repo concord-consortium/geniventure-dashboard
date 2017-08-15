@@ -52,9 +52,11 @@ export default function addDataListener(callback) {
           const fbData = snapshot.val();
           const studentFbData = {};
           students.forEach((s) => {
+            const data = fbData[`${fbStudentPath}${s.user_id}`];
+            const state = data ? data.state : {};
             studentFbData[s.username] = {
               name: s.name,
-              state: fbData[`${fbStudentPath}${s.user_id}`]
+              state
             };
           });
           callback({studentData: studentFbData});
