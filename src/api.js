@@ -17,6 +17,7 @@ const urlParams = (() => {
 const OFFERING_URL = urlParams.offering;
 const AUTH_HEADER = `Bearer ${urlParams.token}`;
 
+const fbAuthoringPath = '/1/authoring/application';
 const fbClassPath = '/1/userState/https%3A%2F%2Flearn%2Econcord%2Eorg%2Fapi%2Fv1%2Fclasses%2F';
 const fbStudentPath = 'https%3A%2F%2Flearn%2Econcord%2Eorg%2F';
 
@@ -28,20 +29,35 @@ const fbConfig = {
 };
 firebase.initializeApp(fbConfig);
 
-export default function addStudentDataListener(callback) {
+const getSnapshotVal = (snapshot) => snapshot.val();
+
+export default function addDataListener(callback) {
   return fetch(OFFERING_URL, {headers: {Authorization: AUTH_HEADER}})
     .then((res) => res.json())
     .then((classData) => {
       const classId = classData.clazz_id;
       const students = classData.students;
+
+      // get authoring data once
+      firebase.database().ref(fbAuthoringPath)
+        .once('value').then(getSnapshotVal)
+        .then((data) => {
+          callback({authoring: data});
+        })
+        .catch(console.log.bind(console));
+
+      // notify callback on all student data changes
       firebase.database().ref(`${fbClassPath}${classId}`)
         .on('value', (snapshot) => {
           const fbData = snapshot.val();
           const studentFbData = {};
           students.forEach((s) => {
-            studentFbData[s.username] = fbData[`${fbStudentPath}${s.user_id}`];
+            studentFbData[s.username] = {
+              name: s.name,
+              state: fbData[`${fbStudentPath}${s.user_id}`]
+            };
           });
-          callback(studentFbData);
+          callback({studentData: studentFbData});
         });
     })
     .catch(console.log.bind(console));

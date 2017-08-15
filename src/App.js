@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import addStudentDataListener from './api';
+import addDataListener from './api';
 
 export default class App extends Component {
   componentWillMount() {
-    addStudentDataListener((data) => {
+    addDataListener((data) => {
       this.setState(data);
     });
   }
