@@ -1,4 +1,5 @@
 /*global firebase*/
+import fakeOffering from './data/fake-offering.json';
 
 const urlParams = (() => {
   const query = window.location.search.substring(1);
@@ -16,6 +17,7 @@ const urlParams = (() => {
 // Report URL and auth tokens are provided as an URL parameters.
 const OFFERING_URL = urlParams.offering;
 const AUTH_HEADER = `Bearer ${urlParams.token}`;
+const USE_FAKE_DATA = urlParams.fake;
 
 const fbAuthoringPath = '/1/authoring/application';
 const fbClassPath = '/1/userState/https%3A%2F%2Flearn%2Econcord%2Eorg%2Fapi%2Fv1%2Fclasses%2F';
@@ -31,9 +33,16 @@ firebase.initializeApp(fbConfig);
 
 const getSnapshotVal = (snapshot) => snapshot.val();
 
-export default function addDataListener(callback) {
+const getClassData = () => {
+  if (USE_FAKE_DATA) {
+    return Promise.resolve(fakeOffering);
+  }
   return fetch(OFFERING_URL, {headers: {Authorization: AUTH_HEADER}})
-    .then((res) => res.json())
+    .then((res) => res.json());
+};
+
+export default function addDataListener(callback) {
+  return getClassData()
     .then((classData) => {
       const classId = classData.clazz_id;
       const students = classData.students;

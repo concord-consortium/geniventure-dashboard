@@ -1,0 +1,170 @@
+{
+  "teacher": "GeniConnect Teacher",
+  "clazz": "GeniConnect - Summer 2017 - Group A",
+  "clazz_id": 3511,
+  "activity": "Geniventure",
+  "activity_url": "http:\/\/geniventure.concord.org\/",
+  "students": [
+    {
+      "name": "Student 0",
+      "username": "student-0",
+      "user_id": 70784,
+      "started_activity": false,
+      "endpoint_url": null
+    },
+    {
+      "name": "Student 1",
+      "username": "student-1",
+      "user_id": 70808,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/1480b98c-2ea5-4e9a-9973-8a44e2303bc0"
+    },
+    {
+      "name": "Student 2",
+      "username": "student-2",
+      "user_id": 70818,
+      "started_activity": false,
+      "endpoint_url": null
+    },
+    {
+      "name": "Student 3",
+      "username": "student-3",
+      "user_id": 70843,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/a41ff607-01df-4656-9da0-0e4c50251436"
+    },
+    {
+      "name": "Student 4",
+      "username": "student-4",
+      "user_id": 70844,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/fc142654-e248-4867-b3ca-756042187099"
+    },
+    {
+      "name": "Student 5",
+      "username": "student-5",
+      "user_id": 70845,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/41c33dcb-72ca-41c8-8efa-ef3cdb74907d"
+    },
+    {
+      "name": "Student 6",
+      "username": "student-6",
+      "user_id": 70846,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/740f7f37-f978-4e1b-b407-96be4537bed9"
+    },
+    {
+      "name": "Student 7",
+      "username": "student-7",
+      "user_id": 70848,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/af2b3a20-3aae-4757-a47a-27a3c710310f"
+    },
+    {
+      "name": "Student 8",
+      "username": "student-8",
+      "user_id": 70849,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/b4da1191-30be-43dc-adb0-4b42f594b9c3"
+    },
+    {
+      "name": "Student 9",
+      "username": "student-9",
+      "user_id": 70850,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/fbb164c7-175f-4cd3-a23d-cc1537f1fa44"
+    },
+    {
+      "name": "Student 10",
+      "username": "student-10",
+      "user_id": 70851,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/9f9f54b0-a2f6-4678-b906-7091e2f86611"
+    },
+    {
+      "name": "Student 11",
+      "username": "student-11",
+      "user_id": 70892,
+      "started_activity": false,
+      "endpoint_url": null
+    },
+    {
+      "name": "Student 12",
+      "username": "student-12",
+      "user_id": 70893,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/1692b90d-5e1b-4c6d-bb56-4ea40e5b74df"
+    },
+    {
+      "name": "Student 13",
+      "username": "student-13",
+      "user_id": 71049,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/45700bdc-f570-4f48-b891-63ea9bca6b1a"
+    },
+    {
+      "name": "Student 14",
+      "username": "student-14",
+      "user_id": 71050,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/413dfbdf-f4e0-4d3b-bcfd-2ddfb58d8308"
+    },
+    {
+      "name": "Student 15",
+      "username": "student-15",
+      "user_id": 71112,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/937edfd4-d134-41af-bfe9-9bc325c4e6df"
+    },
+    {
+      "name": "Student 16",
+      "username": "student-16",
+      "user_id": 71114,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/3b29435c-090b-4344-9ab4-87d329ee884d"
+    },
+    {
+      "name": "Student 17",
+      "username": "student-17",
+      "user_id": 71158,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/4d2f01ec-43de-4275-8be3-7313ee5d7b5e"
+    },
+    {
+      "name": "Student 18",
+      "username": "student-18",
+      "user_id": 71297,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/4b3231e1-e390-4aa8-83ac-59918e671fc8"
+    },
+    {
+      "name": "Student 19",
+      "username": "student-19",
+      "user_id": 71298,
+      "started_activity": false,
+      "endpoint_url": null
+    },
+    {
+      "name": "Student 20",
+      "username": "student-20",
+      "user_id": 71299,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/a82e1a8e-67f2-49cf-93cb-9d50b2ec604a"
+    },
+    {
+      "name": "Student 21",
+      "username": "student-21",
+      "user_id": 71300,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/afcc3efa-acbd-436f-802b-f97ebf6bb826"
+    },
+    {
+      "name": "Student 22",
+      "username": "student-22",
+      "user_id": 71489,
+      "started_activity": true,
+      "endpoint_url": "https:\/\/learn.concord.org\/dataservice\/external_activity_data\/399aa721-04a0-4597-936f-1fc8b1dd2bf2"
+    }
+  ]
+}
