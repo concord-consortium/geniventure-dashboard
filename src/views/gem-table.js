@@ -1,7 +1,7 @@
 import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import { CollapseCell, TextCell, GemCell } from './cells';
+import { CollapseCell, TextCell, GemCell, ConceptCell } from './cells';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
@@ -30,6 +30,11 @@ class GemTable extends Component {
       scrollToRow: rowIndex,
       collapsedRows: newCollapsedRows
     });
+  }
+
+  handleClickChallenge(level, mission, challenge) {
+    console.log("handle");
+    this.props.onSelectChallenge(level, mission,challenge);
   }
 
   subRowHeightGetter(index) {
@@ -67,7 +72,7 @@ class GemTable extends Component {
   }
 
   createColumns() {
-    const {dataStore} = this.props;
+    const {dataStore, selectedLevel, selectedMission, selectedChallenge} = this.props;
     const {collapsedRows} = this.state;
     if (!dataStore.authoring.levels) {
       return null;
@@ -91,31 +96,88 @@ class GemTable extends Component {
         />
       </ColumnGroup>
     );
-    dataStore.authoring.levels.forEach((level, i) => {
-      level.missions.forEach((mission, j) => {
-        const missionName = `Mission ${i + 1}.${j + 1}`;
-        const columns = mission.challenges.map((challenge, k) =>
-          <Column
-            columnKey={JSON.stringify({level: i, mission: j, challenge: k})}
-            header={<Cell>{k + 1}</Cell>}
-            cell={<GemCell data={dataStore} />}
-            width={45}
-          />
-        );
-        columnGroups.push(
-          <ColumnGroup
-            header={<Cell>{missionName}</Cell>}
-          >
-            {columns}
-          </ColumnGroup>
-        );
+    if (selectedChallenge === null) {
+      dataStore.authoring.levels.forEach((level, i) => {
+        level.missions.forEach((mission, j) => {
+          const missionName = `Mission ${i + 1}.${j + 1}`;
+          const columns = mission.challenges.map((challenge, k) =>
+            <Column
+              columnKey={JSON.stringify({level: i, mission: j, challenge: k})}
+              header={
+                <Cell
+                  className={css(styles.clickable)}
+                  onClick={() => this.handleClickChallenge(i, j, k)}>{k + 1}
+                </Cell>
+              }
+              cell={<GemCell data={dataStore} />}
+              width={45}
+            />
+          );
+          columnGroups.push(
+            <ColumnGroup
+              header={<Cell>{missionName}</Cell>}
+            >
+              {columns}
+            </ColumnGroup>
+          );
+        });
       });
-    });
+    } else {
+      const columnKey = JSON.stringify({
+        level: selectedLevel,
+        mission: selectedMission,
+        challenge: selectedChallenge
+      });
+      const challengeName = `Challenge ${selectedLevel+1}.${selectedMission+1}.${selectedChallenge+1}`;
+      columnGroups.push(
+        <ColumnGroup
+          header={<Cell>{challengeName}</Cell>}
+          flexGrow={2}
+        >
+          <Column
+            columnKey={columnKey}
+            header={<Cell>Attempts</Cell>}
+            cell={<GemCell data={dataStore} showAll={true} />}
+            width={45}
+            flexGrow={3}
+          />
+          <Column
+            columnKey={"concept-1"}
+            header={<Cell>Concept 1</Cell>}
+            cell={<ConceptCell data={dataStore} />}
+            width={45}
+            flexGrow={1}
+          />
+          <Column
+            columnKey={"concept-2"}
+            header={<Cell>Concept 2</Cell>}
+            cell={<ConceptCell data={dataStore} />}
+            width={45}
+            flexGrow={1}
+          />
+          <Column
+            columnKey={"concept-3"}
+            header={<Cell>Concept 3</Cell>}
+            cell={<ConceptCell data={dataStore} />}
+            width={45}
+            flexGrow={1}
+          />
+          <Column
+            columnKey={"concept-4"}
+            header={<Cell>Concept 4</Cell>}
+            cell={<ConceptCell data={dataStore} />}
+            width={45}
+            flexGrow={1}
+          />
+        </ColumnGroup>
+      );
+    }
+
     return columnGroups;
   }
 
   render() {
-    const {dataStore} = this.props;
+    const {dataStore, selectedChallenge} = this.props;
     const {scrollToRow} = this.state;
     const columns = this.createColumns();
 
@@ -127,7 +189,7 @@ class GemTable extends Component {
           rowsCount={dataStore.getSize()}
           subRowHeightGetter={this.subRowHeightGetter}
           rowExpanded={this.rowExpandedGetter}
-          groupHeaderHeight={45}
+          groupHeaderHeight={selectedChallenge === null ? 45 : 0}
           headerHeight={50}
           width={1000}
           height={500}
@@ -159,6 +221,9 @@ const styles = StyleSheet.create({
   },
   justNow: {
     color: 'green'
+  },
+  clickable: {
+    cursor: 'pointer'
   }
 });
 

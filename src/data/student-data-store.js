@@ -40,15 +40,14 @@ class StudentDataStore {
     if (!student.state) {
       return "";
     }
+    if (colKey.indexOf("concept") > -1) {
+      return Math.random();
+    }
     const colData = JSON.parse(colKey);
     const gems = student.state.gems;
     if (gems && gems[colData.level] && gems[colData.level][colData.mission]
         && gems[colData.level][colData.mission][colData.challenge] != null) {
-      const gem = gems[colData.level][colData.mission][colData.challenge];
-      if (!isNaN(gem)) {
-        return gem;
-      }
-      return gem[gem.length - 1];
+      return gems[colData.level][colData.mission][colData.challenge];
     }
     return -1;
   }

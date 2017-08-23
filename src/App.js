@@ -10,8 +10,13 @@ export default class App extends Component {
     super();
     this.state = {
       authoring: {},
-      studentData: {}
+      studentData: {},
+      selectedLevel: null,
+      selectedMission: null,
+      selectedChallenge: null
     };
+    this.onSelectChallenge = this.onSelectChallenge.bind(this);
+    this.onBackToOverview = this.onBackToOverview.bind(this);
   }
 
   componentWillMount() {
@@ -20,13 +25,44 @@ export default class App extends Component {
     });
   }
 
+  onSelectChallenge(level, mission, challenge) {
+    this.setState({
+      selectedLevel: level,
+      selectedMission: mission,
+      selectedChallenge: challenge
+    });
+  }
+
+  onBackToOverview() {
+    this.setState({
+      selectedLevel: null,
+      selectedMission: null,
+      selectedChallenge: null
+    });
+  }
+
   render() {
-    const {authoring, studentData} = this.state;
+    const {authoring, studentData, selectedLevel, selectedMission, selectedChallenge} = this.state;
     const dataStore = new StudentDataStore(authoring, studentData);
+    const topRow = (selectedChallenge !== null ?
+      (
+        <div>
+          <a onClick={this.onBackToOverview}>Back to Overview</a>
+        </div>
+      ) :
+      null
+    );
     return (
       <div>
         <h1>Geniverse Dashboard</h1>
-        <GemTable dataStore={dataStore} />
+        {topRow}
+        <GemTable
+          dataStore={dataStore}
+          selectedLevel={selectedLevel}
+          selectedMission={selectedMission}
+          selectedChallenge={selectedChallenge}
+          onSelectChallenge={this.onSelectChallenge}
+        />
       </div>
     );
   }
