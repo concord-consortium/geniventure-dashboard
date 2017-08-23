@@ -13,10 +13,12 @@ export default class App extends Component {
       studentData: {},
       selectedLevel: null,
       selectedMission: null,
-      selectedChallenge: null
+      selectedChallenge: null,
+      viewingPreview: false
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
+    this.onTogglePreview = this.onTogglePreview.bind(this);
   }
 
   componentWillMount() {
@@ -41,21 +43,45 @@ export default class App extends Component {
     });
   }
 
+  onTogglePreview() {
+    this.setState({
+      viewingPreview: !this.state.viewingPreview
+    });
+  }
+
   render() {
-    const {authoring, studentData, selectedLevel, selectedMission, selectedChallenge} = this.state;
+    const {authoring, studentData, selectedLevel, selectedMission, selectedChallenge, viewingPreview} = this.state;
     const dataStore = new StudentDataStore(authoring, studentData);
+    const title = (selectedChallenge !== null ?
+      `Geniverse Dashboard: Challenge ${selectedLevel+1}.${selectedMission+1}.${selectedChallenge+1}`
+      : "Geniverse Dashboard"
+    );
     const topRow = (selectedChallenge !== null ?
-      (
-        <div>
-          <a onClick={this.onBackToOverview}>Back to Overview</a>
-        </div>
+      ( viewingPreview ?
+        (
+          <div style={{padding: "5px"}}>
+            <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>Back to table</a>
+          </div>
+        ) :
+        (
+          <div style={{padding: "5px"}}>
+            <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onBackToOverview}>Back to Overview</a>
+            <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>View challenge preview</a>
+          </div>
+        )
       ) :
       null
     );
-    return (
-      <div>
-        <h1>Geniverse Dashboard</h1>
-        {topRow}
+    const body = (viewingPreview ?
+      (
+        <div>
+          <iframe
+            style={{width: "100%", height: "600px"}}
+            src={`http://geniventure.concord.org/#/${selectedLevel+1}/${selectedMission+1}/${selectedChallenge+1}`}
+          />
+        </div>
+      ) :
+      (
         <GemTable
           dataStore={dataStore}
           selectedLevel={selectedLevel}
@@ -63,6 +89,13 @@ export default class App extends Component {
           selectedChallenge={selectedChallenge}
           onSelectChallenge={this.onSelectChallenge}
         />
+      )
+    );
+    return (
+      <div>
+        <h1>{title}</h1>
+        {topRow}
+        {body}
       </div>
     );
   }
