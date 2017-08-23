@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import addDataListener from './api';
 
-import GemOverview from './views/gem-overview';
+import StudentDataStore from './data/student-data-store';
+import GemTable from './views/gem-table';
 
 export default class App extends Component {
 
@@ -20,10 +21,12 @@ export default class App extends Component {
   }
 
   render() {
+    const {authoring, studentData} = this.state;
+    const dataStore = new StudentDataStore(authoring, studentData);
     return (
       <div>
         <h1>Geniverse Dashboard</h1>
-        <GemOverview authoring={this.state.authoring} studentData={this.state.studentData} />
+        <GemTable dataStore={dataStore} />
       </div>
     );
   }
