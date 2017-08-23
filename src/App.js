@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import addDataListener from './api';
+import addDataListener from './data/api';
 
 import StudentDataStore from './data/student-data-store';
 import GemTable from './views/gem-table';
