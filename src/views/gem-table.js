@@ -33,7 +33,7 @@ class GemTable extends Component {
   }
 
   subRowHeightGetter(index) {
-    return this.state.collapsedRows.has(index) ? 80 : 0;
+    return this.state.collapsedRows.has(index) ? 240 : 0;
   }
 
   rowExpandedGetter({rowIndex, width, height}) {
@@ -48,7 +48,19 @@ class GemTable extends Component {
     return (
       <div style={style}>
         <div className={css(styles.expandStyles)}>
-            expanded content
+          <div className={css(styles.studentData)}>
+            <div>
+              Last seen: <span className={css(styles.justNow)}>Just now</span>
+            </div>
+            <div className={css(styles.padding)}>
+              <img width="20px" src="https://www.umass.edu/research/sites/default/files/red_flag.jpeg" />
+              <br />
+              Recessive traits<br />Breeding challenges
+            </div>
+          </div>
+          <div>
+            <img src="http://i.imgur.com/9kMjESv.png" />
+          </div>
         </div>
       </div>
     );
@@ -130,6 +142,7 @@ class GemTable extends Component {
 
 const styles = StyleSheet.create({
   expandStyles: {
+    display: 'flex',
     'background-color': 'white',
     border: '1px solid #d3d3d3',
     'box-sizing': 'border-box',
@@ -137,6 +150,15 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
     height: '100%'
+  },
+  padding: {
+    padding: '6px'
+  },
+  studentData: {
+    'padding-right': '20px'
+  },
+  justNow: {
+    color: 'green'
   }
 });
 
