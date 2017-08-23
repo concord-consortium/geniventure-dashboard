@@ -1,0 +1,209 @@
+{
+  "levels": [
+    {
+      "missions": [
+        {
+          "challenges": [
+            {
+              "id": "allele-5drakes-tutorial",
+              "name": "Challenge 1.1.1",
+              "room": "simroom"
+            }
+          ],
+          "name": "Mission 1.1"
+        }
+      ],
+      "name": "Level 1"
+    },
+    {
+      "missions": [
+        {
+          "challenges": [
+            {
+              "id": "allele-targetMatch-visible-simpleDom",
+              "name": "Challenge 2.1.1",
+              "room": "simroom"
+            },
+            {
+              "id": "allele-targetMatch-hidden-simpleDom",
+              "name": "Challenge 2.1.2",
+              "room": "simroom"
+            }
+          ],
+          "name": "Mission 2.1"
+        },
+        {
+          "challenges": [
+            {
+              "id": "eggDrop-wings",
+              "name": "Challenge 2.2.1",
+              "room": "hatchery"
+            },
+            {
+              "id": "eggDrop-limbs",
+              "name": "Challenge 2.2.2",
+              "room": "hatchery"
+            }
+          ],
+          "name": "Mission 2.2"
+        },
+        {
+          "challenges": [
+            {
+              "id": "allele-targetMatch-visible-armorHorns",
+              "name": "Challenge 2.3.1",
+              "room": "simroom"
+            },
+            {
+              "id": "allele-targetMatch-hidden-armorHorns",
+              "name": "Challenge 2.3.2",
+              "room": "simroom"
+            },
+            {
+              "id": "eggDrop-horns",
+              "name": "Challenge 2.3.3",
+              "room": "hatchery"
+            },
+            {
+              "id": "eggDrop-armor",
+              "name": "Challenge 2.3.4",
+              "room": "hatchery"
+            }
+          ],
+          "name": "Mission 2.3"
+        }
+      ],
+      "name": "Level 2"
+    },
+    {
+      "missions": [
+        {
+          "challenges": [
+            {
+              "id": "allele-targetMatch-visible-simpleColors",
+              "name": "Challenge 3.1.1",
+              "room": "simroom"
+            },
+            {
+              "id": "allele-targetMatch-hidden-simpleColors",
+              "name": "Challenge 3.1.2",
+              "room": "simroom"
+            }
+          ],
+          "name": "Mission 3.1"
+        },
+        {
+          "challenges": [
+            {
+              "id": "cell-game-size-intro",
+              "name": "Challenge 3.2.1",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-charcoal-lava-size",
+              "name": "Challenge 3.2.2",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-lava-charcoal-size",
+              "name": "Challenge 3.2.3",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-lava-charcoal-nucleus",
+              "name": "Challenge 3.2.4",
+              "room": "zoomroom"
+            }
+          ],
+          "name": "Mission 3.2"
+        },
+        {
+          "challenges": [
+            {
+              "id": "cell-game-charcoal-frost-size",
+              "name": "Challenge 3.3.1",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-frost-charcoal-size",
+              "name": "Challenge 3.3.2",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-frost-charcoal-nucleus",
+              "name": "Challenge 3.3.3",
+              "room": "zoomroom"
+            }
+          ],
+          "name": "Mission 3.3"
+        },
+        {
+          "challenges": [
+            {
+              "id": "cell-game-lava-copper-gate",
+              "name": "Challenge 3.4.2",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-copper-lava-gate",
+              "name": "Challenge 3.4.3",
+              "room": "zoomroom"
+            },
+            {
+              "id": "cell-game-copper-lava-nucleus",
+              "name": "Challenge 3.4.4",
+              "room": "zoomroom"
+            }
+          ],
+          "name": "Mission 3.4"
+        }
+      ],
+      "name": "Level 3"
+    },
+    {
+      "missions": [
+        {
+          "challenges": [
+            {
+              "id": "gamete-5drakes-starterTraits",
+              "name": "Challenge 4.1.1",
+              "room": "hatchery"
+            },
+            {
+              "id": "gamete-targetMatch-starterTraits",
+              "name": "Challenge 4.1.2",
+              "room": "hatchery"
+            },
+            {
+              "id": "gamete-selectSpermEgg-starterTraits",
+              "name": "Challenge 4.1.3",
+              "room": "hatchery"
+            },
+            {
+              "id": "gamete-selectSpermEgg-starterTraits-bothParents",
+              "name": "Challenge 4.1.4",
+              "room": "hatchery"
+            }
+          ],
+          "name": "Mission 4.1"
+        },
+        {
+          "challenges": [
+            {
+              "id": "clutch-5drakes-starterTraits",
+              "name": "Challenge 4.2.1",
+              "room": "breedingbarn"
+            },
+            {
+              "id": "clutch-5drakes-intermediateTraits",
+              "name": "Challenge 4.2.2",
+              "room": "breedingbarn"
+            }
+          ],
+          "name": "Mission 4.2"
+        }
+      ],
+      "name": "Level 4"
+    }
+  ]
+}

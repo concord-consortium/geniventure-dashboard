@@ -4,3 +4,9 @@
   height: 45px;
   width: 45px;
 }
+
+.public_fixedDataTableCell_cellContent a {
+  color: #4183C4;
+  text-decoration: none;
+  cursor: pointer;
+}
