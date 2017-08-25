@@ -2,19 +2,19 @@ const { Cell } = require('fixed-data-table-2');
 const React = require('react');
 import {StyleSheet, css} from 'aphrodite';
 
-class CollapseCell extends React.PureComponent {
+class ExpandCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, collapsedRows, callback, ...props} = this.props;
+    const {data, rowIndex, columnKey, selectedRow, callback, ...props} = this.props;
     return (
-      <Cell {...props}>
-        <a onClick={() => callback(rowIndex)}>
-          {collapsedRows.has(rowIndex) ? '\u25BC' : '\u25BA'}
+      <Cell onClick={() => callback(rowIndex)} {...props}>
+        <a>
+          {selectedRow === rowIndex ? '\u25BC' : '\u25BA'}
         </a>
       </Cell>
     );
   }
 }
-module.exports.CollapseCell = CollapseCell;
+module.exports.ExpandCell = ExpandCell;
 
 class TextCell extends React.PureComponent {
   render() {
@@ -43,10 +43,14 @@ const getGemImage = (gemScore) => {
 
 class GemCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, showAll, ...props} = this.props;
+    const {data, rowIndex, columnKey, showAll, callback} = this.props;
     const gemScore = data.getObjectAt(rowIndex, columnKey);
     if (!isNaN(gemScore) || !showAll) {
-      return getGemImage(gemScore.length ? gemScore[gemScore.length - 1] : gemScore);
+      return (
+        <div onClick={() => callback(columnKey, rowIndex)}>
+          {getGemImage(gemScore.length ? gemScore[gemScore.length - 1] : gemScore)}
+        </div>
+      );
     }
     const allImages = gemScore.map((s) => getGemImage(s));
     return (
