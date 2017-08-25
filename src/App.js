@@ -18,11 +18,13 @@ export default class App extends Component {
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
+      selectedRow: null,
       viewingPreview: false
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
     this.onTogglePreview = this.onTogglePreview.bind(this);
+    this.onExpandClick = this.onExpandClick.bind(this);
   }
 
   componentWillMount() {
@@ -31,11 +33,12 @@ export default class App extends Component {
     });
   }
 
-  onSelectChallenge(level, mission, challenge) {
+  onSelectChallenge(level, mission, challenge, rowIndex) {
     this.setState({
       selectedLevel: level,
       selectedMission: mission,
-      selectedChallenge: challenge
+      selectedChallenge: challenge,
+      selectedRow: rowIndex
     });
   }
 
@@ -43,13 +46,23 @@ export default class App extends Component {
     this.setState({
       selectedLevel: null,
       selectedMission: null,
-      selectedChallenge: null
+      selectedChallenge: null,
+      selectedRow: null
     });
   }
 
   onTogglePreview() {
     this.setState({
       viewingPreview: !this.state.viewingPreview
+    });
+  }
+
+  onExpandClick(rowIndex) {
+    // toggle if select same row
+    const prevRow = this.state.selectedRow;
+    const selectedRow = rowIndex === prevRow ? null : rowIndex;
+    this.setState({
+      selectedRow
     });
   }
 
@@ -83,7 +96,7 @@ export default class App extends Component {
       authoring,
       studentData,
       className,
-      selectedLevel, selectedMission, selectedChallenge,
+      selectedLevel, selectedMission, selectedChallenge, selectedRow,
       viewingPreview
     } = this.state;
 
@@ -111,7 +124,9 @@ export default class App extends Component {
           selectedLevel={selectedLevel}
           selectedMission={selectedMission}
           selectedChallenge={selectedChallenge}
+          selectedRow={selectedRow}
           onSelectChallenge={this.onSelectChallenge}
+          onExpandClick={this.onExpandClick}
         />
       )
     );

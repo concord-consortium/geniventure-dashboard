@@ -1,7 +1,7 @@
 import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import { CollapseCell, TextCell, GemCell, ConceptCell } from './cells';
+import { ExpandCell, TextCell, GemCell, ConceptCell } from './cells';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
@@ -10,39 +10,28 @@ class GemTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrollToRow: null,
-      collapsedRows: new Set()
+      scrollToRow: null
     };
 
-    this.handleCollapseClick = this.handleCollapseClick.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
     this.subRowHeightGetter = this.subRowHeightGetter.bind(this);
     this.rowExpandedGetter = this.rowExpandedGetter.bind(this);
   }
 
-  handleCollapseClick(rowIndex) {
-    const newCollapsedRows = new Set();
-
-    if (!this.state.collapsedRows.has(rowIndex)) {
-      newCollapsedRows.add(rowIndex);
-    }
-
-    this.setState({
-      scrollToRow: rowIndex,
-      collapsedRows: newCollapsedRows
-    });
+  handleExpandClick(rowIndex) {
+    this.props.onExpandClick(rowIndex);
   }
 
   handleClickChallenge(level, mission, challenge) {
-    console.log("handle");
     this.props.onSelectChallenge(level, mission,challenge);
   }
 
   subRowHeightGetter(index) {
-    return this.state.collapsedRows.has(index) ? 240 : 0;
+    return this.props.selectedRow === index ? 240 : 0;
   }
 
   rowExpandedGetter({rowIndex, width, height}) {
-    if (!this.state.collapsedRows.has(rowIndex)) {
+    if (!this.props.selectedRow === rowIndex) {
       return null;
     }
 
@@ -72,8 +61,13 @@ class GemTable extends Component {
   }
 
   createColumns() {
-    const {dataStore, selectedLevel, selectedMission, selectedChallenge} = this.props;
-    const {collapsedRows} = this.state;
+    const {
+      dataStore,
+      selectedLevel,
+      selectedMission,
+      selectedChallenge,
+      selectedRow
+    } = this.props;
     if (!dataStore.authoring.levels) {
       return null;
     }
@@ -83,7 +77,7 @@ class GemTable extends Component {
         fixed={true}
       >
         <Column
-          cell={<CollapseCell callback={this.handleCollapseClick} collapsedRows={collapsedRows} />}
+          cell={<ExpandCell callback={this.handleExpandClick} selectedRow={selectedRow} />}
           fixed={true}
           width={30}
         />
