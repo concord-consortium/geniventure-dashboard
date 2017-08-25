@@ -9,13 +9,12 @@ import '../css/gem-table.css';
 class GemTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      scrollToRow: null
-    };
 
-    this.handleExpandClick = this.handleExpandClick.bind(this);
     this.subRowHeightGetter = this.subRowHeightGetter.bind(this);
     this.rowExpandedGetter = this.rowExpandedGetter.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.handleClickChallenge = this.handleClickChallenge.bind(this);
+    this.handleClickGem = this.handleClickGem.bind(this);
   }
 
   handleExpandClick(rowIndex) {
@@ -23,7 +22,12 @@ class GemTable extends Component {
   }
 
   handleClickChallenge(level, mission, challenge) {
-    this.props.onSelectChallenge(level, mission,challenge);
+    this.props.onSelectChallenge(level, mission, challenge);
+  }
+
+  handleClickGem(column, row) {
+    const col = JSON.parse(column);
+    this.props.onSelectChallenge(col.level, col.mission, col.challenge, row);
   }
 
   subRowHeightGetter(index) {
@@ -100,10 +104,13 @@ class GemTable extends Component {
               header={
                 <Cell
                   className={css(styles.clickable)}
-                  onClick={() => this.handleClickChallenge(i, j, k)}>{k + 1}
+                  onClick={() => this.handleClickChallenge(i, j, k)}>
+                  {k + 1}
                 </Cell>
               }
-              cell={<GemCell data={dataStore} />}
+              cell={
+                <GemCell data={dataStore} callback={this.handleClickGem} />
+              }
               width={45}
             />
           );
@@ -171,14 +178,13 @@ class GemTable extends Component {
   }
 
   render() {
-    const {dataStore, selectedChallenge} = this.props;
-    const {scrollToRow} = this.state;
+    const {dataStore, selectedChallenge, selectedRow} = this.props;
     const columns = this.createColumns();
 
     return (
       <div>
         <Table
-          scrollToRow={scrollToRow}
+          scrollToRow={selectedRow}
           rowHeight={50}
           rowsCount={dataStore.getSize()}
           subRowHeightGetter={this.subRowHeightGetter}

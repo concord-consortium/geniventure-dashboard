@@ -43,10 +43,14 @@ const getGemImage = (gemScore) => {
 
 class GemCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, showAll, ...props} = this.props;
+    const {data, rowIndex, columnKey, showAll, callback} = this.props;
     const gemScore = data.getObjectAt(rowIndex, columnKey);
     if (!isNaN(gemScore) || !showAll) {
-      return getGemImage(gemScore.length ? gemScore[gemScore.length - 1] : gemScore);
+      return (
+        <div onClick={() => callback(columnKey, rowIndex)}>
+          {getGemImage(gemScore.length ? gemScore[gemScore.length - 1] : gemScore)}
+        </div>
+      );
     }
     const allImages = gemScore.map((s) => getGemImage(s));
     return (
