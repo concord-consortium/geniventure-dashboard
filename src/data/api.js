@@ -48,9 +48,16 @@ const getClassData = () => {
 export default function addDataListener(callback) {
   return getClassData()
     .then((classData) => {
+      const className = classData.clazz;
       const classId = classData.clazz_id;
       const students = classData.students;
 
+      // send back the class name as soon as we have it
+      callback({
+        className
+      });
+
+      // then query Firebase for the student and authoring data
       if (USE_FAKE_DATA) {
         callback({
           authoring: fakeAuthoring,
