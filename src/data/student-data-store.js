@@ -1,6 +1,6 @@
 
 class StudentDataStore {
-  constructor(authoring, studentData){
+  constructor(authoring, studentData) {
     this.authoring = authoring;
     this.studentData = studentData;
     this.studentIds = this.getAllStudentIds();
@@ -37,19 +37,28 @@ class StudentDataStore {
     if (colKey === "name") {
       return student.name;
     }
-    if (!student.state) {
+    if (!student.state && !student.stateMeta) {
       return "";
     }
     if (colKey.indexOf("concept") > -1) {
       return Math.random();
     }
-    const colData = JSON.parse(colKey);
-    const gems = student.state.gems;
-    if (gems && gems[colData.level] && gems[colData.level][colData.mission]
-        && gems[colData.level][colData.mission][colData.challenge] != null) {
-      return gems[colData.level][colData.mission][colData.challenge];
+    const {level, mission, challenge} = JSON.parse(colKey);
+    const gems = student.state ? student.state.gems : null;
+    const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
+    const isHere = loc && loc.level === level
+            && loc.mission === mission && loc.challenge === challenge;
+
+    if (gems && gems[level] && gems[level][mission]
+        && gems[level][mission][challenge] != null) {
+      return {
+        score: gems[level][mission][challenge],
+        isHere
+      };
     }
-    return -1;
+    return {
+      isHere
+    };
   }
 
   getObjectAt(index, colKey) {

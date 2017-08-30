@@ -28,13 +28,13 @@ class TextCell extends React.PureComponent {
 }
 module.exports.TextCell = TextCell;
 
-const getGemImage = (gemScore) => {
-  if (gemScore === -1) {
+const getGemImage = (score) => {
+  if (score === undefined) {
     return <div />;
   }
   const imagePath = 'http://geniventure.concord.org/resources/fablevision/venture-pad/';
   const gemNames = ["gem_blue", "gem_yellow", "gem_red", "dark_crystal"];
-  const url = `${imagePath}${gemNames[gemScore]}.png`;
+  const url = `${imagePath}${gemNames[score]}.png`;
   const style = url ?
       {backgroundImage: `url(${url})`} :
       undefined;
@@ -44,17 +44,22 @@ const getGemImage = (gemScore) => {
 class GemCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, showAll, callback} = this.props;
-    const gemScore = data.getObjectAt(rowIndex, columnKey);
-    if (!isNaN(gemScore) || !showAll) {
+    const {score, isHere} = data.getObjectAt(rowIndex, columnKey);
+    let isHereStyle;
+    if (isHere) {
+      isHereStyle = styles.isHere;
+    }
+
+    if (!isNaN(score) || !showAll) {
       return (
-        <div onClick={() => callback(columnKey, rowIndex)}>
-          {getGemImage(gemScore.length ? gemScore[gemScore.length - 1] : gemScore)}
+        <div onClick={() => callback(columnKey, rowIndex)} className={css(isHereStyle)}>
+          {getGemImage((score !== undefined && score.length) ? score[score.length - 1] : score)}
         </div>
       );
     }
-    const allImages = gemScore.map((s) => getGemImage(s));
+    const allImages = score.map((s) => getGemImage(s));
     return (
-      <div className={css(styles.multiGems)}>
+      <div className={css(styles.multiGems, isHereStyle)}>
         {allImages}
       </div>
     );
@@ -78,6 +83,11 @@ class ConceptCell extends React.PureComponent {
 module.exports.ConceptCell = ConceptCell;
 
 const styles = StyleSheet.create({
+  isHere: {
+    'background-color': 'gold',
+    width: "100%",
+    height: "100%"
+  },
   multiGems: {
     display: 'flex'
   },
