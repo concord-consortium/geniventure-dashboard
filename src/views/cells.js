@@ -28,6 +28,28 @@ class TextCell extends React.PureComponent {
 }
 module.exports.TextCell = TextCell;
 
+class StudentNameCell extends React.PureComponent {
+  render() {
+    const {data, rowIndex, columnKey, ...props} = this.props;
+    const {name, lastActionTime} = data.getObjectAt(rowIndex, columnKey);
+    const timeSinceLastSeen = (Date.now() / 1000) - lastActionTime;
+    let style;
+    if (isNaN(timeSinceLastSeen) || timeSinceLastSeen > 3600) {
+      style = "gone";
+    } else if (timeSinceLastSeen > 300) {
+      style = "idle";
+    } else {
+      style = "here";
+    }
+    return (
+      <Cell {...props}>
+        <span className={css(styles[style])}>{name}</span>
+      </Cell>
+    );
+  }
+}
+module.exports.StudentNameCell = StudentNameCell;
+
 const getGemImage = (score) => {
   if (score === undefined) {
     return <div />;
@@ -83,6 +105,15 @@ class ConceptCell extends React.PureComponent {
 module.exports.ConceptCell = ConceptCell;
 
 const styles = StyleSheet.create({
+  gone: {
+    color: 'black'
+  },
+  idle: {
+    color: 'red'
+  },
+  here: {
+    color: 'green'
+  },
   isHere: {
     'background-color': 'gold',
     width: "100%",

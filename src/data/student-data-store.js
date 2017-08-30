@@ -35,7 +35,11 @@ class StudentDataStore {
   createRowObjectData(studentId, colKey) {
     const student = this.studentData[studentId];
     if (colKey === "name") {
-      return student.name;
+      const data = {name: student.name};
+      if (student.stateMeta && student.stateMeta.lastActionTime) {
+        data.lastActionTime = student.stateMeta.lastActionTime;
+      }
+      return data;
     }
     if (!student.state && !student.stateMeta) {
       return "";
