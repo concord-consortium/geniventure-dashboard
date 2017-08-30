@@ -80,9 +80,11 @@ export default function addDataListener(callback) {
             students.forEach((s) => {
               const data = fbData[`${fbStudentPath}${s.user_id}`];
               const state = data ? data.state : {};
+              const stateMeta = data ? data.stateMeta : {};
               studentFbData[s.username] = {
                 name: s.name,
-                state
+                state,
+                stateMeta
               };
             });
             callback({studentData: studentFbData});

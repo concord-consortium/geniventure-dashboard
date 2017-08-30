@@ -7,6 +7,14 @@
   },
   "student-1": {
     "name": "Student 1",
+    "stateMeta": {
+      "lastActionTime": 1503934111,
+      "currentChallenge": {
+        "level": 3,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -57,12 +65,26 @@
   },
   "student-2": {
     "name": "Student 2",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 0,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
 
     }
   },
   "student-3": {
     "name": "Student 3",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 3
+      }
+    },
     "state": {
       "gems": [
         [
@@ -90,6 +112,13 @@
   },
   "student-4": {
     "name": "Student 4",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 3
+      }
+    },
     "state": {
       "gems": [
         [
@@ -129,6 +158,13 @@
   },
   "student-5": {
     "name": "Student 5",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 0,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -141,6 +177,13 @@
   },
   "student-6": {
     "name": "Student 6",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 2
+      }
+    },
     "state": {
       "gems": [
         [
@@ -169,6 +212,13 @@
   },
   "student-7": {
     "name": "Student 7",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 2
+      }
+    },
     "state": {
       "gems": [
         [
@@ -207,6 +257,13 @@
   },
   "student-8": {
     "name": "Student 8",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 2,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
     "state": {
       "gems": [
         [
@@ -262,6 +319,13 @@
   },
   "student-9": {
     "name": "Student 9",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -323,6 +387,14 @@
   },
   "student-10": {
     "name": "Student 10",
+    "stateMeta": {
+      "lastActionTime": 1504193311,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -351,12 +423,28 @@
   },
   "student-11": {
     "name": "Student 11",
+    "stateMeta": {
+      "lastActionTime": 1504193311,
+      "currentChallenge": {
+        "level": 0,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
 
     }
   },
   "student-12": {
     "name": "Student 12",
+    "stateMeta": {
+      "lastActionTime": 1504193311,
+      "currentChallenge": {
+        "level": 3,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
     "state": {
       "gems": [
         [
@@ -412,6 +500,14 @@
   },
   "student-13": {
     "name": "Student 13",
+    "stateMeta": {
+      "lastActionTime": 1504193311,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 1
+      }
+    },
     "state": {
       "gems": [
         [
@@ -438,6 +534,13 @@
   },
   "student-14": {
     "name": "Student 14",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 3,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -496,6 +599,13 @@
   },
   "student-15": {
     "name": "Student 15",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 2,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
     "state": {
       "gems": [
         [
@@ -534,6 +644,13 @@
   },
   "student-16": {
     "name": "Student 16",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -552,6 +669,13 @@
   },
   "student-17": {
     "name": "Student 17",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 1
+      }
+    },
     "state": {
       "gems": [
         [
@@ -577,6 +701,13 @@
   },
   "student-18": {
     "name": "Student 18",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -617,6 +748,13 @@
   },
   "student-20": {
     "name": "Student 20",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [
@@ -635,6 +773,13 @@
   },
   "student-21": {
     "name": "Student 21",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 1,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
     "state": {
       "gems": [
         [
@@ -653,6 +798,13 @@
   },
   "student-22": {
     "name": "Student 22",
+    "stateMeta": {
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
     "state": {
       "gems": [
         [

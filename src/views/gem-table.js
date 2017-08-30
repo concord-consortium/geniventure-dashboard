@@ -1,7 +1,7 @@
 import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import { ExpandCell, TextCell, GemCell, ConceptCell } from './cells';
+import { ExpandCell, StudentNameCell, GemCell, ConceptCell } from './cells';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
@@ -88,7 +88,7 @@ class GemTable extends Component {
         <Column
           columnKey="name"
           header={<Cell>Name</Cell>}
-          cell={<TextCell data={dataStore} />}
+          cell={<StudentNameCell data={dataStore} />}
           fixed={true}
           width={100}
         />
