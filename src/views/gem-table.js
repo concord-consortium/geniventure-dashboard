@@ -5,6 +5,28 @@ import { ExpandCell, StudentNameCell, GemCell, ConceptCell } from './cells';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
+// Finishes the phrase starting with: "Last seen:"
+const timeAgoString = (timeInS) => {
+  if (isNaN(timeInS)) {
+    return "Never";
+  }
+  let minutes = Math.floor(timeInS / 60);
+  if (minutes < 2) {
+    return "Just now";
+  }
+  if (minutes < 60) {
+    if (minutes > 10) {
+      minutes = Math.round(minutes / 5) * 5;
+    }
+    return `${minutes} minutes ago`;
+  }
+  const hours = Math.round(minutes / 60);
+  if (hours < 20) {
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  }
+  const days = Math.round(hours / 24);
+  return `${days} day${days > 1 ? 's' : ''} ago`;
+};
 
 class GemTable extends Component {
   constructor(props) {
@@ -39,6 +61,9 @@ class GemTable extends Component {
       return null;
     }
 
+    const {timeSinceLastAction, idleLevel} = this.props.dataStore.getObjectAt(rowIndex, "name");
+    const timeString = timeAgoString(timeSinceLastAction);
+
     const style = {
       height,
       width: width - 2,
@@ -48,7 +73,7 @@ class GemTable extends Component {
         <div className={css(styles.expandStyles)}>
           <div className={css(styles.studentData)}>
             <div>
-              Last seen: <span className={css(styles.justNow)}>Just now</span>
+              Last seen: <span className={css(styles[idleLevel])}>{timeString}</span>
             </div>
             <div className={css(styles.padding)}>
               <img width="20px" src="https://www.umass.edu/research/sites/default/files/red_flag.jpeg" />
@@ -71,6 +96,7 @@ class GemTable extends Component {
       selectedMission,
       selectedChallenge,
       selectedRow
+
     } = this.props;
     if (!dataStore.authoring.levels) {
       return null;
@@ -144,30 +170,30 @@ class GemTable extends Component {
           />
           <Column
             columnKey={"concept-1"}
-            header={<Cell>Concept 1</Cell>}
+            header={<Cell>A</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-2"}
-            header={<Cell>Concept 2</Cell>}
+            header={<Cell>B</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-3"}
-            header={<Cell>Concept 3</Cell>}
+            header={<Cell>C</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-4"}
-            header={<Cell>Concept 4</Cell>}
+            header={<Cell>D</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
         </ColumnGroup>
@@ -191,7 +217,7 @@ class GemTable extends Component {
           rowExpanded={this.rowExpandedGetter}
           groupHeaderHeight={selectedChallenge === null ? 45 : 0}
           headerHeight={50}
-          width={1000}
+          width={selectedChallenge !== null ? 500 : 1000}
           height={500}
           {...this.props}
         >
@@ -219,7 +245,13 @@ const styles = StyleSheet.create({
   studentData: {
     'padding-right': '20px'
   },
-  justNow: {
+  gone: {
+    color: 'black'
+  },
+  idle: {
+    color: 'red'
+  },
+  here: {
     color: 'green'
   },
   clickable: {

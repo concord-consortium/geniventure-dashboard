@@ -19,7 +19,8 @@ export default class App extends Component {
       selectedMission: null,
       selectedChallenge: null,
       selectedRow: null,
-      viewingPreview: false
+      viewingPreview: false,
+      time: Date.now()
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
@@ -31,6 +32,15 @@ export default class App extends Component {
     addDataListener((data) => {
       this.setState(data);
     });
+
+    // update time state every 5 seconds to change student "last seen" state
+    this.timerInterval = setInterval(() => this.setState({time: Date.now()}), 5000);
+  }
+
+  componentWillUnmount() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   onSelectChallenge(level, mission, challenge, rowIndex) {
@@ -66,19 +76,23 @@ export default class App extends Component {
     });
   }
 
+  challengeString(separator) {
+    const {selectedLevel, selectedMission, selectedChallenge} = this.state;
+    return [selectedLevel + 1, selectedMission + 1, selectedChallenge + 1].join(separator);
+  }
+
   renderTopRow() {
     const {
-      selectedLevel, selectedMission, selectedChallenge,
+      selectedChallenge,
       viewingPreview
     } = this.state;
     const location = selectedChallenge === null ? "Overview"
-      : `Challenge ${selectedLevel + 1}.${selectedMission + 1}.${selectedChallenge + 1}`;
+      : `Challenge ${this.challengeString('.')}`;
 
     let links;
     if (selectedChallenge !== null && !viewingPreview) {
       links = [
-        <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onBackToOverview}>Back to Overview</a>,
-        <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>View challenge preview</a>
+        <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onBackToOverview}>Back to Overview</a>
       ];
     } else if (viewingPreview) {
       links = <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>Back to table</a>
@@ -91,16 +105,30 @@ export default class App extends Component {
     );
   }
 
+  renderRightPanel() {
+    if (this.state.selectedChallenge === null) {
+      return null;
+    }
+    const imgSrc = `assets/img/challenges/${this.challengeString('-')}.png`;
+    return (
+      <div className={css(styles.rightWrapper)}>
+        <img className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
+        <img className={css(styles.previewImg)} onClick={this.onTogglePreview} width="500px" src="assets/img/play-overlay.png" alt="Play challenge preview" />
+      </div>
+    );
+  }
+
   render() {
     const {
       authoring,
       studentData,
       className,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
-      viewingPreview
+      viewingPreview,
+      time
     } = this.state;
 
-    const dataStore = new StudentDataStore(authoring, studentData);
+    const dataStore = new StudentDataStore(authoring, studentData, time);
 
     const title = [<span>Geniventure Dashboard</span>];
     if (className !== null) {
@@ -108,26 +136,30 @@ export default class App extends Component {
     }
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
+    const rightPanel = this.renderRightPanel();
 
     const body = (viewingPreview ?
       (
         <div>
           <iframe
-            style={{width: "100%", height: "600px"}}
-            src={`https://geniventure.concord.org/#/${selectedLevel + 1}/${selectedMission + 1}/${selectedChallenge + 1}`}
+            style={{width: "1070px", height: "600px", marginLeft: "10px"}}
+            src={`https://geniventure.concord.org/#/${this.challengeString('/')}`}
           />
         </div>
       ) :
       (
-        <GemTable
-          dataStore={dataStore}
-          selectedLevel={selectedLevel}
-          selectedMission={selectedMission}
-          selectedChallenge={selectedChallenge}
-          selectedRow={selectedRow}
-          onSelectChallenge={this.onSelectChallenge}
-          onExpandClick={this.onExpandClick}
-        />
+        <div className={css(styles.bodyWrapper)}>
+          <GemTable
+            dataStore={dataStore}
+            selectedLevel={selectedLevel}
+            selectedMission={selectedMission}
+            selectedChallenge={selectedChallenge}
+            selectedRow={selectedRow}
+            onSelectChallenge={this.onSelectChallenge}
+            onExpandClick={this.onExpandClick}
+          />
+          {rightPanel}
+        </div>
       )
     );
     return (
@@ -141,6 +173,23 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
+  bodyWrapper: {
+    display: 'flex'
+  },
+  rightWrapper: {
+    'padding-left': '20px',
+    position: 'relative'
+  },
+  previewImg: {
+    position: 'absolute',
+    top: 0,
+    ':hover': {
+      opacity: 0.5
+    },
+    ':active': {
+      opacity: 1
+    }
+  },
   title: {
     'background-color': '#c4e7e6',
     padding: '11px',

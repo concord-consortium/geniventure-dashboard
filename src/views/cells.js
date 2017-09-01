@@ -31,19 +31,11 @@ module.exports.TextCell = TextCell;
 class StudentNameCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    const {name, lastActionTime} = data.getObjectAt(rowIndex, columnKey);
-    const timeSinceLastSeen = (Date.now() / 1000) - lastActionTime;
-    let style;
-    if (isNaN(timeSinceLastSeen) || timeSinceLastSeen > 3600) {
-      style = "gone";
-    } else if (timeSinceLastSeen > 300) {
-      style = "idle";
-    } else {
-      style = "here";
-    }
+    const {name, idleLevel} = data.getObjectAt(rowIndex, columnKey);
+
     return (
       <Cell {...props}>
-        <span className={css(styles[style])}>{name}</span>
+        <span className={css(styles[idleLevel])}>{name}</span>
       </Cell>
     );
   }
@@ -72,10 +64,10 @@ class GemCell extends React.PureComponent {
       isHereStyle = styles.isHere;
     }
 
-    if (!isNaN(score) || !showAll) {
+    if (!showAll) {
       return (
         <div onClick={() => callback(columnKey, rowIndex)} className={css(isHereStyle)}>
-          {getGemImage((score !== undefined && score.length) ? score[score.length - 1] : score)}
+          {getGemImage(score[score.length - 1])}
         </div>
       );
     }
