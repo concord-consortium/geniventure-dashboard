@@ -1,8 +1,17 @@
+import migrate from './migrations';
+
+const migrateAllData = (data) => {
+  const studentData = Object.assign({}, data);
+  Object.keys(studentData).forEach(studentId => {
+    studentData[studentId].state = migrate(studentData[studentId].state);
+  });
+  return studentData;
+};
 
 class StudentDataStore {
   constructor(authoring, studentData) {
     this.authoring = authoring;
-    this.studentData = studentData;
+    this.studentData = migrateAllData(studentData);
     this.studentIds = this.getAllStudentIds();
     this.size = this.studentIds.length;
     this.cache = {};
@@ -61,6 +70,7 @@ class StudentDataStore {
       };
     }
     return {
+      score: [],
       isHere
     };
   }
