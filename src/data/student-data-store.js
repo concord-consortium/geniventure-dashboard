@@ -21,6 +21,14 @@ class StudentDataStore {
       IDLE: "idle",
       GONE: "gone"
     };
+
+    // won't be needed when we have data
+    this.seed = 1;
+    this.pseudoRandom = () => {
+      this.seed += 1;
+      const x = Math.sin(this.seed) * 10000;
+      return x - Math.floor(x);
+    };
   }
 
   // returns an array of ids, sorted by student name
@@ -73,7 +81,7 @@ class StudentDataStore {
       return "";
     }
     if (colKey.indexOf("concept") > -1) {
-      return Math.random();
+      return this.pseudoRandom();
     }
     const {level, mission, challenge} = JSON.parse(colKey);
     const gems = student.state ? student.state.gems : null;

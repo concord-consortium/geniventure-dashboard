@@ -170,30 +170,30 @@ class GemTable extends Component {
           />
           <Column
             columnKey={"concept-1"}
-            header={<Cell>Concept 1</Cell>}
+            header={<Cell>A</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-2"}
-            header={<Cell>Concept 2</Cell>}
+            header={<Cell>B</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-3"}
-            header={<Cell>Concept 3</Cell>}
+            header={<Cell>C</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-4"}
-            header={<Cell>Concept 4</Cell>}
+            header={<Cell>D</Cell>}
             cell={<ConceptCell data={dataStore} />}
-            width={45}
+            width={10}
             flexGrow={1}
           />
         </ColumnGroup>
@@ -217,7 +217,7 @@ class GemTable extends Component {
           rowExpanded={this.rowExpandedGetter}
           groupHeaderHeight={selectedChallenge === null ? 45 : 0}
           headerHeight={50}
-          width={1000}
+          width={selectedChallenge !== null ? 500 : 1000}
           height={500}
           {...this.props}
         >
