@@ -19,7 +19,8 @@ export default class App extends Component {
       selectedMission: null,
       selectedChallenge: null,
       selectedRow: null,
-      viewingPreview: false
+      viewingPreview: false,
+      time: Date.now()
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
@@ -31,6 +32,15 @@ export default class App extends Component {
     addDataListener((data) => {
       this.setState(data);
     });
+
+    // update time state every 5 seconds to change student "last seen" state
+    this.timerInterval = setInterval(() => this.setState({time: Date.now()}), 5000);
+  }
+
+  componentWillUnmount() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   onSelectChallenge(level, mission, challenge, rowIndex) {
@@ -97,10 +107,11 @@ export default class App extends Component {
       studentData,
       className,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
-      viewingPreview
+      viewingPreview,
+      time
     } = this.state;
 
-    const dataStore = new StudentDataStore(authoring, studentData);
+    const dataStore = new StudentDataStore(authoring, studentData, time);
 
     const title = [<span>Geniventure Dashboard</span>];
     if (className !== null) {

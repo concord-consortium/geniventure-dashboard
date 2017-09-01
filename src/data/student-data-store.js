@@ -9,12 +9,18 @@ const migrateAllData = (data) => {
 };
 
 class StudentDataStore {
-  constructor(authoring, studentData) {
+  constructor(authoring, studentData, time) {
     this.authoring = authoring;
     this.studentData = migrateAllData(studentData);
     this.studentIds = this.getAllStudentIds();
     this.size = this.studentIds.length;
+    this.time = time;
     this.cache = {};
+    this.idleLevels = {
+      HERE: "here",
+      IDLE: "idle",
+      GONE: "gone"
+    };
   }
 
   // returns an array of ids, sorted by student name
@@ -44,11 +50,24 @@ class StudentDataStore {
   createRowObjectData(studentId, colKey) {
     const student = this.studentData[studentId];
     if (colKey === "name") {
-      const data = {name: student.name};
+      const name = student.name;
+      let timeSinceLastAction;
+      let idleLevel = this.idleLevels.GONE;
+
       if (student.stateMeta && student.stateMeta.lastActionTime) {
-        data.lastActionTime = student.stateMeta.lastActionTime;
+        const lastActionTime = student.stateMeta.lastActionTime;
+        timeSinceLastAction = (this.time / 1000) - lastActionTime;
+        if (timeSinceLastAction < 300) {
+          idleLevel = this.idleLevels.HERE;
+        } else if (timeSinceLastAction < 3600) {
+          idleLevel = this.idleLevels.IDLE;
+        }
       }
-      return data;
+      return {
+        name,
+        timeSinceLastAction,
+        idleLevel
+      };
     }
     if (!student.state && !student.stateMeta) {
       return "";
