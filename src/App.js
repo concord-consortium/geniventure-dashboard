@@ -99,7 +99,7 @@ export default class App extends Component {
     }
     return (
       <div style={{padding: "5px"}}>
-        <span style={{paddingRight: "10px", fontWeight: "bold"}}>{location}</span>
+        <span style={{paddingRight: "10px", fontWeight: "bold", fontSize: "1.2em"}}>{location}</span>
         {links}
       </div>
     );
@@ -109,11 +109,26 @@ export default class App extends Component {
     if (this.state.selectedChallenge === null) {
       return null;
     }
+    const {authoring, selectedLevel, selectedMission, selectedChallenge} = this.state;
+    const about = authoring.levels[selectedLevel]
+            .missions[selectedMission].challenges[selectedChallenge].about || {};
+    const {type, description, tip} = about;
     const imgSrc = `assets/img/challenges/${this.challengeString('-')}.png`;
     return (
       <div className={css(styles.rightWrapper)}>
-        <img className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
-        <img className={css(styles.previewImg)} onClick={this.onTogglePreview} width="500px" src="assets/img/play-overlay.png" alt="Play challenge preview" />
+        <div style={{backgroundColor: "rgba(255,255,255,0.7", width: "500px", height: "208px", marginBottom: "10px", position: "relative"}}>
+          <div style={{fontWeight: "bold", padding: "6px"}}>{type}</div>
+          <div style={{padding: "4px"}}>{description}</div>
+          <div style={{fontStyle: "italic", bottom: "4px", display: "flex", position: "absolute"}}>
+            {tip ? <img src="assets/img/alert.png" width="30px" style={{paddingRight: "5px", alignSelf: "center"}} alt="Tip" />
+                    : null}
+            {tip}
+          </div>
+        </div>
+        <div style={{position: "relative"}}>
+          <img className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
+          <img className={css(styles.previewImg)} onClick={this.onTogglePreview} width="500px" src="assets/img/play-overlay.png" alt="Play challenge preview" />
+        </div>
       </div>
     );
   }
