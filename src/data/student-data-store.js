@@ -64,7 +64,7 @@ class StudentDataStore {
 
       if (student.stateMeta && student.stateMeta.lastActionTime) {
         const lastActionTime = student.stateMeta.lastActionTime;
-        timeSinceLastAction = (this.time / 1000) - lastActionTime;
+        timeSinceLastAction = (this.time - lastActionTime) / 1000;
         if (timeSinceLastAction < 300) {
           idleLevel = this.idleLevels.HERE;
         } else if (timeSinceLastAction < 3600) {

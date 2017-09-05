@@ -8,7 +8,7 @@
   "student-1": {
     "name": "Student 1",
     "stateMeta": {
-      "lastActionTime": 1503934111,
+      "lastActionTime": 1503934111000,
       "currentChallenge": {
         "level": 3,
         "mission": 0,
@@ -388,7 +388,7 @@
   "student-10": {
     "name": "Student 10",
     "stateMeta": {
-      "lastActionTime": 1504193311,
+      "lastActionTime": 1504193311000,
       "currentChallenge": {
         "level": 2,
         "mission": 0,
@@ -424,7 +424,7 @@
   "student-11": {
     "name": "Student 11",
     "stateMeta": {
-      "lastActionTime": 1504193311,
+      "lastActionTime": 1504193311000,
       "currentChallenge": {
         "level": 0,
         "mission": 0,
@@ -438,7 +438,7 @@
   "student-12": {
     "name": "Student 12",
     "stateMeta": {
-      "lastActionTime": 1504193311,
+      "lastActionTime": 1504193311000,
       "currentChallenge": {
         "level": 3,
         "mission": 0,
@@ -501,7 +501,7 @@
   "student-13": {
     "name": "Student 13",
     "stateMeta": {
-      "lastActionTime": 1504193311,
+      "lastActionTime": 1504193311000,
       "currentChallenge": {
         "level": 1,
         "mission": 2,
