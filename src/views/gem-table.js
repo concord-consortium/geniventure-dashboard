@@ -1,5 +1,6 @@
 import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell, ConceptCell } from './cells';
 import '../css/fixed-data-table.css';
@@ -37,6 +38,42 @@ class GemTable extends Component {
     this.handleExpandClick = this.handleExpandClick.bind(this);
     this.handleClickChallenge = this.handleClickChallenge.bind(this);
     this.handleClickGem = this.handleClickGem.bind(this);
+    this.state = {
+      width: 1000,
+      stackGems: true
+    };
+    this.shrink = this.shrink.bind(this);
+    this.grow = this.grow.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.transitionToChallenge && !nextProps.transitionToChallenge) {
+      requestAnimationFrame(this.shrink);
+      setTimeout(() => this.setState({stackGems: false}), 1000);
+    } else if (this.props.selectedChallenge !== null && nextProps.selectedChallenge === null) {
+      requestAnimationFrame(this.grow);
+      this.setState({stackGems: true});
+    }
+  }
+
+  shrink() {
+    const width = this.state.width;
+    if (width > 500) {
+      this.setState({
+        width: width - 50
+      });
+      requestAnimationFrame(this.shrink);
+    }
+  }
+
+  grow() {
+    const width = this.state.width;
+    if (width < 1000) {
+      this.setState({
+        width: width + 100
+      });
+      requestAnimationFrame(this.grow);
+    }
   }
 
   handleExpandClick(rowIndex) {
@@ -95,8 +132,8 @@ class GemTable extends Component {
       selectedLevel,
       selectedMission,
       selectedChallenge,
-      selectedRow
-
+      selectedRow,
+      transitionToChallenge,
     } = this.props;
     if (!dataStore.authoring.levels) {
       return null;
@@ -104,6 +141,7 @@ class GemTable extends Component {
     const columnGroups = [];
     columnGroups.push(
       <ColumnGroup
+        key="student"
         fixed={true}
       >
         <Column
@@ -120,17 +158,27 @@ class GemTable extends Component {
         />
       </ColumnGroup>
     );
-    if (selectedChallenge === null) {
+    if (selectedChallenge === null || transitionToChallenge) {
+      let selectedChallengeString = "";
+      if (transitionToChallenge) {
+        selectedChallengeString = JSON.stringify({level: selectedLevel, mission: selectedMission, challenge: selectedChallenge});
+      }
       dataStore.authoring.levels.forEach((level, i) => {
         level.missions.forEach((mission, j) => {
           const missionName = `Mission ${i + 1}.${j + 1}`;
-          const columns = mission.challenges.map((challenge, k) =>
-            <Column
-              columnKey={JSON.stringify({level: i, mission: j, challenge: k})}
+          const columns = mission.challenges.map((challenge, k) => {
+            let columnKey = JSON.stringify({level: i, mission: j, challenge: k});
+            if (transitionToChallenge && columnKey !== selectedChallengeString) {
+              columnKey = null;
+            }
+            return (<Column
+              key={columnKey}
+              columnKey={columnKey}
               header={
                 <Cell
                   className={css(styles.clickable)}
-                  onClick={() => this.handleClickChallenge(i, j, k)}>
+                  onClick={() => this.handleClickChallenge(i, j, k)}
+                >
                   {k + 1}
                 </Cell>
               }
@@ -138,10 +186,11 @@ class GemTable extends Component {
                 <GemCell data={dataStore} callback={this.handleClickGem} />
               }
               width={45}
-            />
-          );
+            />);
+          });
           columnGroups.push(
             <ColumnGroup
+              key={missionName}
               header={<Cell>{missionName}</Cell>}
             >
               {columns}
@@ -158,13 +207,14 @@ class GemTable extends Component {
       const challengeName = `Challenge ${selectedLevel+1}.${selectedMission+1}.${selectedChallenge+1}`;
       columnGroups.push(
         <ColumnGroup
+          key={challengeName}
           header={<Cell>{challengeName}</Cell>}
           flexGrow={2}
         >
           <Column
             columnKey={columnKey}
             header={<Cell>Attempts</Cell>}
-            cell={<GemCell data={dataStore} showAll={true} />}
+            cell={<GemCell data={dataStore} showAll={true} stack={this.state.stackGems} />}
             width={45}
             flexGrow={3}
           />
@@ -204,8 +254,9 @@ class GemTable extends Component {
   }
 
   render() {
-    const {dataStore, selectedChallenge, selectedRow} = this.props;
+    const {dataStore, selectedChallenge, selectedRow, transitionToChallenge} = this.props;
     const columns = this.createColumns();
+    const isLarge = selectedChallenge === null || transitionToChallenge;
 
     return (
       <div>
@@ -215,9 +266,9 @@ class GemTable extends Component {
           rowsCount={dataStore.getSize()}
           subRowHeightGetter={this.subRowHeightGetter}
           rowExpanded={this.rowExpandedGetter}
-          groupHeaderHeight={selectedChallenge === null ? 45 : 0}
+          groupHeaderHeight={isLarge ? 45 : 0}
           headerHeight={50}
-          width={selectedChallenge !== null ? 500 : 1000}
+          width={this.state.width}
           height={500}
           {...this.props}
         >
@@ -227,6 +278,17 @@ class GemTable extends Component {
     );
   }
 }
+
+GemTable.propTypes = {
+  dataStore: PropTypes.object,
+  selectedLevel: PropTypes.number,
+  selectedMission: PropTypes.number,
+  selectedChallenge: PropTypes.number,
+  selectedRow: PropTypes.number,
+  transitionToChallenge: PropTypes.bool,
+  onSelectChallenge: PropTypes.func,
+  onExpandClick: PropTypes.func
+};
 
 const styles = StyleSheet.create({
   expandStyles: {

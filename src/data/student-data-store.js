@@ -56,6 +56,7 @@ class StudentDataStore {
   }
 
   createRowObjectData(studentId, colKey) {
+    if (!colKey) return {};
     const student = this.studentData[studentId];
     if (colKey === "name") {
       const name = student.name;

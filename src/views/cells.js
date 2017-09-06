@@ -42,23 +42,34 @@ class StudentNameCell extends React.PureComponent {
 }
 module.exports.StudentNameCell = StudentNameCell;
 
-const getGemImage = (score) => {
+const getGemImage = (score, stack, i) => {
   if (score === undefined) {
     return <div />;
   }
-  const imagePath = 'http://geniventure.concord.org/resources/fablevision/venture-pad/';
-  const gemNames = ["gem_blue", "gem_yellow", "gem_red", "dark_crystal"];
-  const url = `${imagePath}${gemNames[score]}.png`;
-  const style = url ?
-      {backgroundImage: `url(${url})`} :
-      undefined;
-  return <div className="gem-image" style={style} />;
+  let style;
+  let text = "";
+  if (score !== "...") {
+    const imagePath = 'http://geniventure.concord.org/resources/fablevision/venture-pad/';
+    const gemNames = ["gem_blue", "gem_yellow", "gem_red", "dark_crystal"];
+    const url = `${imagePath}${gemNames[score]}.png`;
+    style = {backgroundImage: `url(${url})`, backgroundSize: "22px"};
+  } else {
+    text = score;
+  }
+
+  let className = "gem-image";
+  if (stack) {
+    className += " stacked";
+  }
+  return <div key={i} className={className} style={style}>{text}</div>;
 };
 
 class GemCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, showAll, callback} = this.props;
+    const {data, rowIndex, columnKey, showAll, stack, callback} = this.props;
     const {score, isHere} = data.getObjectAt(rowIndex, columnKey);
+    if (score === undefined) return null;
+
     let isHereStyle;
     if (isHere) {
       isHereStyle = styles.isHere;
@@ -67,11 +78,15 @@ class GemCell extends React.PureComponent {
     if (!showAll) {
       return (
         <div onClick={() => callback(columnKey, rowIndex)} className={css(isHereStyle)}>
-          {getGemImage(score[score.length - 1])}
+          {getGemImage(score[score.length - 1], false, 0)}
         </div>
       );
     }
-    const allImages = score.map((s) => getGemImage(s));
+    if (score.length > 4) {
+      const skip = score.length - 4;
+      score.splice(0, skip, "...");
+    }
+    const allImages = score.map((s, i) => getGemImage(s, stack, i));
     return (
       <div className={css(styles.multiGems, isHereStyle)}>
         {allImages}
@@ -112,7 +127,8 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   multiGems: {
-    display: 'flex'
+    display: 'flex',
+    'justify-content': 'flex-end'
   },
   failedConcept: {
     color: 'red',

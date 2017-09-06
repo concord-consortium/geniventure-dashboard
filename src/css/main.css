@@ -2,3 +2,23 @@ body {
   margin: 0;
   background-color: #fee9aa;
 }
+
+.preview-image {
+  position: absolute;
+  top: 0px;
+}
+.preview-image:hover {
+  opacity: 0.5
+}
+.preview-image:active {
+  opacity: 1
+}
+
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity .8s ease-in;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import addDataListener from './data/api';
 import StudentDataStore from './data/student-data-store';
@@ -19,6 +20,7 @@ export default class App extends Component {
       selectedMission: null,
       selectedChallenge: null,
       selectedRow: null,
+      transitionToChallenge: false,
       viewingPreview: false,
       time: Date.now()
     };
@@ -48,8 +50,11 @@ export default class App extends Component {
       selectedLevel: level,
       selectedMission: mission,
       selectedChallenge: challenge,
-      selectedRow: rowIndex
+      selectedRow: rowIndex,
+      transitionToChallenge: true
     });
+
+    setTimeout(() => this.setState({transitionToChallenge: false}), 900);
   }
 
   onBackToOverview() {
@@ -91,9 +96,7 @@ export default class App extends Component {
 
     let links;
     if (selectedChallenge !== null && !viewingPreview) {
-      links = [
-        <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onBackToOverview}>Back to Overview</a>
-      ];
+      links = <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onBackToOverview}>Back to Overview</a>;
     } else if (viewingPreview) {
       links = <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>Back to table</a>
     }
@@ -106,7 +109,7 @@ export default class App extends Component {
   }
 
   renderRightPanel() {
-    if (this.state.selectedChallenge === null) {
+    if (this.state.selectedChallenge === null || this.state.transitionToChallenge) {
       return null;
     }
     const {authoring, selectedLevel, selectedMission, selectedChallenge} = this.state;
@@ -114,6 +117,7 @@ export default class App extends Component {
             .missions[selectedMission].challenges[selectedChallenge].about || {};
     const {type, description, tip} = about;
     const imgSrc = `assets/img/challenges/${this.challengeString('-')}.png`;
+    setTimeout(() => this.setState({in: true}), 500);
     return (
       <div className={css(styles.rightWrapper)}>
         <div style={{backgroundColor: "rgba(255,255,255,0.7", width: "500px", height: "208px", marginBottom: "10px", position: "relative"}}>
@@ -126,8 +130,16 @@ export default class App extends Component {
           </div>
         </div>
         <div style={{position: "relative"}}>
-          <img className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
-          <img className={css(styles.previewImg)} onClick={this.onTogglePreview} width="500px" src="assets/img/play-overlay.png" alt="Play challenge preview" />
+          <img key="img1" className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
+          <CSSTransitionGroup
+            transitionName="fade"
+            transitionAppear={true}
+            transitionAppearTimeout={800}
+            transitionEnter={false}
+            transitionLeave={false}
+          >
+            <img key="img2" className="preview-image" onClick={this.onTogglePreview} width="500px" src="assets/img/play-overlay.png" alt="Play challenge preview" />
+          </CSSTransitionGroup>
         </div>
       </div>
     );
@@ -139,15 +151,16 @@ export default class App extends Component {
       studentData,
       className,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
+      transitionToChallenge,
       viewingPreview,
       time
     } = this.state;
 
     const dataStore = new StudentDataStore(authoring, studentData, time);
 
-    const title = [<span>Geniventure Dashboard</span>];
+    const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
-      title.push(<span className={css(styles.lighter)}>{`: ${className}`}</span>);
+      title.push(<span key="className" className={css(styles.lighter)}>{`: ${className}`}</span>);
     }
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
@@ -170,6 +183,7 @@ export default class App extends Component {
             selectedMission={selectedMission}
             selectedChallenge={selectedChallenge}
             selectedRow={selectedRow}
+            transitionToChallenge={transitionToChallenge}
             onSelectChallenge={this.onSelectChallenge}
             onExpandClick={this.onExpandClick}
           />
@@ -197,13 +211,7 @@ const styles = StyleSheet.create({
   },
   previewImg: {
     position: 'absolute',
-    top: 0,
-    ':hover': {
-      opacity: 0.5
-    },
-    ':active': {
-      opacity: 1
-    }
+    top: 0
   },
   title: {
     'background-color': '#c4e7e6',
