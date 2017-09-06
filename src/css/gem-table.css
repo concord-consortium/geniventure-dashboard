@@ -2,11 +2,27 @@
   background: 7px no-repeat;
   background-size: contain;
   height: 45px;
-  width: 45px;
+  width: 32px;
+  line-height: 31px;
+  text-align: center;
+  font-size: 2em;
+  transition: margin-left 1s;
+}
+
+.gem-image.stacked {
+  margin-left: -32px;
 }
 
 .public_fixedDataTableCell_cellContent a {
   color: #4183C4;
   text-decoration: none;
   cursor: pointer;
+}
+
+.fixedDataTableLayout_main {
+  background-color: white;
+}
+
+.fixedDataTableRowLayout_main {
+  transition: height 1s;
 }

@@ -7,7 +7,11 @@
             {
               "id": "allele-5drakes-tutorial",
               "name": "Challenge 1.1.1",
-              "room": "simroom"
+              "room": "simroom",
+              "about": {
+                "type": "Drake Builder",
+                "description": "Students will create drakes with different traits  (arms, legs, wings, horns, armor)  by selecting alleles from pulldown menus and changing the sex of the drakes. To complete the challenge, students must create five different looking drakes and save them to their stable."
+              }
             }
           ],
           "name": "Mission 1.1"
@@ -22,12 +26,22 @@
             {
               "id": "allele-targetMatch-visible-simpleDom",
               "name": "Challenge 2.1.1",
-              "room": "simroom"
+              "room": "simroom",
+              "about": {
+                "type": "Visible Drake Match",
+                "description": "Students will match a series of target drakes by selecting alleles from a pulldown menu. The drake that the student is creating will be visible to the student while they are manipulating the alleles. The manipulable alleles are limited to wings, arms and legs (all simple dominance).",
+                "tip": "Students may not notice that the neck flap only appears on male drakes. Students will only receive a blue crystal if they create the drake in the fewest moves possible."
+              }
             },
             {
               "id": "allele-targetMatch-hidden-simpleDom",
               "name": "Challenge 2.1.2",
-              "room": "simroom"
+              "room": "simroom",
+              "about": {
+                "type": "Invisible Drake Match",
+                "description": "Students will match a series of target drakes by selecting alleles from a pulldown menu. The drake that the student is creating will be invisible to the student while they are manipulating the alleles. The manipulable alleles are limited to wings, arms and legs (all simple dominance).",
+                "tip": "Students may not notice that the neck flap only appears on male drakes. Students will only receive a blue crystal if they create the drake in the fewest moves possible."
+              }
             }
           ],
           "name": "Mission 2.1"
@@ -37,12 +51,22 @@
             {
               "id": "eggDrop-wings",
               "name": "Challenge 2.2.1",
-              "room": "hatchery"
+              "room": "hatchery",
+              "about": {
+                "type": "Egg Drop",
+                "description": "Students will examine the genotype of eggs and sort them into the appropriate baskets. Students will receive a point for correctly sorted eggs. Students will receive a hint for incorrectly sorted eggs. Students will sort eggs based only on wings (dominant trait).",
+                "tip": "Students may not notice that the X and Y chromosomes are different lengths. The Y, only appearing in males, is the shorter chromosome."
+              }
             },
             {
               "id": "eggDrop-limbs",
               "name": "Challenge 2.2.2",
-              "room": "hatchery"
+              "room": "hatchery",
+              "about": {
+                "type": "Egg Drop",
+                "description": "Students will examine the genotype of eggs and sort them into the appropriate baskets. Students will receive a point for correctly sorted eggs. Students will receive a hint for incorrectly sorted eggs. Students will sort eggs based on both arms and legs (both dominant traits).",
+                "tip": "Students may not notice that the X and Y chromosomes are different lengths. The Y, only appearing in males, is the shorter chromosome."
+              }
             }
           ],
           "name": "Mission 2.2"
@@ -52,22 +76,40 @@
             {
               "id": "allele-targetMatch-visible-armorHorns",
               "name": "Challenge 2.3.1",
-              "room": "simroom"
+              "room": "simroom",
+              "about": {
+                "type": "Visible Drake Match",
+                "description": "Students will match a series of target drakes by selecting alleles from a pulldown menu. The drake that the student is creating will be visible to the student while they are manipulating the alleles. The manipulable alleles will be limited to horns (recessive trait) and armor (incomplete dominance).",
+                "tip": "Students will only receive a blue crystal if they create the drake in the fewest moves possible. Students may be confused by horns being a recessive trait. Students may not immediately see the difference between 3-plate and 5-plate armor."
+              }
             },
             {
               "id": "allele-targetMatch-hidden-armorHorns",
               "name": "Challenge 2.3.2",
-              "room": "simroom"
+              "room": "simroom",
+              "about": {
+                "type": "Invisible Drake Match",
+                "description": "Students will match a series of target drakes by selecting alleles from a pulldown menu. The drake that the student is creating will be invisible to the student while they are manipulating the alleles. The manipulable alleles will be limited to horns (recessive trait) and armor (incomplete dominance).",
+                "tip": "Students will only receive a blue crystal if they create the drake in the fewest moves possible. Students may be confused by horns being a recessive trait. Students may not immediately see the difference between 3-plate and 5-plate armor."
+              }
             },
             {
               "id": "eggDrop-horns",
               "name": "Challenge 2.3.3",
-              "room": "hatchery"
+              "room": "hatchery",
+              "about": {
+                "type": "Egg Drop",
+                "description": "Students will examine the genotype of eggs and sort them into the appropriate baskets. Students will receive a point for correctly sorted eggs. Students will receive a hint for incorrectly sorted eggs. Students will sort eggs based only on horns (recessive trait)."
+              }
             },
             {
               "id": "eggDrop-armor",
               "name": "Challenge 2.3.4",
-              "room": "hatchery"
+              "room": "hatchery",
+              "about": {
+                "type": "Egg Drop",
+                "description": "Students will examine the genotype of eggs and sort them into the appropriate baskets. Students will receive a point for correctly sorted eggs. Students will receive a hint for incorrectly sorted eggs. Students will sort eggs based only on armor (incomplete dominance)."
+              }
             }
           ],
           "name": "Mission 2.3"
