@@ -18,12 +18,12 @@
   width: 17px;
   height: 17px;
   background: rgba(255,255,255,0.6);
-  border: 2px solid rgba(100,100,100,0.5);
+  border: 1px solid rgba(100,100,100,0.5);
   color: #666;
   line-height: 18px;
   position: absolute;
-  top: 13px;
-  left: 7px;
+  top: 14px;
+  left: 8px;
   font-size: 0.5em;
 }
 

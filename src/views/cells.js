@@ -31,16 +31,49 @@ module.exports.TextCell = TextCell;
 class StudentNameCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    const {name, idleLevel} = data.getObjectAt(rowIndex, columnKey);
+    const {name, idleLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
+    const className = css(
+      styles[idleLevel],
+      allStudents && styles.allStudents
+    );
 
     return (
       <Cell {...props}>
-        <span className={css(styles[idleLevel])}>{name}</span>
+        <span className={className}>{name}</span>
       </Cell>
     );
   }
 }
 module.exports.StudentNameCell = StudentNameCell;
+
+const getTotalsImage = (data) => {
+  const height = 40;
+  const width = 20;
+  const total = data.studentCount;
+  const blueHeight = height * (data['0'] / total);
+  const blueY = height - blueHeight;
+  const goldHeight = height * (data['1'] / total);
+  const goldY = height - blueHeight - goldHeight;
+  const redHeight = height * (data['2'] / total);
+  const redY = height - blueHeight - goldHeight - redHeight;
+  const blackHeight = height * (data['3'] / total);
+  const blackY = height - blueHeight - goldHeight - redHeight - blackHeight;
+  const border = {
+    strokeWidth: "0.25",
+    stroke: "black"
+  };
+  return (
+    <div className={css(styles.svg)}>
+      <svg height={height} width={width}>
+        <rect height={height} width={width} fill={"white"} {...border} />
+        <rect y={blueY} height={blueHeight} width={width} fill={"#7AEAF5"} {...border} />
+        <rect y={goldY} height={goldHeight} width={width} fill={"#FFFA5F"} {...border} />
+        <rect y={redY} height={redHeight} width={width} fill={"#D53448"} {...border} />
+        <rect y={blackY} height={blackHeight} width={width} fill={"#0D0938"} {...border} />
+      </svg>
+    </div>
+  );
+};
 
 const getGemImage = (score, stack, number, i) => {
   if (score === undefined) {
@@ -69,7 +102,13 @@ class GemCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, showAll, stack, callback} = this.props;
     const cellData = data.getObjectAt(rowIndex, columnKey);
-    if (!cellData || cellData.score === undefined) return null;
+    if (!cellData) return null;
+
+    if (cellData.studentCount) {
+      return getTotalsImage(cellData);
+    }
+
+    if (cellData.score === undefined) return null;
 
     const {score, isHere} = cellData;
     let isHereStyle;
@@ -126,6 +165,9 @@ const styles = StyleSheet.create({
   here: {
     color: 'green'
   },
+  allStudents: {
+    'font-weight': 'bold'
+  },
   isHere: {
     'background-color': 'gold',
     width: "100%",
@@ -140,6 +182,9 @@ const styles = StyleSheet.create({
     'font-weight': 'bold',
     padding: '18px',
     'text-align': 'center'
+  },
+  svg: {
+    padding: '5px'
   }
 });
 

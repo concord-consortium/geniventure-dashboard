@@ -21,7 +21,6 @@ class StudentDataStore {
     this.authoring = authoring;
     this.fbStudentData = migrateAllData(fbStudentData);
     this.studentIds = this.getAllStudentIds();
-    this.size = this.studentIds.length;
     this.time = time;
     this.idleLevels = {
       HERE: "here",
@@ -31,7 +30,7 @@ class StudentDataStore {
     };
 
     // create the data object
-    this.data = this.createDataMap();
+    this.createDataMap();
   }
 
   // returns an array of ids, sorted by student name
@@ -59,7 +58,8 @@ class StudentDataStore {
   }
 
   createDataMap() {
-    const data = {};
+    this.data = {};
+
     this.studentIds.forEach((id) => {
       const studentData = {};
       const student = this.fbStudentData[id];
@@ -104,13 +104,57 @@ class StudentDataStore {
         });
       });
 
-      data[id] = studentData;
+      this.data[id] = studentData;
     });
-    return data;
+
+    this.addAllStudentsRow();
+  }
+
+  addAllStudentsRow() {
+    if (!this.studentIds.length || !this.authoring.levels) {
+      return;
+    }
+    const allStudentData = {};
+
+    allStudentData.name = {
+      name: "All students",
+      allStudents: true
+    };
+
+    this.authoring.levels.forEach((level, i) => {
+      level.missions.forEach((mission, j) => {
+        mission.challenges.forEach((challenge, k) => {
+          const key = JSON.stringify({level: i, mission: j, challenge: k});
+          const scores = this.getScoreCounts(key);
+          allStudentData[key] = scores;
+        });
+      });
+    });
+
+    const allStudentsId = "all-students";
+    this.studentIds.unshift(allStudentsId);
+    this.data[allStudentsId] = allStudentData;
+  }
+
+  getScoreCounts(colKey) {
+    const counts = {
+      studentCount: this.studentIds.length,
+      0: 0,
+      1: 0,
+      2: 0,
+      3: 0
+    };
+    this.studentIds.forEach((id) => {
+      const scoreObj = this.data[id][colKey];
+      if (scoreObj && scoreObj.score) {
+        counts[scoreObj.score[scoreObj.score.length - 1]] += 1;
+      }
+    });
+    return counts;
   }
 
   getObjectAt(index, colKey) {
-    if (index < 0 || index > this.size || !colKey) {
+    if (index < 0 || index > this.studentIds.length || !colKey) {
       return undefined;
     }
 
@@ -123,11 +167,11 @@ class StudentDataStore {
     }
 
     const studentId = this.studentIds[index];
-    return this.data[studentId][colKey];
+    return this.data[studentId][colKey];;
   }
 
   getSize() {
-    return this.size;
+    return this.studentIds.length;
   }
 }
 
