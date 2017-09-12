@@ -16,12 +16,26 @@ const migrateAllData = (data) => {
   return studentData;
 };
 
+let totalChallenges = 0;
+
+// returns a score based on how well the student is doing at the moment
+const calculateRecentScore = (completedChallenges, lastThreeScores) => {
+  const percComplete = completedChallenges / totalChallenges;
+  const totalScore = lastThreeScores.reduce((a, b) => a + b, 0);
+  const positiveScore = (4 * 3) - totalScore;   // Three 4s is the worst score
+  const percScore = positiveScore / (4 * 3);
+
+  // weight completion and recent scores equally
+  return (percComplete * 0.5) + (percScore * 0.5);
+};
+
 class StudentDataStore {
-  constructor(authoring, fbStudentData, time, sortActive) {
+  constructor(authoring, fbStudentData, time, sortActive, sortStruggling) {
     this.authoring = authoring;
     this.fbStudentData = migrateAllData(fbStudentData);
     this.studentIds = Object.keys(this.fbStudentData);
     this.sortActive = sortActive;
+    this.sortStruggling = sortStruggling;
     this.time = time;
     this.idleLevels = {
       HERE: "here",
@@ -52,12 +66,25 @@ class StudentDataStore {
       const nameB = studentB.name.toUpperCase();
       const isActiveA = studentA.idleLevel !== this.idleLevels.NEVER;
       const isActiveB = studentB.idleLevel !== this.idleLevels.NEVER;
+      const scoreA = this.data[a].recentScore;
+      const scoreB = this.data[b].recentScore;
+
+      // First sort active over inactive, if requested
       if (this.sortActive && isActiveA && !isActiveB) {
         return -1;
       }
       if (this.sortActive && !isActiveA && isActiveB) {
         return 1;
       }
+
+      // Then sort struggling students over non-struggling students, if requested
+      if (this.sortStruggling && scoreA < scoreB) {
+        return -1;
+      }
+      if (this.sortStruggling && scoreA > scoreB) {
+        return 1;
+      }
+
       if (nameA < nameB) {
         return -1;
       }
@@ -98,6 +125,10 @@ class StudentDataStore {
       const gems = student.state && student.state.gems ? student.state.gems : [];
       const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
 
+      let completedChallenges = 0;
+      const lastThreeScores = [3, 3, 3];
+      totalChallenges = 0;
+
       this.authoring.levels.forEach((level, i) => {
         level.missions.forEach((mission, j) => {
           mission.challenges.forEach((challenge, k) => {
@@ -111,9 +142,20 @@ class StudentDataStore {
               score,
               isHere
             };
+
+            totalChallenges += 1;
+            if (score.length) {
+              completedChallenges += 1;
+              // push the most recent array of scores into lastThreeScores, keeping
+              // length at max 3
+              lastThreeScores.push(...score);
+              lastThreeScores.splice(0, lastThreeScores.length - 3);
+            }
           });
         });
       });
+
+      studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
 
       studentData.concepts = [];
       if (student.itsData) {

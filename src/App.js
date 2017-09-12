@@ -17,6 +17,7 @@ export default class App extends Component {
       studentData: {},
       className: "",
       sortActive: true,
+      sort: "alphabetical",
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
@@ -30,6 +31,7 @@ export default class App extends Component {
     this.onTogglePreview = this.onTogglePreview.bind(this);
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
+    this.onSortChange = this.onSortChange.bind(this);
   }
 
   componentWillMount() {
@@ -86,6 +88,12 @@ export default class App extends Component {
   onSortActiveToggle() {
     this.setState({
       sortActive: !this.state.sortActive
+    });
+  }
+
+  onSortChange(evt) {
+    this.setState({
+      sort: evt.target.value
     });
   }
 
@@ -155,7 +163,14 @@ export default class App extends Component {
 
   renderSortPanel() {
     return (
-      <div>
+      <div style={{padding: "5px"}}>
+        <label htmlFor="sort-struggle" style={{paddingRight: "17px"}}>
+          <span style={{paddingRight: "3px"}}>Sort:</span>
+          <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
+            <option value="alphabetical">alphabetically</option>
+            <option value="struggling">by struggling students</option>
+          </select>
+        </label>
         <label htmlFor="show-active">
           <input
             id="show-active"
@@ -175,13 +190,20 @@ export default class App extends Component {
       studentData,
       className,
       sortActive,
+      sort,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
       viewingPreview,
       time
     } = this.state;
+    const sortStruggling = sort === "struggling";
 
-    const dataStore = new StudentDataStore(authoring, studentData, time, sortActive);
+    const dataStore = new StudentDataStore(
+      authoring,
+      studentData,
+      time,
+      sortActive,
+      sortStruggling);
 
     const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
