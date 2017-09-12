@@ -67,9 +67,10 @@ const getGemImage = (score, stack, i) => {
 class GemCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, showAll, stack, callback} = this.props;
-    const {score, isHere} = data.getObjectAt(rowIndex, columnKey);
-    if (score === undefined) return null;
+    const cellData = data.getObjectAt(rowIndex, columnKey);
+    if (!cellData || cellData.score === undefined) return null;
 
+    const {score, isHere} = cellData;
     let isHereStyle;
     if (isHere) {
       isHereStyle = styles.isHere;

@@ -1,5 +1,13 @@
 import migrate from './migrations';
 
+// pseudo random generator. won't be needed when we have data
+const randCache = {};
+const pseudoRandom = (string) => {
+  const seed = string;
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
 const migrateAllData = (data) => {
   const studentData = Object.assign({}, data);
   Object.keys(studentData).forEach(studentId => {
@@ -9,33 +17,27 @@ const migrateAllData = (data) => {
 };
 
 class StudentDataStore {
-  constructor(authoring, studentData, time) {
+  constructor(authoring, fbStudentData, time) {
     this.authoring = authoring;
-    this.studentData = migrateAllData(studentData);
+    this.fbStudentData = migrateAllData(fbStudentData);
     this.studentIds = this.getAllStudentIds();
     this.size = this.studentIds.length;
     this.time = time;
-    this.cache = {};
     this.idleLevels = {
       HERE: "here",
       IDLE: "idle",
       GONE: "gone"
     };
 
-    // won't be needed when we have data
-    this.seed = 1;
-    this.pseudoRandom = () => {
-      this.seed += 1;
-      const x = Math.sin(this.seed) * 10000;
-      return x - Math.floor(x);
-    };
+    // create the data object
+    this.data = this.createDataMap();
   }
 
   // returns an array of ids, sorted by student name
   getAllStudentIds() {
     const data = [];
-    Object.keys(this.studentData).forEach(studentId => {
-      const student = this.studentData[studentId];
+    Object.keys(this.fbStudentData).forEach(studentId => {
+      const student = this.fbStudentData[studentId];
       data.push({
         id: studentId,
         name: student.name
@@ -55,11 +57,12 @@ class StudentDataStore {
     return data.map((s) => s.id);
   }
 
-  createRowObjectData(studentId, colKey) {
-    if (!colKey) return {};
-    const student = this.studentData[studentId];
-    if (colKey === "name") {
-      const name = student.name;
+  createDataMap() {
+    const data = {};
+    this.studentIds.forEach((id) => {
+      const studentData = {};
+      const student = this.fbStudentData[id];
+
       let timeSinceLastAction;
       let idleLevel = this.idleLevels.GONE;
 
@@ -72,47 +75,51 @@ class StudentDataStore {
           idleLevel = this.idleLevels.IDLE;
         }
       }
-      return {
-        name,
+      studentData.name = {
+        name: student.name,
         timeSinceLastAction,
         idleLevel
       };
-    }
-    if (!student.state && !student.stateMeta) {
-      return "";
-    }
-    if (colKey.indexOf("concept") > -1) {
-      return this.pseudoRandom();
-    }
-    const {level, mission, challenge} = JSON.parse(colKey);
-    const gems = student.state ? student.state.gems : null;
-    const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
-    const isHere = loc && loc.level === level
-            && loc.mission === mission && loc.challenge === challenge;
 
-    if (gems && gems[level] && gems[level][mission]
-        && gems[level][mission][challenge] != null) {
-      return {
-        score: gems[level][mission][challenge],
-        isHere
-      };
-    }
-    return {
-      score: [],
-      isHere
-    };
+      const gems = student.state && student.state.gems ? student.state.gems : [];
+      const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
+
+      this.authoring.levels.forEach((level, i) => {
+        level.missions.forEach((mission, j) => {
+          mission.challenges.forEach((challenge, k) => {
+            const key = JSON.stringify({level: i, mission: j, challenge: k});
+            const score = gems[i] && gems[i][j] && gems[i][j][k] ? gems[i][j][k] : [];
+            const isHere = loc && loc.level === i && loc.mission === j
+                            && loc.challenge === k;
+
+            studentData[key] = {
+              score,
+              isHere
+            };
+          });
+        });
+      });
+
+      data[id] = studentData;
+    });
+    return data;
   }
 
   getObjectAt(index, colKey) {
-    if (index < 0 || index > this.size) {
+    if (index < 0 || index > this.size || !colKey) {
       return undefined;
     }
-    const studentId = this.studentIds[index];
-    if (this.cache[studentId] === undefined || this.cache[studentId][colKey] === undefined) {
-      this.cache[studentId] = this.cache[studentId] || {};
-      this.cache[studentId][colKey] = this.createRowObjectData(studentId, colKey);
+
+    // temp
+    if (colKey.indexOf("concept-") > -1) {
+      if (!randCache[index + colKey]) {
+        randCache[index + colKey] = pseudoRandom(index + parseInt(colKey.substr(8), 10));
+      }
+      return randCache[index + colKey];
     }
-    return this.cache[studentId][colKey];
+
+    const studentId = this.studentIds[index];
+    return this.data[studentId][colKey];
   }
 
   getSize() {
