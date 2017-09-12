@@ -98,8 +98,16 @@ class GemTable extends Component {
       return null;
     }
 
-    const {timeSinceLastAction, idleLevel} = this.props.dataStore.getObjectAt(rowIndex, "name");
-    const timeString = timeAgoString(timeSinceLastAction);
+    const {timeSinceLastAction, idleLevel, allStudents} = this.props.dataStore.getObjectAt(rowIndex, "name");
+    let timeEl;
+    if (!allStudents) {
+      const timeString = timeAgoString(timeSinceLastAction);
+      timeEl = (
+        <div>
+          Last seen: <span className={css(styles[idleLevel])}>{timeString}</span>
+        </div>
+      );
+    }
 
     const style = {
       height,
@@ -109,9 +117,7 @@ class GemTable extends Component {
       <div style={style}>
         <div className={css(styles.expandStyles)}>
           <div className={css(styles.studentData)}>
-            <div>
-              Last seen: <span className={css(styles[idleLevel])}>{timeString}</span>
-            </div>
+            {timeEl}
             <div className={css(styles.padding)}>
               <img width="20px" src="https://www.umass.edu/research/sites/default/files/red_flag.jpeg" />
               <br />
