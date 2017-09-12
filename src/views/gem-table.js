@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell, ConceptCell } from './cells';
+import Chart from './chart';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
@@ -99,6 +100,8 @@ class GemTable extends Component {
     }
 
     const {timeSinceLastAction, idleLevel, allStudents} = this.props.dataStore.getObjectAt(rowIndex, "name");
+    const concepts = this.props.dataStore.getObjectAt(rowIndex, "concepts") || [];
+    let title;
     let timeEl;
     if (!allStudents) {
       const timeString = timeAgoString(timeSinceLastAction);
@@ -107,12 +110,16 @@ class GemTable extends Component {
           Last seen: <span className={css(styles[idleLevel])}>{timeString}</span>
         </div>
       );
+      title = "Concept scores";
+    } else {
+      title = "Average concept scores";
     }
 
     const style = {
       height,
       width: width - 2,
     };
+
     return (
       <div style={style}>
         <div className={css(styles.expandStyles)}>
@@ -125,7 +132,11 @@ class GemTable extends Component {
             </div>
           </div>
           <div>
-            <img src="http://i.imgur.com/9kMjESv.png" />
+            <Chart
+              width={250}
+              data={concepts}
+              title={title}
+            />
           </div>
         </div>
       </div>

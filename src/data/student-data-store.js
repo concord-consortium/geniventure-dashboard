@@ -104,6 +104,16 @@ class StudentDataStore {
         });
       });
 
+      studentData.concepts = [];
+      if (student.itsData) {
+        if (student.itsData.conceptsAggregated) {
+          studentData.concepts = student.itsData.conceptsAggregated.map(d => ({
+            label: d.conceptId,
+            value: d.score
+          }));
+        }
+      }
+
       this.data[id] = studentData;
     });
 
@@ -128,6 +138,26 @@ class StudentDataStore {
           const scores = this.getScoreCounts(key);
           allStudentData[key] = scores;
         });
+      });
+    });
+
+    allStudentData.concepts = [];
+    const conceptsMap = {};
+    this.studentIds.forEach((id) => {
+      const studentConcepts = this.data[id].concepts;
+      studentConcepts.forEach((c) => {
+        if (conceptsMap[c.label] === undefined) {
+          conceptsMap[c.label] = {count: 0, total: 0};
+        }
+        conceptsMap[c.label].count += 1;
+        conceptsMap[c.label].total += c.value;
+      });
+    });
+    Object.keys(conceptsMap).forEach(label => {
+      const concept = conceptsMap[label];
+      allStudentData.concepts.push({
+        label,
+        value: concept.total / concept.count
       });
     });
 
