@@ -214,21 +214,8 @@
   "student-5": {
     "name": "Student 5",
     "stateMeta": {
-      "lastActionTime": 1504193311000,
-      "currentChallenge": {
-        "level": 0,
-        "mission": 0,
-        "challenge": 0
-      }
     },
     "state": {
-      "gems": [
-        [
-          [
-            0
-          ]
-        ]
-      ]
     }
   },
   "student-6": {

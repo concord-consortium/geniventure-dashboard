@@ -17,10 +17,11 @@ const migrateAllData = (data) => {
 };
 
 class StudentDataStore {
-  constructor(authoring, fbStudentData, time) {
+  constructor(authoring, fbStudentData, time, sortActive) {
     this.authoring = authoring;
     this.fbStudentData = migrateAllData(fbStudentData);
-    this.studentIds = this.getAllStudentIds();
+    this.studentIds = Object.keys(this.fbStudentData);
+    this.sortActive = sortActive;
     this.time = time;
     this.idleLevels = {
       HERE: "here",
@@ -31,21 +32,32 @@ class StudentDataStore {
 
     // create the data object
     this.createDataMap();
+
+    // sort
+    this.sortStudentIds();
   }
 
   // returns an array of ids, sorted by student name
-  getAllStudentIds() {
-    const data = [];
-    Object.keys(this.fbStudentData).forEach(studentId => {
-      const student = this.fbStudentData[studentId];
-      data.push({
-        id: studentId,
-        name: student.name
-      });
-    });
-    data.sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
+  sortStudentIds() {
+    this.studentIds.sort((a, b) => {
+      if (a === "all-students") {
+        return -1;
+      }
+      if (b === "all-students") {
+        return 1;
+      }
+      const studentA = this.data[a].name;
+      const studentB = this.data[b].name;
+      const nameA = studentA.name.toUpperCase();
+      const nameB = studentB.name.toUpperCase();
+      const isActiveA = studentA.idleLevel !== this.idleLevels.NEVER;
+      const isActiveB = studentB.idleLevel !== this.idleLevels.NEVER;
+      if (this.sortActive && isActiveA && !isActiveB) {
+        return -1;
+      }
+      if (this.sortActive && !isActiveA && isActiveB) {
+        return 1;
+      }
       if (nameA < nameB) {
         return -1;
       }
@@ -54,7 +66,6 @@ class StudentDataStore {
       }
       return 0;
     });
-    return data.map((s) => s.id);
   }
 
   createDataMap() {

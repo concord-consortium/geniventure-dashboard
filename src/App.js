@@ -16,6 +16,7 @@ export default class App extends Component {
       authoring: {},
       studentData: {},
       className: "",
+      sortActive: true,
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
@@ -28,6 +29,7 @@ export default class App extends Component {
     this.onBackToOverview = this.onBackToOverview.bind(this);
     this.onTogglePreview = this.onTogglePreview.bind(this);
     this.onExpandClick = this.onExpandClick.bind(this);
+    this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
   }
 
   componentWillMount() {
@@ -78,6 +80,12 @@ export default class App extends Component {
     const selectedRow = rowIndex === prevRow ? null : rowIndex;
     this.setState({
       selectedRow
+    });
+  }
+
+  onSortActiveToggle() {
+    this.setState({
+      sortActive: !this.state.sortActive
     });
   }
 
@@ -145,18 +153,35 @@ export default class App extends Component {
     );
   }
 
+  renderSortPanel() {
+    return (
+      <div>
+        <label htmlFor="show-active">
+          <input
+            id="show-active"
+            type="checkbox"
+            checked={this.state.sortActive}
+            onChange={this.onSortActiveToggle}
+          />
+          Sort inactive students to bottom
+        </label>
+      </div>
+    );
+  }
+
   render() {
     const {
       authoring,
       studentData,
       className,
+      sortActive,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
       viewingPreview,
       time
     } = this.state;
 
-    const dataStore = new StudentDataStore(authoring, studentData, time);
+    const dataStore = new StudentDataStore(authoring, studentData, time, sortActive);
 
     const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
@@ -165,6 +190,7 @@ export default class App extends Component {
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
+    const sorting = this.renderSortPanel();
 
     const body = (viewingPreview ?
       (
@@ -195,6 +221,7 @@ export default class App extends Component {
       <div>
         <nav className={css(styles.title)}>{title}</nav>
         {topRow}
+        {sorting}
         {body}
       </div>
     );
