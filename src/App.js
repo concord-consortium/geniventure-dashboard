@@ -16,6 +16,8 @@ export default class App extends Component {
       authoring: {},
       studentData: {},
       className: "",
+      sortActive: true,
+      sort: "alphabetical",
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
@@ -28,6 +30,8 @@ export default class App extends Component {
     this.onBackToOverview = this.onBackToOverview.bind(this);
     this.onTogglePreview = this.onTogglePreview.bind(this);
     this.onExpandClick = this.onExpandClick.bind(this);
+    this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
+    this.onSortChange = this.onSortChange.bind(this);
   }
 
   componentWillMount() {
@@ -78,6 +82,18 @@ export default class App extends Component {
     const selectedRow = rowIndex === prevRow ? null : rowIndex;
     this.setState({
       selectedRow
+    });
+  }
+
+  onSortActiveToggle() {
+    this.setState({
+      sortActive: !this.state.sortActive
+    });
+  }
+
+  onSortChange(evt) {
+    this.setState({
+      sort: evt.target.value
     });
   }
 
@@ -145,18 +161,49 @@ export default class App extends Component {
     );
   }
 
+  renderSortPanel() {
+    return (
+      <div style={{padding: "5px"}}>
+        <label htmlFor="sort-struggle" style={{paddingRight: "17px"}}>
+          <span style={{paddingRight: "3px"}}>Sort:</span>
+          <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
+            <option value="alphabetical">alphabetically</option>
+            <option value="struggling">by struggling students</option>
+          </select>
+        </label>
+        <label htmlFor="show-active">
+          <input
+            id="show-active"
+            type="checkbox"
+            checked={this.state.sortActive}
+            onChange={this.onSortActiveToggle}
+          />
+          Sort inactive students to bottom
+        </label>
+      </div>
+    );
+  }
+
   render() {
     const {
       authoring,
       studentData,
       className,
+      sortActive,
+      sort,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
       viewingPreview,
       time
     } = this.state;
+    const sortStruggling = sort === "struggling";
 
-    const dataStore = new StudentDataStore(authoring, studentData, time);
+    const dataStore = new StudentDataStore(
+      authoring,
+      studentData,
+      time,
+      sortActive,
+      sortStruggling);
 
     const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
@@ -165,6 +212,7 @@ export default class App extends Component {
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
+    const sorting = this.renderSortPanel();
 
     const body = (viewingPreview ?
       (
@@ -195,6 +243,7 @@ export default class App extends Component {
       <div>
         <nav className={css(styles.title)}>{title}</nav>
         {topRow}
+        {sorting}
         {body}
       </div>
     );

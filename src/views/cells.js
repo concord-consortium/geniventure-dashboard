@@ -31,23 +31,60 @@ module.exports.TextCell = TextCell;
 class StudentNameCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    const {name, idleLevel} = data.getObjectAt(rowIndex, columnKey);
+    const {name, idleLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
+    const className = css(
+      styles[idleLevel],
+      allStudents && styles.allStudents
+    );
 
     return (
       <Cell {...props}>
-        <span className={css(styles[idleLevel])}>{name}</span>
+        <span className={className}>{name}</span>
       </Cell>
     );
   }
 }
 module.exports.StudentNameCell = StudentNameCell;
 
-const getGemImage = (score, stack, i) => {
+const getTotalsImage = (data, multiGemColumn) => {
+  const height = 40;
+  const width = 20;
+  const total = data.studentCount;
+  const blueHeight = height * (data['0'] / total);
+  const blueY = height - blueHeight;
+  const goldHeight = height * (data['1'] / total);
+  const goldY = height - blueHeight - goldHeight;
+  const redHeight = height * (data['2'] / total);
+  const redY = height - blueHeight - goldHeight - redHeight;
+  const blackHeight = height * (data['3'] / total);
+  const blackY = height - blueHeight - goldHeight - redHeight - blackHeight;
+  const border = {
+    strokeWidth: "0.25",
+    stroke: "black"
+  };
+  const className = css(
+    styles.svg,
+    multiGemColumn && styles.multiGems
+  );
+  return (
+    <div className={className}>
+      <svg height={height} width={width}>
+        <rect height={height} width={width} fill={"white"} {...border} />
+        <rect y={blueY} height={blueHeight} width={width} fill={"#7AEAF5"} {...border} />
+        <rect y={goldY} height={goldHeight} width={width} fill={"#FFFA5F"} {...border} />
+        <rect y={redY} height={redHeight} width={width} fill={"#D53448"} {...border} />
+        <rect y={blackY} height={blackHeight} width={width} fill={"#0D0938"} {...border} />
+      </svg>
+    </div>
+  );
+};
+
+const getGemImage = (score, stack, number, i) => {
   if (score === undefined) {
     return <div />;
   }
   let style;
-  let text = "";
+  let text = number > 3 ? <div className="numbered-gem">{number}</div> : "";
   if (score !== "...") {
     const imagePath = 'http://geniventure.concord.org/resources/fablevision/venture-pad/';
     const gemNames = ["gem_blue", "gem_yellow", "gem_red", "dark_crystal"];
@@ -61,15 +98,23 @@ const getGemImage = (score, stack, i) => {
   if (stack) {
     className += " stacked";
   }
+
   return <div key={i} className={className} style={style}>{text}</div>;
 };
 
 class GemCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, showAll, stack, callback} = this.props;
-    const {score, isHere} = data.getObjectAt(rowIndex, columnKey);
-    if (score === undefined) return null;
+    const cellData = data.getObjectAt(rowIndex, columnKey);
+    if (!cellData) return null;
 
+    if (cellData.studentCount) {
+      return getTotalsImage(cellData, showAll);
+    }
+
+    if (cellData.score === undefined) return null;
+
+    const {score, isHere} = cellData;
     let isHereStyle;
     if (isHere) {
       isHereStyle = styles.isHere;
@@ -78,7 +123,7 @@ class GemCell extends React.PureComponent {
     if (!showAll) {
       return (
         <div onClick={() => callback(columnKey, rowIndex)} className={css(isHereStyle)}>
-          {getGemImage(score[score.length - 1], false, 0)}
+          {getGemImage(score[score.length - 1], false, score.length, 0)}
         </div>
       );
     }
@@ -86,7 +131,7 @@ class GemCell extends React.PureComponent {
       const skip = score.length - 4;
       score.splice(0, skip, "...");
     }
-    const allImages = score.map((s, i) => getGemImage(s, stack, i));
+    const allImages = score.map((s, i) => getGemImage(s, stack, null, i));
     return (
       <div className={css(styles.multiGems, isHereStyle)}>
         {allImages}
@@ -112,6 +157,9 @@ class ConceptCell extends React.PureComponent {
 module.exports.ConceptCell = ConceptCell;
 
 const styles = StyleSheet.create({
+  never: {
+    color: 'gray'
+  },
   gone: {
     color: 'black'
   },
@@ -120,6 +168,9 @@ const styles = StyleSheet.create({
   },
   here: {
     color: 'green'
+  },
+  allStudents: {
+    'font-weight': 'bold'
   },
   isHere: {
     'background-color': 'gold',
@@ -135,6 +186,9 @@ const styles = StyleSheet.create({
     'font-weight': 'bold',
     padding: '18px',
     'text-align': 'center'
+  },
+  svg: {
+    padding: '5px'
   }
 });
 
