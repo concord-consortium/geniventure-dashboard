@@ -42,12 +42,12 @@ class StudentNameCell extends React.PureComponent {
 }
 module.exports.StudentNameCell = StudentNameCell;
 
-const getGemImage = (score, stack, i) => {
+const getGemImage = (score, stack, number, i) => {
   if (score === undefined) {
     return <div />;
   }
   let style;
-  let text = "";
+  let text = number > 3 ? <div className="numbered-gem">{number}</div> : "";
   if (score !== "...") {
     const imagePath = 'http://geniventure.concord.org/resources/fablevision/venture-pad/';
     const gemNames = ["gem_blue", "gem_yellow", "gem_red", "dark_crystal"];
@@ -61,6 +61,7 @@ const getGemImage = (score, stack, i) => {
   if (stack) {
     className += " stacked";
   }
+
   return <div key={i} className={className} style={style}>{text}</div>;
 };
 
@@ -79,7 +80,7 @@ class GemCell extends React.PureComponent {
     if (!showAll) {
       return (
         <div onClick={() => callback(columnKey, rowIndex)} className={css(isHereStyle)}>
-          {getGemImage(score[score.length - 1], false, 0)}
+          {getGemImage(score[score.length - 1], false, score.length, 0)}
         </div>
       );
     }
@@ -87,7 +88,7 @@ class GemCell extends React.PureComponent {
       const skip = score.length - 4;
       score.splice(0, skip, "...");
     }
-    const allImages = score.map((s, i) => getGemImage(s, stack, i));
+    const allImages = score.map((s, i) => getGemImage(s, stack, null, i));
     return (
       <div className={css(styles.multiGems, isHereStyle)}>
         {allImages}
@@ -113,6 +114,9 @@ class ConceptCell extends React.PureComponent {
 module.exports.ConceptCell = ConceptCell;
 
 const styles = StyleSheet.create({
+  never: {
+    color: 'gray'
+  },
   gone: {
     color: 'black'
   },

@@ -26,7 +26,8 @@ class StudentDataStore {
     this.idleLevels = {
       HERE: "here",
       IDLE: "idle",
-      GONE: "gone"
+      GONE: "gone",
+      NEVER: "never"
     };
 
     // create the data object
@@ -64,7 +65,7 @@ class StudentDataStore {
       const student = this.fbStudentData[id];
 
       let timeSinceLastAction;
-      let idleLevel = this.idleLevels.GONE;
+      let idleLevel = this.idleLevels.NEVER;
 
       if (student.stateMeta && student.stateMeta.lastActionTime) {
         const lastActionTime = student.stateMeta.lastActionTime;
@@ -73,6 +74,8 @@ class StudentDataStore {
           idleLevel = this.idleLevels.HERE;
         } else if (timeSinceLastAction < 3600) {
           idleLevel = this.idleLevels.IDLE;
+        } else {
+          idleLevel = this.idleLevels.GONE;
         }
       }
       studentData.name = {
@@ -89,7 +92,8 @@ class StudentDataStore {
           mission.challenges.forEach((challenge, k) => {
             const key = JSON.stringify({level: i, mission: j, challenge: k});
             const score = gems[i] && gems[i][j] && gems[i][j][k] ? gems[i][j][k] : [];
-            const isHere = loc && loc.level === i && loc.mission === j
+            const isHere = idleLevel !== this.idleLevels.GONE
+                            && loc && loc.level === i && loc.mission === j
                             && loc.challenge === k;
 
             studentData[key] = {
