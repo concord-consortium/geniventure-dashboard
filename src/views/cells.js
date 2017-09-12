@@ -46,7 +46,7 @@ class StudentNameCell extends React.PureComponent {
 }
 module.exports.StudentNameCell = StudentNameCell;
 
-const getTotalsImage = (data) => {
+const getTotalsImage = (data, multiGemColumn) => {
   const height = 40;
   const width = 20;
   const total = data.studentCount;
@@ -62,8 +62,12 @@ const getTotalsImage = (data) => {
     strokeWidth: "0.25",
     stroke: "black"
   };
+  const className = css(
+    styles.svg,
+    multiGemColumn && styles.multiGems
+  );
   return (
-    <div className={css(styles.svg)}>
+    <div className={className}>
       <svg height={height} width={width}>
         <rect height={height} width={width} fill={"white"} {...border} />
         <rect y={blueY} height={blueHeight} width={width} fill={"#7AEAF5"} {...border} />
@@ -105,7 +109,7 @@ class GemCell extends React.PureComponent {
     if (!cellData) return null;
 
     if (cellData.studentCount) {
-      return getTotalsImage(cellData);
+      return getTotalsImage(cellData, showAll);
     }
 
     if (cellData.score === undefined) return null;

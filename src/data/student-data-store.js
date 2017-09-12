@@ -66,14 +66,22 @@ class StudentDataStore {
       const nameB = studentB.name.toUpperCase();
       const isActiveA = studentA.idleLevel !== this.idleLevels.NEVER;
       const isActiveB = studentB.idleLevel !== this.idleLevels.NEVER;
+      const isHereA = studentA.idleLevel !== this.idleLevels.GONE;
+      const isHereB = studentB.idleLevel !== this.idleLevels.GONE;
       const scoreA = this.data[a].recentScore;
       const scoreB = this.data[b].recentScore;
 
-      // First sort active over inactive, if requested
+      // First sort active over inactive, and here over not here, if requested
       if (this.sortActive && isActiveA && !isActiveB) {
         return -1;
       }
       if (this.sortActive && !isActiveA && isActiveB) {
+        return 1;
+      }
+      if (this.sortActive && isHereA && !isHereB) {
+        return -1;
+      }
+      if (this.sortActive && !isHereA && isHereB) {
         return 1;
       }
 
