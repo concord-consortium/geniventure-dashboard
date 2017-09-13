@@ -46,7 +46,7 @@ class StudentNameCell extends React.PureComponent {
 }
 module.exports.StudentNameCell = StudentNameCell;
 
-const getTotalsImage = (data, multiGemColumn) => {
+const getTotalsImage = (data, multiGemColumn, transparent) => {
   const height = 40;
   const width = 20;
   const total = data.studentCount;
@@ -62,10 +62,14 @@ const getTotalsImage = (data, multiGemColumn) => {
     strokeWidth: "0.25",
     stroke: "black"
   };
-  const className = css(
+  let className = css(
     styles.svg,
     multiGemColumn && styles.multiGems
   );
+  className += " gem-cell";
+  if (transparent) {
+    className += " transparent";
+  }
   return (
     <div className={className}>
       <svg height={height} width={width}>
@@ -104,12 +108,12 @@ const getGemImage = (score, stack, number, i) => {
 
 class GemCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, showAll, stack, callback} = this.props;
+    const {data, rowIndex, columnKey, showAll, stack, callback, transparent} = this.props;
     const cellData = data.getObjectAt(rowIndex, columnKey);
     if (!cellData) return null;
 
     if (cellData.studentCount) {
-      return getTotalsImage(cellData, showAll);
+      return getTotalsImage(cellData, showAll, transparent);
     }
 
     if (cellData.score === undefined) return null;
@@ -121,8 +125,12 @@ class GemCell extends React.PureComponent {
     }
 
     if (!showAll) {
+      let className = `gem-cell ${css(isHereStyle)}`;
+      if (transparent) {
+        className += " transparent";
+      }
       return (
-        <div onClick={() => callback(columnKey, rowIndex)} className={css(isHereStyle)}>
+        <div onClick={() => callback(columnKey, rowIndex)} className={className}>
           {getGemImage(score[score.length - 1], false, score.length, 0)}
         </div>
       );

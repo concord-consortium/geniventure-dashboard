@@ -39,8 +39,8 @@ export default class App extends Component {
       this.setState(data);
     });
 
-    // update time state every 5 seconds to change student "last seen" state
-    this.timerInterval = setInterval(() => this.setState({time: Date.now()}), 5000);
+    // update time state every 10 seconds to change student "last seen" state
+    this.timerInterval = setInterval(() => this.setState({time: Date.now()}), 10000);
   }
 
   componentWillUnmount() {
@@ -58,7 +58,7 @@ export default class App extends Component {
       transitionToChallenge: true
     });
 
-    setTimeout(() => this.setState({transitionToChallenge: false}), 900);
+    setTimeout(() => this.setState({transitionToChallenge: false}), 1100);
   }
 
   onBackToOverview() {
@@ -87,13 +87,15 @@ export default class App extends Component {
 
   onSortActiveToggle() {
     this.setState({
-      sortActive: !this.state.sortActive
+      sortActive: !this.state.sortActive,
+      selectedRow: null
     });
   }
 
   onSortChange(evt) {
     this.setState({
-      sort: evt.target.value
+      sort: evt.target.value,
+      selectedRow: null
     });
   }
 
