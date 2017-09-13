@@ -184,9 +184,10 @@ class GemTable extends Component {
         level.missions.forEach((mission, j) => {
           const missionName = `Mission ${i + 1}.${j + 1}`;
           const columns = mission.challenges.map((challenge, k) => {
-            let columnKey = JSON.stringify({level: i, mission: j, challenge: k});
+            const columnKey = JSON.stringify({level: i, mission: j, challenge: k});
+            let transparent = false;
             if (transitionToChallenge && columnKey !== selectedChallengeString) {
-              columnKey = null;
+              transparent = true;
             }
             return (<Column
               key={columnKey}
@@ -200,7 +201,7 @@ class GemTable extends Component {
                 </Cell>
               }
               cell={
-                <GemCell data={dataStore} callback={this.handleClickGem} />
+                <GemCell data={dataStore} callback={this.handleClickGem} transparent={transparent} />
               }
               width={45}
             />);
