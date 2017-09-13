@@ -30,25 +30,61 @@ const calculateRecentScore = (completedChallenges, lastThreeScores) => {
 };
 
 class StudentDataStore {
-  constructor(authoring, fbStudentData, time, sortActive, sortStruggling) {
-    this.authoring = authoring;
-    this.fbStudentData = migrateAllData(fbStudentData);
-    this.studentIds = Object.keys(this.fbStudentData);
-    this.sortActive = sortActive;
-    this.sortStruggling = sortStruggling;
-    this.time = time;
+  constructor() {
     this.idleLevels = {
       HERE: "here",
       IDLE: "idle",
       GONE: "gone",
       NEVER: "never"
     };
+    this.cache = {
+      authoring: "",
+      fbStudentData: "",
+      time: 0,
+      sortActive: false,
+      sortStruggling: false
+    };
+  }
 
-    // create the data object
-    this.createDataMap();
+  // Compare the new data we have with out cache, and return `true` if we need
+  // to update.
+  checkCache(authoring, rawFBStudentData, time, sortActive, sortStruggling) {
+    const authoringStr = JSON.stringify(authoring);
+    const rawFBStudentDataStr = JSON.stringify(rawFBStudentData);
 
-    // sort
-    this.sortStudentIds();
+    if (time !== this.cache.time || sortActive !== this.cache.sortActive
+        || sortStruggling !== this.cache.sortStruggling
+        || authoringStr !== this.cache.authoring
+        || rawFBStudentData !== this.cache.rawFBStudentData) {
+      // update cache
+      this.cache = {
+        authoring: authoringStr,
+        rawFBStudentData: rawFBStudentDataStr,
+        time,
+        sortActive,
+        sortStruggling
+      };
+      return true;
+    }
+    return false;
+  }
+
+  update(authoring, rawFBStudentData, time, sortActive, sortStruggling) {
+    const shouldUpdate = this.checkCache(authoring, rawFBStudentData, time, sortActive, sortStruggling);
+    if (shouldUpdate) {
+      this.authoring = authoring;
+      this.fbStudentData = migrateAllData(rawFBStudentData);
+      this.studentIds = Object.keys(this.fbStudentData);
+      this.sortActive = sortActive;
+      this.sortStruggling = sortStruggling;
+      this.time = time;
+
+      // create the data object
+      this.createDataMap();
+
+      // sort
+      this.sortStudentIds();
+    }
   }
 
   // returns an array of ids, sorted by student name

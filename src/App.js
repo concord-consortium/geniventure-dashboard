@@ -34,6 +34,8 @@ export default class App extends Component {
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
     this.onToggleDrawer = this.onToggleDrawer.bind(this);
+
+    this.dataStore = new StudentDataStore();
   }
 
   componentWillMount() {
@@ -241,13 +243,6 @@ export default class App extends Component {
     } = this.state;
     const sortStruggling = sort === "struggling";
 
-    const dataStore = new StudentDataStore(
-      authoring,
-      studentData,
-      time,
-      sortActive,
-      sortStruggling);
-
     const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
       title.push(<span key="className" className={css(styles.lighter)}>{`: ${className}`}</span>);
@@ -256,6 +251,13 @@ export default class App extends Component {
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
     const sorting = this.renderSortPanel();
+
+    this.dataStore.update(
+      authoring,
+      studentData,
+      time,
+      sortActive,
+      sortStruggling);
 
     const body = (viewingPreview ?
       (
@@ -269,7 +271,7 @@ export default class App extends Component {
       (
         <div className={css(styles.bodyWrapper)}>
           <GemTable
-            dataStore={dataStore}
+            dataStore={this.dataStore}
             selectedLevel={selectedLevel}
             selectedMission={selectedMission}
             selectedChallenge={selectedChallenge}
