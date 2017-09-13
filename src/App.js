@@ -145,8 +145,8 @@ export default class App extends Component {
     const imgSrc = `assets/img/challenges/${this.challengeString('-')}.png`;
     setTimeout(() => this.setState({in: true}), 500);
     return (
-      <div className={css(styles.rightWrapper)}>
-        <div style={{backgroundColor: "rgba(255,255,255,0.7", width: "500px", height: "208px", marginBottom: "10px", position: "relative"}}>
+      <div className="right-panel-wrapper">
+        <div className="description">
           <div style={{fontWeight: "bold", padding: "6px"}}>{type}</div>
           <div style={{padding: "4px"}}>{description}</div>
           <div style={{fontStyle: "italic", bottom: "4px", display: "flex", position: "absolute"}}>
@@ -156,7 +156,7 @@ export default class App extends Component {
           </div>
         </div>
         <div style={{position: "relative"}}>
-          <img key="img1" className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
+          <img key="img1" className="preview-image" width="500px" src={imgSrc} alt="Play challenge preview" />
           <CSSTransitionGroup
             transitionName="fade"
             transitionAppear={true}
@@ -296,14 +296,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   bodyWrapper: {
     display: 'flex'
-  },
-  rightWrapper: {
-    'padding-left': '20px',
-    position: 'relative'
-  },
-  previewImg: {
-    position: 'absolute',
-    top: 0
   },
   title: {
     'background-color': '#c4e7e6',

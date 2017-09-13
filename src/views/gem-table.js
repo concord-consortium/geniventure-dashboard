@@ -1,6 +1,7 @@
 import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Dimensions from 'react-dimensions';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell, ConceptCell } from './cells';
 import Chart from './chart';
@@ -40,7 +41,7 @@ class GemTable extends Component {
     this.handleClickChallenge = this.handleClickChallenge.bind(this);
     this.handleClickGem = this.handleClickGem.bind(this);
     this.state = {
-      width: 1000,
+      widthPercent: 100,
       stackGems: true
     };
     this.shrink = this.shrink.bind(this);
@@ -58,20 +59,20 @@ class GemTable extends Component {
   }
 
   shrink() {
-    const width = this.state.width;
-    if (width > 500) {
+    const widthPercent = this.state.widthPercent;
+    if (widthPercent > 50) {
       this.setState({
-        width: width - 50
+        widthPercent: widthPercent - 5
       });
       requestAnimationFrame(this.shrink);
     }
   }
 
   grow() {
-    const width = this.state.width;
-    if (width < 1000) {
+    const widthPercent = this.state.widthPercent;
+    if (widthPercent < 100) {
       this.setState({
-        width: width + 100
+        widthPercent: widthPercent + 10
       });
       requestAnimationFrame(this.grow);
     }
@@ -168,10 +169,10 @@ class GemTable extends Component {
         />
         <Column
           columnKey="name"
-          header={<Cell>Name</Cell>}
           cell={<StudentNameCell data={dataStore} />}
           fixed={true}
           width={100}
+          flexGrow={2}
         />
       </ColumnGroup>
     );
@@ -204,6 +205,7 @@ class GemTable extends Component {
                 <GemCell data={dataStore} callback={this.handleClickGem} transparent={transparent} />
               }
               width={45}
+              flexGrow={1}
             />);
           });
           columnGroups.push(
@@ -273,8 +275,12 @@ class GemTable extends Component {
 
   render() {
     const {dataStore, selectedChallenge, selectedRow, transitionToChallenge} = this.props;
+    const {containerWidth, containerHeight} = this.props;
+    const {widthPercent} = this.state;
     const columns = this.createColumns();
     const isLarge = selectedChallenge === null || transitionToChallenge;
+    const width = containerWidth * (widthPercent / 100);
+    const height = containerHeight + 50;
 
     return (
       <div>
@@ -286,8 +292,8 @@ class GemTable extends Component {
           rowExpanded={this.rowExpandedGetter}
           groupHeaderHeight={isLarge ? 45 : 0}
           headerHeight={50}
-          width={this.state.width}
-          height={500}
+          width={width}
+          height={height}
           {...this.props}
         >
           {columns}
@@ -305,7 +311,9 @@ GemTable.propTypes = {
   selectedRow: PropTypes.number,
   transitionToChallenge: PropTypes.bool,
   onSelectChallenge: PropTypes.func,
-  onExpandClick: PropTypes.func
+  onExpandClick: PropTypes.func,
+  // drom Dimensions
+  containerWidth: PropTypes.number
 };
 
 const styles = StyleSheet.create({
@@ -339,4 +347,13 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = GemTable;
+module.exports = Dimensions({
+  getHeight() {
+    return window.innerHeight - 200;
+  },
+  getWidth() {
+    console.log("getting width!")
+    const widthOffset = window.innerWidth < 100 ? 0 : 20;
+    return window.innerWidth - widthOffset;
+  }
+})(GemTable);
