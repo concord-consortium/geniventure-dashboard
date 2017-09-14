@@ -25,8 +25,8 @@ const calculateRecentScore = (completedChallenges, lastThreeScores) => {
   const positiveScore = (4 * 3) - totalScore;   // Three 4s is the worst score
   const percScore = positiveScore / (4 * 3);
 
-  // weight completion and recent scores equally
-  return (percComplete * 0.5) + (percScore * 0.5);
+  // weight recent scores most, and settle differences by completion
+  return (percComplete * 0.05) + (percScore * 0.95);
 };
 
 class StudentDataStore {
@@ -175,7 +175,7 @@ class StudentDataStore {
       const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
 
       let completedChallenges = 0;
-      const lastThreeScores = [3, 3, 3];
+      const lastThreeScores = [0, 0, 0];  // If student has fewer than three gems, pretend previous were blue
       totalChallenges = 0;
 
       this.authoring.levels.forEach((level, i) => {
@@ -204,7 +204,9 @@ class StudentDataStore {
         });
       });
 
-      studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
+      if (this.sortStruggling) {
+        studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
+      }
 
       studentData.concepts = [];
       if (student.itsData) {
