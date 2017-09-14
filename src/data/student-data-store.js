@@ -44,6 +44,9 @@ class StudentDataStore {
       sortActive: false,
       sortStruggling: false
     };
+    // simple property we can use to force rerender (hack, because we keep using same
+    // datastore object, so React doesn't know to re-render columns)
+    this.lastUpdateTime = Date.now();
   }
 
   // Compare the new data we have with out cache, and return `true` if we need
@@ -84,6 +87,8 @@ class StudentDataStore {
 
       // sort
       this.sortStudentIds();
+
+      this.lastUpdateTime = Date.now();
     }
   }
 
@@ -294,7 +299,7 @@ class StudentDataStore {
     }
 
     const studentId = this.studentIds[index];
-    return this.data[studentId][colKey];;
+    return this.data[studentId][colKey];
   }
 
   getSize() {

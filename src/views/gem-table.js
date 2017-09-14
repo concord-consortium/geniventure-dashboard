@@ -169,7 +169,7 @@ class GemTable extends Component {
         />
         <Column
           columnKey="name"
-          cell={<StudentNameCell data={dataStore} />}
+          cell={<StudentNameCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
           fixed={true}
           width={100}
           flexGrow={2}
@@ -202,7 +202,7 @@ class GemTable extends Component {
                 </Cell>
               }
               cell={
-                <GemCell data={dataStore} callback={this.handleClickGem} transparent={transparent} />
+                <GemCell data={dataStore}  lastUpdateTime={dataStore.lastUpdateTime} callback={this.handleClickGem} transparent={transparent} />
               }
               width={45}
               flexGrow={1}
@@ -234,35 +234,35 @@ class GemTable extends Component {
           <Column
             columnKey={columnKey}
             header={<Cell>Attempts</Cell>}
-            cell={<GemCell data={dataStore} showAll={true} stack={this.state.stackGems} />}
+            cell={<GemCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} showAll={true} stack={this.state.stackGems} />}
             width={45}
             flexGrow={3}
           />
           <Column
             columnKey={"concept-1"}
             header={<Cell>A</Cell>}
-            cell={<ConceptCell data={dataStore} />}
+            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-2"}
             header={<Cell>B</Cell>}
-            cell={<ConceptCell data={dataStore} />}
+            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-3"}
             header={<Cell>C</Cell>}
-            cell={<ConceptCell data={dataStore} />}
+            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-4"}
             header={<Cell>D</Cell>}
-            cell={<ConceptCell data={dataStore} />}
+            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
