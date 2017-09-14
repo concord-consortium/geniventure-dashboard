@@ -141,7 +141,7 @@ class GemCell extends React.PureComponent {
     }
     const allImages = score.map((s, i) => getGemImage(s, stack, null, i));
     return (
-      <div className={css(styles.multiGems, isHereStyle)}>
+      <div className={css(styles.multiGems, isHereStyle) + " multi-gems"}>
         {allImages}
       </div>
     );
@@ -185,9 +185,10 @@ const styles = StyleSheet.create({
     'font-weight': 'bold'
   },
   isHere: {
-    'background-color': 'gold',
+    'background-color': '#ccf39b',
     width: "100%",
-    height: "100%"
+    height: "100%",
+    'border-radius': '20px'
   },
   multiGems: {
     display: 'flex',

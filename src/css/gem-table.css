@@ -1,15 +1,21 @@
 .gem-image {
   background: 7px no-repeat;
   background-size: contain;
-  height: 45px;
-  width: 32px;
+  background-position: center center;
+  height: 48px;
+  width: 100%;
   line-height: 31px;
   text-align: center;
   font-size: 2em;
   transition: margin-left 1s;
+  display: flex;
+  justify-content: center;
 }
 
-.gem-image.stacked {
+.multi-gems .gem-image {
+  width: 32px;
+}
+.multi-gems .gem-image.stacked {
   margin-left: -32px;
 }
 
@@ -22,8 +28,7 @@
   color: #666;
   line-height: 18px;
   position: absolute;
-  top: 14px;
-  left: 8px;
+  top: 15px;
   font-size: 0.5em;
 }
 
