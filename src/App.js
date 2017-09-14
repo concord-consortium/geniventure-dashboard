@@ -196,7 +196,7 @@ export default class App extends Component {
                 checked={this.state.sortActive}
                 onChange={this.onSortActiveToggle}
               />
-              Sort inactive students to bottom
+              Sort by currently-active students
             </label>
           </div>
           <div>

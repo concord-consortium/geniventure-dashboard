@@ -29,13 +29,26 @@ const calculateRecentScore = (completedChallenges, lastThreeScores) => {
   return (percComplete * 0.05) + (percScore * 0.95);
 };
 
+const activitySortOrder = {
+  idle: 0,
+  here: 1,
+  gone: 2,
+  never: 3
+};
+
 class StudentDataStore {
   constructor() {
-    this.idleLevels = {
+    this.activityLevels = {
       HERE: "here",
       IDLE: "idle",
       GONE: "gone",
       NEVER: "never"
+    };
+    this.activityRows = {
+      idle: -1,
+      here: -1,
+      gone: -1,
+      never: -1
     };
     this.cache = {
       authoring: "",
@@ -88,6 +101,10 @@ class StudentDataStore {
       // sort
       this.sortStudentIds();
 
+      if (this.sortActive) {
+        this.calculateActivityCategoryRows();
+      }
+
       this.lastUpdateTime = Date.now();
     }
   }
@@ -101,38 +118,34 @@ class StudentDataStore {
       if (b === "all-students") {
         return 1;
       }
-      const studentA = this.data[a].name;
-      const studentB = this.data[b].name;
-      const nameA = studentA.name.toUpperCase();
-      const nameB = studentB.name.toUpperCase();
-      const isActiveA = studentA.idleLevel !== this.idleLevels.NEVER;
-      const isActiveB = studentB.idleLevel !== this.idleLevels.NEVER;
-      const isHereA = studentA.idleLevel !== this.idleLevels.GONE;
-      const isHereB = studentB.idleLevel !== this.idleLevels.GONE;
-      const scoreA = this.data[a].recentScore;
-      const scoreB = this.data[b].recentScore;
+      const studentA = this.data[a];
+      const studentB = this.data[b];
 
-      // First sort active over inactive, and here over not here, if requested
-      if (this.sortActive && isActiveA && !isActiveB) {
-        return -1;
-      }
-      if (this.sortActive && !isActiveA && isActiveB) {
-        return 1;
-      }
-      if (this.sortActive && isHereA && !isHereB) {
-        return -1;
-      }
-      if (this.sortActive && !isHereA && isHereB) {
-        return 1;
+      // if two students are in different activity categories, sort if requested
+      if (this.sortActive) {
+        const activityScoreA = activitySortOrder[studentA.name.activityLevel];
+        const activityScoreB = activitySortOrder[studentB.name.activityLevel];
+        if (activityScoreA !== activityScoreB) {
+          return activityScoreA - activityScoreB;
+        }
       }
 
-      // Then sort struggling students over non-struggling students, if requested
-      if (this.sortStruggling && scoreA < scoreB) {
-        return -1;
+      // if they have different scores, sort if requested
+      if (this.sortStruggling) {
+        const scoreA = this.data[a].recentScore;
+        const scoreB = this.data[b].recentScore;
+
+        if (scoreA < scoreB) {
+          return -1;
+        }
+        if (scoreA > scoreB) {
+          return 1;
+        }
       }
-      if (this.sortStruggling && scoreA > scoreB) {
-        return 1;
-      }
+
+      // sort alphabetically last
+      const nameA = studentA.name.name.toUpperCase();
+      const nameB = studentB.name.name.toUpperCase();
 
       if (nameA < nameB) {
         return -1;
@@ -144,6 +157,22 @@ class StudentDataStore {
     });
   }
 
+  // Requires studentIds to have already been sorted by activity
+  calculateActivityCategoryRows() {
+    this.activityRows = {
+      idle: -1,
+      here: -1,
+      gone: -1,
+      never: -1
+    };
+    this.studentIds.forEach((s, i) => {
+      const activityLevel = this.data[s].name.activityLevel;
+      if (this.activityRows[activityLevel] === -1) {
+        this.activityRows[activityLevel] = i - 1;   // -1 die to all-students row
+      }
+    });
+  }
+
   createDataMap() {
     this.data = {};
 
@@ -152,23 +181,23 @@ class StudentDataStore {
       const student = this.fbStudentData[id];
 
       let timeSinceLastAction;
-      let idleLevel = this.idleLevels.NEVER;
+      let activityLevel = this.activityLevels.NEVER;
 
       if (student.stateMeta && student.stateMeta.lastActionTime) {
         const lastActionTime = student.stateMeta.lastActionTime;
         timeSinceLastAction = (this.time - lastActionTime) / 1000;
         if (timeSinceLastAction < 300) {
-          idleLevel = this.idleLevels.HERE;
+          activityLevel = this.activityLevels.HERE;
         } else if (timeSinceLastAction < 3600) {
-          idleLevel = this.idleLevels.IDLE;
+          activityLevel = this.activityLevels.IDLE;
         } else {
-          idleLevel = this.idleLevels.GONE;
+          activityLevel = this.activityLevels.GONE;
         }
       }
       studentData.name = {
         name: student.name,
         timeSinceLastAction,
-        idleLevel
+        activityLevel
       };
 
       const gems = student.state && student.state.gems ? student.state.gems : [];
@@ -183,7 +212,7 @@ class StudentDataStore {
           mission.challenges.forEach((challenge, k) => {
             const key = JSON.stringify({level: i, mission: j, challenge: k});
             const score = gems[i] && gems[i][j] && gems[i][j][k] ? gems[i][j][k] : [];
-            const isHere = idleLevel !== this.idleLevels.GONE
+            const isHere = activityLevel !== this.activityLevels.GONE
                             && loc && loc.level === i && loc.mission === j
                             && loc.challenge === k;
 
@@ -306,6 +335,24 @@ class StudentDataStore {
 
   getSize() {
     return this.studentIds.length;
+  }
+
+  getActivityHeadingForRow(i) {
+    if (this.sortActive) {
+      if (this.activityRows.idle === i) {
+        return "idle";
+      }
+      if (this.activityRows.here === i) {
+        return "online";
+      }
+      if (this.activityRows.gone === i) {
+        return "offline";
+      }
+      if (this.activityRows.never === i) {
+        return "never logged in";
+      }
+    }
+    return false;
   }
 }
 
