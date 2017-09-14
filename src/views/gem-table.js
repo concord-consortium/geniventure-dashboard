@@ -92,15 +92,32 @@ class GemTable extends Component {
   }
 
   subRowHeightGetter(index) {
-    return this.props.selectedRow === index ? 240 : 0;
+    if (index === this.props.selectedRow) {
+      if (!this.props.dataStore.getActivityHeadingForRow(index)) {
+        return 221;
+      }
+      return 240;
+    }
+    if (this.props.dataStore.getActivityHeadingForRow(index)) {
+      return 19;
+    }
+    return 0;
   }
 
   rowExpandedGetter({rowIndex, width, height}) {
-    if (!this.props.selectedRow === rowIndex) {
+    if (this.props.selectedRow !== rowIndex) {
+      if (this.props.dataStore.getActivityHeadingForRow(rowIndex)) {
+        return (
+          <div className="table-section-heading">
+            {this.props.dataStore.getActivityHeadingForRow(rowIndex)}
+          </div>
+        );
+      }
+
       return null;
     }
 
-    const {timeSinceLastAction, idleLevel, allStudents} = this.props.dataStore.getObjectAt(rowIndex, "name");
+    const {timeSinceLastAction, activityLevel, allStudents} = this.props.dataStore.getObjectAt(rowIndex, "name");
     const concepts = this.props.dataStore.getObjectAt(rowIndex, "concepts") || [];
     let title;
     let timeEl;
@@ -108,7 +125,7 @@ class GemTable extends Component {
       const timeString = timeAgoString(timeSinceLastAction);
       timeEl = (
         <div>
-          Last seen: <span className={css(styles[idleLevel])}>{timeString}</span>
+          Last seen: <span className={css(styles[activityLevel])}>{timeString}</span>
         </div>
       );
       title = "Concept scores";
@@ -120,6 +137,15 @@ class GemTable extends Component {
       height,
       width: width - 2,
     };
+
+    let activityHeading = null;
+    if (this.props.dataStore.getActivityHeadingForRow(rowIndex)) {
+      activityHeading = (
+        <div className="table-section-heading">
+          {this.props.dataStore.getActivityHeadingForRow(rowIndex)}
+        </div>
+      );
+    }
 
     return (
       <div style={style}>
@@ -140,6 +166,7 @@ class GemTable extends Component {
             />
           </div>
         </div>
+        {activityHeading}
       </div>
     );
   }
@@ -325,7 +352,7 @@ const styles = StyleSheet.create({
     padding: '20px',
     overflow: 'hidden',
     width: '100%',
-    height: '100%'
+    height: '221px'
   },
   padding: {
     padding: '6px'
@@ -337,7 +364,9 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   idle: {
-    color: 'red'
+    ':before': {
+      content: "url(assets/img/hourglass.svg)"
+    }
   },
   here: {
     color: 'green'
@@ -352,7 +381,6 @@ module.exports = Dimensions({
     return window.innerHeight - 200;
   },
   getWidth() {
-    console.log("getting width!")
     const widthOffset = window.innerWidth < 100 ? 0 : 20;
     return window.innerWidth - widthOffset;
   }

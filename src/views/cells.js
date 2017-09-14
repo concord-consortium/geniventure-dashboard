@@ -31,9 +31,9 @@ module.exports.TextCell = TextCell;
 class StudentNameCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    const {name, idleLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
+    const {name, activityLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
     const className = css(
-      styles[idleLevel],
+      styles[activityLevel],
       allStudents && styles.allStudents
     );
 
@@ -141,7 +141,7 @@ class GemCell extends React.PureComponent {
     }
     const allImages = score.map((s, i) => getGemImage(s, stack, null, i));
     return (
-      <div className={css(styles.multiGems, isHereStyle)}>
+      <div className={css(styles.multiGems, isHereStyle) + " multi-gems"}>
         {allImages}
       </div>
     );
@@ -166,24 +166,29 @@ module.exports.ConceptCell = ConceptCell;
 
 const styles = StyleSheet.create({
   never: {
-    color: 'gray'
+    color: '#888'
   },
   gone: {
     color: 'black'
   },
   idle: {
-    color: 'red'
+    'font-style': 'italic',
+    ':before': {
+      content: 'url(assets/img/hourglass.svg)',
+      'padding-right': '3px'
+    }
   },
   here: {
-    color: 'green'
+    color: 'black'
   },
   allStudents: {
     'font-weight': 'bold'
   },
   isHere: {
-    'background-color': 'gold',
+    'background-color': '#ccf39b',
     width: "100%",
-    height: "100%"
+    height: "100%",
+    'border-radius': '20px'
   },
   multiGems: {
     display: 'flex',

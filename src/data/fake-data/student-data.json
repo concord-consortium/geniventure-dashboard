@@ -10,9 +10,9 @@
     "stateMeta": {
       "lastActionTime": 1503934111000,
       "currentChallenge": {
-        "level": 3,
-        "mission": 0,
-        "challenge": 0
+        "level": 2,
+        "mission": 1,
+        "challenge": 3
       }
     },
     "state": {
@@ -261,7 +261,7 @@
       "currentChallenge": {
         "level": 2,
         "mission": 1,
-        "challenge": 2
+        "challenge": 0
       }
     },
     "state": {
@@ -397,11 +397,11 @@
   "student-10": {
     "name": "Student 10",
     "stateMeta": {
-      "lastActionTime": 1504193311000,
+      "lastActionTime": 1505411363938,
       "currentChallenge": {
-        "level": 2,
-        "mission": 0,
-        "challenge": 0
+        "level": 1,
+        "mission": 1,
+        "challenge": 1
       }
     },
     "state": {
@@ -485,7 +485,7 @@
   "student-11": {
     "name": "Student 11",
     "stateMeta": {
-      "lastActionTime": 1504193311000,
+      "lastActionTime": 1505411363938,
       "currentChallenge": {
         "level": 0,
         "mission": 0,
@@ -499,10 +499,10 @@
   "student-12": {
     "name": "Student 12",
     "stateMeta": {
-      "lastActionTime": 1505248273107,
+      "lastActionTime": 1505409921002,
       "currentChallenge": {
-        "level": 3,
-        "mission": 0,
+        "level": 2,
+        "mission": 2,
         "challenge": 1
       }
     },
@@ -584,10 +584,10 @@
   "student-14": {
     "name": "Student 14",
     "stateMeta": {
-      "lastActionTime": 1504193311000,
+      "lastActionTime": 1505412306695,
       "currentChallenge": {
-        "level": 3,
-        "mission": 1,
+        "level": 2,
+        "mission": 2,
         "challenge": 0
       }
     },
@@ -700,7 +700,7 @@
   "student-17": {
     "name": "Student 17",
     "stateMeta": {
-      "lastActionTime": 1504193311000,
+      "lastActionTime": 1505413943944,
       "currentChallenge": {
         "level": 1,
         "mission": 2,
@@ -835,8 +835,8 @@
     "stateMeta": {
       "lastActionTime": 1504193311000,
       "currentChallenge": {
-        "level": 2,
-        "mission": 1,
+        "level": 1,
+        "mission": 2,
         "challenge": 0
       }
     },
