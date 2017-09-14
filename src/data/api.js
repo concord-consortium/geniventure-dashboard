@@ -45,6 +45,22 @@ const getClassData = () => {
     .then((res) => res.json());
 };
 
+const updateFakeTimes = (studentData) => {
+  Object.keys(studentData).forEach(studentId => {
+    if (studentData[studentId].stateMeta && studentData[studentId].stateMeta.lastActionTime) {
+      const rand = Math.random();
+      const now = Date.now();
+      if (rand < 0.75) {
+        studentData[studentId].stateMeta.lastActionTime = now;
+      } else if (rand < 0.82) {
+        studentData[studentId].stateMeta.lastActionTime = now - (1000 * 60 * 10);
+      } else {
+        studentData[studentId].stateMeta.lastActionTime = now - (1000 * 60 * 70);
+      }
+    }
+  });
+};
+
 export default function addDataListener(callback) {
   return getClassData()
     .then((classData) => {
@@ -59,6 +75,7 @@ export default function addDataListener(callback) {
 
       // then query Firebase for the student and authoring data
       if (USE_FAKE_DATA) {
+        updateFakeTimes(fakeStudentData);
         callback({
           authoring: fakeAuthoring,
           studentData: fakeStudentData
