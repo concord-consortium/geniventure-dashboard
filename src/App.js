@@ -24,7 +24,8 @@ export default class App extends Component {
       selectedRow: null,
       transitionToChallenge: false,
       viewingPreview: false,
-      time: Date.now()
+      time: Date.now(),
+      drawerOpen: false
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
@@ -32,6 +33,9 @@ export default class App extends Component {
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
+    this.onToggleDrawer = this.onToggleDrawer.bind(this);
+
+    this.dataStore = new StudentDataStore();
   }
 
   componentWillMount() {
@@ -99,6 +103,12 @@ export default class App extends Component {
     });
   }
 
+  onToggleDrawer() {
+    this.setState({
+      drawerOpen: !this.state.drawerOpen
+    });
+  }
+
   challengeString(separator) {
     const {selectedLevel, selectedMission, selectedChallenge} = this.state;
     return [selectedLevel + 1, selectedMission + 1, selectedChallenge + 1].join(separator);
@@ -119,7 +129,7 @@ export default class App extends Component {
       links = <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>Back to table</a>
     }
     return (
-      <div style={{padding: "5px"}}>
+      <div className="top-row">
         <span style={{paddingRight: "10px", fontWeight: "bold", fontSize: "1.2em"}}>{location}</span>
         {links}
       </div>
@@ -137,8 +147,8 @@ export default class App extends Component {
     const imgSrc = `assets/img/challenges/${this.challengeString('-')}.png`;
     setTimeout(() => this.setState({in: true}), 500);
     return (
-      <div className={css(styles.rightWrapper)}>
-        <div style={{backgroundColor: "rgba(255,255,255,0.7", width: "500px", height: "208px", marginBottom: "10px", position: "relative"}}>
+      <div className="right-panel-wrapper">
+        <div className="description">
           <div style={{fontWeight: "bold", padding: "6px"}}>{type}</div>
           <div style={{padding: "4px"}}>{description}</div>
           <div style={{fontStyle: "italic", bottom: "4px", display: "flex", position: "absolute"}}>
@@ -148,7 +158,7 @@ export default class App extends Component {
           </div>
         </div>
         <div style={{position: "relative"}}>
-          <img key="img1" className={css(styles.previewImg)} width="500px" src={imgSrc} alt="Play challenge preview" />
+          <img key="img1" className="preview-image" width="500px" src={imgSrc} alt="Play challenge preview" />
           <CSSTransitionGroup
             transitionName="fade"
             transitionAppear={true}
@@ -164,24 +174,57 @@ export default class App extends Component {
   }
 
   renderSortPanel() {
+    let drawerClassName = "drawer";
+    if (this.state.drawerOpen) {
+      drawerClassName += " open";
+    }
     return (
-      <div style={{padding: "5px"}}>
-        <label htmlFor="sort-struggle" style={{paddingRight: "17px"}}>
-          <span style={{paddingRight: "3px"}}>Sort:</span>
-          <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
-            <option value="alphabetical">alphabetically</option>
-            <option value="struggling">by struggling students</option>
-          </select>
-        </label>
-        <label htmlFor="show-active">
-          <input
-            id="show-active"
-            type="checkbox"
-            checked={this.state.sortActive}
-            onChange={this.onSortActiveToggle}
-          />
-          Sort inactive students to bottom
-        </label>
+      <div>
+        <div className={drawerClassName}>
+          <div className="drawer-contents">
+            <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
+              <span style={{paddingRight: "3px"}}>Sort:</span>
+              <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
+                <option value="alphabetical">alphabetically</option>
+                <option value="struggling">by struggling students</option>
+              </select>
+            </label>
+            <label htmlFor="show-active">
+              <input
+                id="show-active"
+                type="checkbox"
+                checked={this.state.sortActive}
+                onChange={this.onSortActiveToggle}
+              />
+              Sort inactive students to bottom
+            </label>
+          </div>
+          <div>
+            <div className="tips">
+              <div className="tips-title">Tips</div>
+              <div>
+                <ul>
+                  <li>
+                    You can change the <span className="tip-word">sorting</span> to &quot;struggling&quot; to show
+                    those students who are behind and those who have been having trouble
+                    with recent activities.
+                  </li>
+                  <li>
+                    Click on a <span className="tip-word">column heading</span> to show a detailed report and information
+                    for that challenge.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="drawer-handle-wrapper" onClick={this.onToggleDrawer}>
+          <div className="drawer-handle">
+            <hr />
+            <hr />
+            <hr />
+          </div>
+        </div>
       </div>
     );
   }
@@ -200,13 +243,6 @@ export default class App extends Component {
     } = this.state;
     const sortStruggling = sort === "struggling";
 
-    const dataStore = new StudentDataStore(
-      authoring,
-      studentData,
-      time,
-      sortActive,
-      sortStruggling);
-
     const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
       title.push(<span key="className" className={css(styles.lighter)}>{`: ${className}`}</span>);
@@ -215,6 +251,13 @@ export default class App extends Component {
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
     const sorting = this.renderSortPanel();
+
+    this.dataStore.update(
+      authoring,
+      studentData,
+      time,
+      sortActive,
+      sortStruggling);
 
     const body = (viewingPreview ?
       (
@@ -228,7 +271,7 @@ export default class App extends Component {
       (
         <div className={css(styles.bodyWrapper)}>
           <GemTable
-            dataStore={dataStore}
+            dataStore={this.dataStore}
             selectedLevel={selectedLevel}
             selectedMission={selectedMission}
             selectedChallenge={selectedChallenge}
@@ -255,14 +298,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   bodyWrapper: {
     display: 'flex'
-  },
-  rightWrapper: {
-    'padding-left': '20px',
-    position: 'relative'
-  },
-  previewImg: {
-    position: 'absolute',
-    top: 0
   },
   title: {
     'background-color': '#c4e7e6',
