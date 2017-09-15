@@ -307,7 +307,7 @@ class GemTable extends Component {
     const columns = this.createColumns();
     const isLarge = selectedChallenge === null || transitionToChallenge;
     const width = containerWidth * (widthPercent / 100);
-    const height = containerHeight + 50;
+    const height = containerHeight;
 
     return (
       <div>
@@ -377,11 +377,9 @@ const styles = StyleSheet.create({
 });
 
 module.exports = Dimensions({
-  getHeight() {
-    return window.innerHeight - 200;
-  },
+  // elementResize: true,
   getWidth() {
-    const widthOffset = window.innerWidth < 100 ? 0 : 20;
-    return window.innerWidth - widthOffset;
+    // const widthOffset = window.innerWidth < 100 ? 0 : 20;
+    return window.innerWidth;
   }
 })(GemTable);

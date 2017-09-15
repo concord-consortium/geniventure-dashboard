@@ -107,6 +107,7 @@ export default class App extends Component {
     this.setState({
       drawerOpen: !this.state.drawerOpen
     });
+    window.scrollTo(0, 0);
   }
 
   challengeString(separator) {
