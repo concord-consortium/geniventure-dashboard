@@ -160,7 +160,8 @@ class GemTable extends Component {
           </div>
           <div>
             <Chart
-              width={250}
+              labelWidth={170}
+              barWidth={300}
               data={concepts}
               title={title}
             />

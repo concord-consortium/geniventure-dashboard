@@ -18,21 +18,23 @@
 
 .chart .bar-wrapper {
   position: relative;
+  border: 1px solid #CCC;
+  margin: -1px 0 0 0;
 }
 
 .chart .bar {
   display: block;
   border-radius: 0 4px 4px 0;
-  margin: 0 0 5px 0;
-  height: 1em;
+  margin: 3px 0 3px 0;
+  height: 17px;
 }
 
 .chart .tick {
   position: absolute;
   width: 1px;
-  height: 22px;
+  height: 24px;
   background-color: #BBB;
-  top: -3px;
+  top: 0px;
 }
 
 .chart .tick-0 {
