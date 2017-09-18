@@ -175,8 +175,6 @@ class GemTable extends Component {
             {timeEl}
             <div className={css(styles.padding)}>
               <img width="20px" src="https://www.umass.edu/research/sites/default/files/red_flag.jpeg" />
-              <br />
-              Recessive traits<br />Breeding challenges
             </div>
           </div>
           <div>
@@ -284,28 +282,28 @@ class GemTable extends Component {
           />
           <Column
             columnKey={"concept-1"}
-            header={<Cell>A</Cell>}
+            header={<Cell>Sex Det.</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-2"}
-            header={<Cell>B</Cell>}
+            header={<Cell>Simple Dom.</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-3"}
-            header={<Cell>C</Cell>}
+            header={<Cell>Reces.</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-4"}
-            header={<Cell>D</Cell>}
+            header={<Cell>Geno&ndash; Pheno</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}

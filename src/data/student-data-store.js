@@ -2,9 +2,8 @@ import migrate from './migrations';
 
 // pseudo random generator. won't be needed when we have data
 const randCache = {};
-const pseudoRandom = (string) => {
-  const seed = string;
-  const x = Math.sin(seed) * 10000;
+const pseudoRandom = (seed) => {
+  const x = Math.sin(seed) * 10;
   return x - Math.floor(x);
 };
 
@@ -55,11 +54,11 @@ const conceptLabels = {
   },
   "LG1.P1": {
     long: "Geno-to-Pheno Mapp.",
-    short: "Geno to Pheno"
+    short: "Geno - Pheno"
   },
   "LG1.P2": {
     long: "Pheno-to-Geno Mapp.",
-    short: "Pheno to Geno"
+    short: "Pheno - Geno"
   },
 };
 const getConceptLabel = (code) => {
@@ -357,7 +356,7 @@ class StudentDataStore {
     // temp
     if (colKey.indexOf("concept-") > -1) {
       if (!randCache[index + colKey]) {
-        randCache[index + colKey] = pseudoRandom(index + parseInt(colKey.substr(8), 10));
+        randCache[index + colKey] = pseudoRandom(index + parseInt(colKey.substr(8), 10) * 10);
       }
       return randCache[index + colKey];
     }

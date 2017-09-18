@@ -155,8 +155,8 @@ class ConceptCell extends React.PureComponent {
     const conceptScore = data.getObjectAt(rowIndex, columnKey);
     let value = "";
     let style = null;
-    if (conceptScore < 0.3) {
-      value = "x";
+    if (conceptScore < 0.1) {
+      value = "X";
       style = css(styles.failedConcept);
     }
     return <div className={style}>{value}</div>;
