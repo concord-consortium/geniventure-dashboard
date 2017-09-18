@@ -147,6 +147,27 @@ class GemTable extends Component {
       );
     }
 
+    let conceptChart;
+    if (concepts && Object.keys(concepts).length > 0) {
+      conceptChart = (
+        <Chart
+          labelWidth={170}
+          barWidth={300}
+          data={concepts}
+          title={title}
+        />
+      );
+    } else {
+      conceptChart = (
+        <div className="chart" style={{width: 470, padding: '5px', border: '1px solid #DDD'}}>
+          <div className="title">{title}</div>
+          <div style={{padding: 20}}>
+            Not enough data yet.
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div style={style}>
         <div className={css(styles.expandStyles)}>
@@ -159,12 +180,7 @@ class GemTable extends Component {
             </div>
           </div>
           <div>
-            <Chart
-              labelWidth={170}
-              barWidth={300}
-              data={concepts}
-              title={title}
-            />
+            {conceptChart}
           </div>
         </div>
         {activityHeading}
