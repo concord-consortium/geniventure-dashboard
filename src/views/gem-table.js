@@ -147,6 +147,27 @@ class GemTable extends Component {
       );
     }
 
+    let conceptChart;
+    if (concepts && Object.keys(concepts).length > 0) {
+      conceptChart = (
+        <Chart
+          labelWidth={170}
+          barWidth={300}
+          data={concepts}
+          title={title}
+        />
+      );
+    } else {
+      conceptChart = (
+        <div className="chart" style={{width: 470, padding: '5px', border: '1px solid #DDD'}}>
+          <div className="title">{title}</div>
+          <div style={{padding: 20}}>
+            Not enough data yet.
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div style={style}>
         <div className={css(styles.expandStyles)}>
@@ -154,16 +175,10 @@ class GemTable extends Component {
             {timeEl}
             <div className={css(styles.padding)}>
               <img width="20px" src="https://www.umass.edu/research/sites/default/files/red_flag.jpeg" />
-              <br />
-              Recessive traits<br />Breeding challenges
             </div>
           </div>
           <div>
-            <Chart
-              width={250}
-              data={concepts}
-              title={title}
-            />
+            {conceptChart}
           </div>
         </div>
         {activityHeading}
@@ -267,28 +282,28 @@ class GemTable extends Component {
           />
           <Column
             columnKey={"concept-1"}
-            header={<Cell>A</Cell>}
+            header={<Cell>Sex Det.</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-2"}
-            header={<Cell>B</Cell>}
+            header={<Cell>Simple Dom.</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-3"}
-            header={<Cell>C</Cell>}
+            header={<Cell>Reces.</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
           />
           <Column
             columnKey={"concept-4"}
-            header={<Cell>D</Cell>}
+            header={<Cell>Geno&ndash; Pheno</Cell>}
             cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
             width={10}
             flexGrow={1}
@@ -307,7 +322,7 @@ class GemTable extends Component {
     const columns = this.createColumns();
     const isLarge = selectedChallenge === null || transitionToChallenge;
     const width = containerWidth * (widthPercent / 100);
-    const height = containerHeight + 50;
+    const height = containerHeight;
 
     return (
       <div>
@@ -377,11 +392,9 @@ const styles = StyleSheet.create({
 });
 
 module.exports = Dimensions({
-  getHeight() {
-    return window.innerHeight - 200;
-  },
+  // elementResize: true,
   getWidth() {
-    const widthOffset = window.innerWidth < 100 ? 0 : 20;
-    return window.innerWidth - widthOffset;
+    // const widthOffset = window.innerWidth < 100 ? 0 : 20;
+    return window.innerWidth;
   }
 })(GemTable);

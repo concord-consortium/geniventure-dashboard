@@ -105,12 +105,16 @@
           "score": 1
         },
         {
-          "conceptId": "LG1.C2b",
+          "conceptId": "LG1.C2a",
           "score": 0.8333333333333334
         },
         {
-          "conceptId": "LG1.C2a",
-          "score": 0.8333333333333334
+          "conceptId": "LG1.C2b",
+          "score": 0.45
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.55
         }
       ]
     }
@@ -478,6 +482,10 @@
         {
           "conceptId": "LG1.C2b",
           "score": 0.2
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.4
         }
       ]
     }
@@ -545,6 +553,76 @@
           ]
         ]
       ]
+    },
+    "itsData": {
+      "traitScores": [
+        {
+          "trait": "forelimbs",
+          "score": 0.5
+        },
+        {
+          "trait": "sex",
+          "score": 1
+        },
+        {
+          "trait": "hindlimbs",
+          "score": 1
+        },
+        {
+          "trait": "wings",
+          "score": 1
+        }
+      ],
+      "conceptsByChallenge": {
+        "allele-targetMatch-visible-simpleDom": [
+          {
+            "conceptId": "LG1.A3",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 2,
+            "totalCorrect": 2,
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C2b",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          },
+          {
+            "conceptId": "LG1.C2a",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 1,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          }
+        ]
+      },
+      "conceptsAggregated": [
+        {
+          "conceptId": "LG1.A3",
+          "score": 1
+        },
+        {
+          "conceptId": "LG1.C2b",
+          "score": 0.75
+        },
+        {
+          "conceptId": "LG1.C2a",
+          "score": 0.65
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.9
+        },
+        {
+          "conceptId": "LG1.P2",
+          "score": 0.7
+        }
+      ]
     }
   },
   "student-13": {
@@ -578,6 +656,72 @@
             [3, 3, 3, 3]
           ]
         ]
+      ]
+    },
+    "itsData": {
+      "traitScores": [
+        {
+          "trait": "forelimbs",
+          "score": 0.5
+        },
+        {
+          "trait": "sex",
+          "score": 1
+        },
+        {
+          "trait": "hindlimbs",
+          "score": 1
+        },
+        {
+          "trait": "wings",
+          "score": 1
+        }
+      ],
+      "conceptsByChallenge": {
+        "allele-targetMatch-visible-simpleDom": [
+          {
+            "conceptId": "LG1.A3",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 2,
+            "totalCorrect": 2,
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C2b",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          },
+          {
+            "conceptId": "LG1.C2a",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 1,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          }
+        ]
+      },
+      "conceptsAggregated": [
+        {
+          "conceptId": "LG1.A3",
+          "score": 1
+        },
+        {
+          "conceptId": "LG1.C2b",
+          "score": 0.45
+        },
+        {
+          "conceptId": "LG1.C2a",
+          "score": 0.65
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.8
+        }
       ]
     }
   },
@@ -627,6 +771,72 @@
           ]
         ]
       ]
+    },
+    "itsData": {
+      "traitScores": [
+        {
+          "trait": "forelimbs",
+          "score": 0.5
+        },
+        {
+          "trait": "sex",
+          "score": 1
+        },
+        {
+          "trait": "hindlimbs",
+          "score": 1
+        },
+        {
+          "trait": "wings",
+          "score": 1
+        }
+      ],
+      "conceptsByChallenge": {
+        "allele-targetMatch-visible-simpleDom": [
+          {
+            "conceptId": "LG1.A3",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 2,
+            "totalCorrect": 2,
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C2b",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          },
+          {
+            "conceptId": "LG1.C2a",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 1,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          }
+        ]
+      },
+      "conceptsAggregated": [
+        {
+          "conceptId": "LG1.A3",
+          "score": 1
+        },
+        {
+          "conceptId": "LG1.C2a",
+          "score": 0.9
+        },
+        {
+          "conceptId": "LG1.C2b",
+          "score": 0.8
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.4
+        }
+      ]
     }
   },
   "student-15": {
@@ -669,6 +879,72 @@
           ]
         ]
       ]
+    },
+    "itsData": {
+      "traitScores": [
+        {
+          "trait": "forelimbs",
+          "score": 0.5
+        },
+        {
+          "trait": "sex",
+          "score": 1
+        },
+        {
+          "trait": "hindlimbs",
+          "score": 1
+        },
+        {
+          "trait": "wings",
+          "score": 1
+        }
+      ],
+      "conceptsByChallenge": {
+        "allele-targetMatch-visible-simpleDom": [
+          {
+            "conceptId": "LG1.A3",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 2,
+            "totalCorrect": 2,
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C2b",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          },
+          {
+            "conceptId": "LG1.C2a",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 1,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          }
+        ]
+      },
+      "conceptsAggregated": [
+        {
+          "conceptId": "LG1.A3",
+          "score": 0.8
+        },
+        {
+          "conceptId": "LG1.C2a",
+          "score": 0.68
+        },
+        {
+          "conceptId": "LG1.C2b",
+          "score": 0.3
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.5
+        }
+      ]
     }
   },
   "student-16": {
@@ -694,6 +970,64 @@
             2
           ]
         ]
+      ]
+    },
+    "itsData": {
+      "traitScores": [
+        {
+          "trait": "forelimbs",
+          "score": 0.5
+        },
+        {
+          "trait": "sex",
+          "score": 1
+        },
+        {
+          "trait": "hindlimbs",
+          "score": 1
+        },
+        {
+          "trait": "wings",
+          "score": 1
+        }
+      ],
+      "conceptsByChallenge": {
+        "allele-targetMatch-visible-simpleDom": [
+          {
+            "conceptId": "LG1.A3",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 2,
+            "totalCorrect": 2,
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C2b",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          },
+          {
+            "conceptId": "LG1.C2a",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 1,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          }
+        ]
+      },
+      "conceptsAggregated": [
+        {
+          "conceptId": "LG1.A3",
+          "score": 0.6
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.3
+        }
       ]
     }
   },
@@ -727,6 +1061,68 @@
             1
           ]
         ]
+      ]
+    },
+    "itsData": {
+      "traitScores": [
+        {
+          "trait": "forelimbs",
+          "score": 0.5
+        },
+        {
+          "trait": "sex",
+          "score": 1
+        },
+        {
+          "trait": "hindlimbs",
+          "score": 1
+        },
+        {
+          "trait": "wings",
+          "score": 1
+        }
+      ],
+      "conceptsByChallenge": {
+        "allele-targetMatch-visible-simpleDom": [
+          {
+            "conceptId": "LG1.A3",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 2,
+            "totalCorrect": 2,
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C2b",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 0,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          },
+          {
+            "conceptId": "LG1.C2a",
+            "totalBottomOutHintsDelivered": 0,
+            "totalHintsDelivered": 1,
+            "totalAttempts": 6,
+            "totalCorrect": 5,
+            "score": 0.8333333333333334
+          }
+        ]
+      },
+      "conceptsAggregated": [
+        {
+          "conceptId": "LG1.A3",
+          "score": 0.7
+        },
+        {
+          "conceptId": "LG1.C2a",
+          "score": 0.45
+        },
+        {
+          "conceptId": "LG1.P1",
+          "score": 0.3
+        }
       ]
     }
   },
