@@ -4,7 +4,7 @@ import '../css/chart.css';
 
 const Chart = ({data, labelWidth, barWidth, title}) => {
   const totalWidth = labelWidth + barWidth;
-  const columns = data.map((d, i) => {
+  const rows = data.map((d, i) => {
     const barLength = d.value * barWidth;
     let color;
     if (d.value < 0.33) {
@@ -35,7 +35,12 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
     <div className="chart" style={{width: totalWidth, padding: '5px', border: '1px solid #DDD'}}>
       <div className="title">{title}</div>
       <div className="body">
-        {columns}
+        {rows}
+      </div>
+      <div className="x-axis">
+        <div>Low</div>
+        <div>Medium</div>
+        <div>High</div>
       </div>
     </div>
   );

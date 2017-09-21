@@ -48,3 +48,11 @@
 .chart .tick-100 {
   left: 100%;
 }
+
+.chart .x-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 167px;
+  font-size: 0.8em;
+  color: #444;
+}
