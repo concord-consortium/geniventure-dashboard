@@ -128,9 +128,9 @@ class GemTable extends Component {
           Last seen: <span className={css(styles[activityLevel])}>{timeString}</span>
         </div>
       );
-      title = "Concept scores";
+      title = "Concept understanding";
     } else {
-      title = "Average concept scores";
+      title = "Average concept understanding";
     }
 
     const style = {
