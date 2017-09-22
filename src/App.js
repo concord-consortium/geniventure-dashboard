@@ -9,11 +9,12 @@ import GemTable from './views/gem-table';
 
 import './css/main.css';
 
+const gaInitialized = false;
 const GAEvents = {
-  OPENED_CHALLENGE: 'opened_challenge_table',
-  OPENED_STUDENT: 'opened_student_row',
-  OPENED_PREVIEW: 'viewed_challenge_preview',
-  SORTED: 'sorted_table'
+  OPENED_CHALLENGE: 'Opened challenge table',
+  OPENED_STUDENT: 'Opened student row',
+  OPENED_PREVIEW: 'Viewed challenge preview',
+  SORTED: 'Sorted table'
 };
 
 export default class App extends Component {
@@ -48,7 +49,17 @@ export default class App extends Component {
 
   componentWillMount() {
     addDataListener((data) => {
+      console.log("woo", data)
       this.setState(data);
+
+      if (!gaInitialized && data.className) {
+        const title = `Geniventure Dashboard: ${data.className}`;
+        document.title = title;
+        gtag('js', new Date());
+        gtag('config', 'UA-106905302-1', {
+          page_title: title
+        });
+      }
     });
 
     // update time state every 10 seconds to change student "last seen" state
@@ -69,9 +80,11 @@ export default class App extends Component {
       selectedRow: rowIndex,
       transitionToChallenge: true
     }, () => {
-      gtag('event', GAEvents.OPENED_CHALLENGE, {
-        challenge: this.challengeString(".")
-      });
+      if (gaInitialized) {
+        gtag('event', GAEvents.OPENED_CHALLENGE, {
+          challenge: this.challengeString(".")
+        });
+      }
     });
 
     setTimeout(() => this.setState({transitionToChallenge: false}), 1100);
@@ -90,9 +103,11 @@ export default class App extends Component {
     this.setState({
       viewingPreview: !this.state.viewingPreview
     }, () => {
-      gtag('event', GAEvents.OPENED_PREVIEW, {
-        challenge: this.challengeString('.')
-      });
+      if (gaInitialized) {
+        gtag('event', GAEvents.OPENED_PREVIEW, {
+          challenge: this.challengeString('.')
+        });
+      }
     });
   }
 
@@ -104,7 +119,9 @@ export default class App extends Component {
       selectedRow
     });
 
-    gtag('event', GAEvents.OPENED_STUDENT);
+    if (gaInitialized) {
+      gtag('event', GAEvents.OPENED_STUDENT);
+    }
   }
 
   onSortActiveToggle() {
@@ -112,9 +129,11 @@ export default class App extends Component {
       sortActive: !this.state.sortActive,
       selectedRow: null
     }, () => {
-      gtag('event', GAEvents.SORTED, {
-        by_active: this.state.sortActive
-      });
+      if (gaInitialized) {
+        gtag('event', GAEvents.SORTED, {
+          by_active: this.state.sortActive
+        });
+      }
     });
   }
 
@@ -123,9 +142,11 @@ export default class App extends Component {
       sort: evt.target.value,
       selectedRow: null
     }, () => {
-      gtag('event', GAEvents.SORTED, {
-        sorting: this.state.sort
-      });
+      if (gaInitialized) {
+        gtag('event', GAEvents.SORTED, {
+          sorting: this.state.sort
+        });
+      }
     });
   }
 
