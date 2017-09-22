@@ -1,12 +1,5 @@
 import migrate from './migrations';
 
-// pseudo random generator. won't be needed when we have data
-const randCache = {};
-const pseudoRandom = (seed) => {
-  const x = Math.sin(seed) * 10;
-  return x - Math.floor(x);
-};
-
 const migrateAllData = (data) => {
   const studentData = Object.assign({}, data);
   Object.keys(studentData).forEach(studentId => {
@@ -234,7 +227,8 @@ class StudentDataStore {
       const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
 
       let completedChallenges = 0;
-      const lastThreeScores = [0, 0, 0];  // If student has fewer than three gems, pretend previous were blue
+      // If student has fewer than three gems, pretend previous were blue
+      const lastThreeScores = [0, 0, 0];
       totalChallenges = 0;
 
       this.authoring.levels.forEach((level, i) => {
@@ -351,14 +345,6 @@ class StudentDataStore {
   getObjectAt(index, colKey) {
     if (index < 0 || index > this.studentIds.length || !colKey) {
       return undefined;
-    }
-
-    // temp
-    if (colKey.indexOf("concept-") > -1) {
-      if (!randCache[index + colKey]) {
-        randCache[index + colKey] = pseudoRandom(index + parseInt(colKey.substr(8), 10) * 10);
-      }
-      return randCache[index + colKey];
     }
 
     const studentId = this.studentIds[index];
