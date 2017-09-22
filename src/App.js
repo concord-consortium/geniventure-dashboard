@@ -1,3 +1,4 @@
+/* global gtag */
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import { CSSTransitionGroup } from 'react-transition-group';
@@ -7,6 +8,13 @@ import StudentDataStore from './data/student-data-store';
 import GemTable from './views/gem-table';
 
 import './css/main.css';
+
+const GAEvents = {
+  OPENED_CHALLENGE: 'opened_challenge_table',
+  OPENED_STUDENT: 'opened_student_row',
+  OPENED_PREVIEW: 'viewed_challenge_preview',
+  SORTED: 'sorted_table'
+};
 
 export default class App extends Component {
 
@@ -60,6 +68,10 @@ export default class App extends Component {
       selectedChallenge: challenge,
       selectedRow: rowIndex,
       transitionToChallenge: true
+    }, () => {
+      gtag('event', GAEvents.OPENED_CHALLENGE, {
+        challenge: this.challengeString(".")
+      });
     });
 
     setTimeout(() => this.setState({transitionToChallenge: false}), 1100);
@@ -77,6 +89,10 @@ export default class App extends Component {
   onTogglePreview() {
     this.setState({
       viewingPreview: !this.state.viewingPreview
+    }, () => {
+      gtag('event', GAEvents.OPENED_PREVIEW, {
+        challenge: this.challengeString('.')
+      });
     });
   }
 
@@ -87,12 +103,18 @@ export default class App extends Component {
     this.setState({
       selectedRow
     });
+
+    gtag('event', GAEvents.OPENED_STUDENT);
   }
 
   onSortActiveToggle() {
     this.setState({
       sortActive: !this.state.sortActive,
       selectedRow: null
+    }, () => {
+      gtag('event', GAEvents.SORTED, {
+        by_active: this.state.sortActive
+      });
     });
   }
 
@@ -100,6 +122,10 @@ export default class App extends Component {
     this.setState({
       sort: evt.target.value,
       selectedRow: null
+    }, () => {
+      gtag('event', GAEvents.SORTED, {
+        sorting: this.state.sort
+      });
     });
   }
 
