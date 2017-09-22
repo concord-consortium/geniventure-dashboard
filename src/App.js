@@ -150,7 +150,7 @@ export default class App extends Component {
     return (
       <div className="right-panel-wrapper">
         <div className="description">
-          <div style={{fontWeight: "bold", padding: "6px"}}>{type}</div>
+          <div style={{fontWeight: "bold", padding: "6px", textAlign: "center"}}>{type}</div>
           <div style={{padding: "4px"}}>{description}</div>
           <div style={{fontStyle: "italic", bottom: "4px", display: "flex", position: "absolute"}}>
             {tip ? <img src="assets/img/alert.png" width="30px" style={{paddingRight: "5px", alignSelf: "center"}} alt="Tip" />
