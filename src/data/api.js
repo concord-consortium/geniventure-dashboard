@@ -1,4 +1,5 @@
 /* global firebase */
+import 'whatwg-fetch';        // fetch polyfill
 import fakeOffering from './fake-data/offering.json';
 import fakeAuthoring from './fake-data/authoring.json';
 import fakeStudentData from './fake-data/student-data.json';
