@@ -9,7 +9,7 @@ import GemTable from './views/gem-table';
 
 import './css/main.css';
 
-const gaInitialized = false;
+let gaInitialized = false;
 const GAEvents = {
   OPENED_CHALLENGE: 'Opened challenge table',
   OPENED_STUDENT: 'Opened student row',
@@ -49,7 +49,6 @@ export default class App extends Component {
 
   componentWillMount() {
     addDataListener((data) => {
-      console.log("woo", data)
       this.setState(data);
 
       if (!gaInitialized && data.className) {
@@ -59,6 +58,7 @@ export default class App extends Component {
         gtag('config', 'UA-106905302-1', {
           page_title: title
         });
+        gaInitialized = true;
       }
     });
 
