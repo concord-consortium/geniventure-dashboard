@@ -262,9 +262,9 @@ class StudentDataStore {
       }
 
       studentData.concepts = [];
-      if (student.itsData) {
-        if (student.itsData.conceptsAggregated) {
-          studentData.concepts = student.itsData.conceptsAggregated.map(d => ({
+      if (student.itsData && student.itsData.studentModel) {
+        if (student.itsData.studentModel.conceptsAggregated) {
+          studentData.concepts = student.itsData.studentModel.conceptsAggregated.map(d => ({
             code: d.conceptId,
             label: getConceptLabel(d.conceptId),
             value: d.score
