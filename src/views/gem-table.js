@@ -94,9 +94,9 @@ class GemTable extends Component {
   subRowHeightGetter(index) {
     if (index === this.props.selectedRow) {
       if (!this.props.dataStore.getActivityHeadingForRow(index)) {
-        return 221;
+        return 278;
       }
-      return 240;
+      return 297;
     }
     if (this.props.dataStore.getActivityHeadingForRow(index)) {
       return 19;
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     padding: '20px',
     overflow: 'hidden',
     width: '100%',
-    height: '221px'
+    height: '278px'
   },
   padding: {
     padding: '6px'

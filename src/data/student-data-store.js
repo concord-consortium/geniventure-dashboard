@@ -45,6 +45,11 @@ const conceptLabels = {
     long: "Incomplete Dom.",
     short: "Inc. Dom."
   },
+  "LG1.C4": {
+    long: "Epistasis",
+    short: "Epistasis",
+    description: "There are traits that result from a single gene and others that result from the interaction between multiple genes."
+  },
   "LG1.P1": {
     long: "Geno-to-Pheno Mapp.",
     short: "Geno - Pheno"
@@ -53,7 +58,18 @@ const conceptLabels = {
     long: "Pheno-to-Geno Mapp.",
     short: "Pheno - Geno"
   },
+  "LG2.P1": {
+    long: "Gamete selection",
+    short: "Gamete sel.",
+    description: "Create or select parental gametes to create an individual offspring with a specific phenotype."
+  },
+  "LG3.P1": {
+    long: "Parent genotypes",
+    short: "Parent gene",
+    description: "Set parental genotypes to produce a specific pattern of offspring."
+  }
 };
+
 const getConceptLabel = (code) => {
   const label = conceptLabels[code];
   return label || {long: code, short: code};
