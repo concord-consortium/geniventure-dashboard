@@ -316,9 +316,12 @@ class GemTable extends Component {
   }
 
   render() {
-    const {dataStore, selectedChallenge, selectedRow, transitionToChallenge} = this.props;
+    const {dataStore, selectedChallenge, selectedRow, transitionToChallenge, startSmall} = this.props;
     const {containerWidth, containerHeight} = this.props;
-    const {widthPercent} = this.state;
+    let {widthPercent} = this.state;
+    if (startSmall) {
+      widthPercent = 50;
+    }
     const columns = this.createColumns();
     const isLarge = selectedChallenge === null || transitionToChallenge;
     const width = containerWidth * (widthPercent / 100);
@@ -352,6 +355,7 @@ GemTable.propTypes = {
   selectedChallenge: PropTypes.number,
   selectedRow: PropTypes.number,
   transitionToChallenge: PropTypes.bool,
+  startSmall: PropTypes.bool,
   onSelectChallenge: PropTypes.func,
   onExpandClick: PropTypes.func,
   // drom Dimensions

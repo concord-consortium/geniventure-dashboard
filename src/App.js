@@ -36,7 +36,8 @@ export default class App extends Component {
       viewingPreview: false,
       viewingHelp: false,
       time: Date.now(),
-      drawerOpen: false
+      drawerOpen: false,
+      startSmall: false
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
@@ -98,13 +99,15 @@ export default class App extends Component {
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
-      selectedRow: null
+      selectedRow: null,
+      startSmall: false
     });
   }
 
   onTogglePreview() {
     this.setState({
-      viewingPreview: !this.state.viewingPreview
+      viewingPreview: !this.state.viewingPreview,
+      startSmall: true
     }, () => {
       if (gaInitialized && this.state.viewingPreview) {
         gtag('event', GAEvents.OPENED_PREVIEW, {
@@ -334,6 +337,7 @@ export default class App extends Component {
       sort,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
+      startSmall,
       viewingPreview,
       viewingHelp,
       time
@@ -376,6 +380,7 @@ export default class App extends Component {
             selectedChallenge={selectedChallenge}
             selectedRow={selectedRow}
             transitionToChallenge={transitionToChallenge}
+            startSmall={startSmall}
             onSelectChallenge={this.onSelectChallenge}
             onExpandClick={this.onExpandClick}
           />
