@@ -27,6 +27,7 @@
   border-radius: 0 4px 4px 0;
   margin: 3px 0 3px 0;
   height: 17px;
+  border: 1px solid;
 }
 
 .chart .tick {

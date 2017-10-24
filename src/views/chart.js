@@ -16,12 +16,13 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
     }
     const style = {
       width: barLength,
-      backgroundColor: color
+      backgroundColor: color.bar,
+      borderColor: color.border
     };
     return (
       <div className="row" key={`row-${i}`}>
         <div className="label" style={{width: labelWidth}}>{d.label.long}</div>
-        <div className="bar-wrapper" style={{width: barWidth + 5}}>
+        <div className="bar-wrapper" style={{width: barWidth + 8}}>
           <div className="bar" style={style} />
           <div className="tick tick-0" />
           <div className="tick tick-50" />
@@ -60,9 +61,18 @@ Chart.propTypes = {
 };
 
 Chart.colors = {
-  high: "#42B9B5",
-  medium: "#EADD2D",
-  low: "#DA3D3D"
+  high: {
+    bar: "#7AEAF5",
+    border: "#5ee6f3"
+  },
+  medium: {
+    bar: "#FFFA5F",
+    border: "#e6de00"
+  },
+  low: {
+    bar: "#D53448",
+    border: "#be2739"
+  }
 };
 
 module.exports = Chart;
