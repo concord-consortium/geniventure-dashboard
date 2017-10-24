@@ -31,32 +31,38 @@ const activitySortOrder = {
 const conceptLabels = {
   "LG1.A3": {
     long: "Sex Determination",
-    short: "Sex Det."
+    short: "Sex Det.",
+    description: "Females have two X chromosomes. Males have one X and one Y."
   },
   "LG1.C2a": {
     long: "Simple Dominance",
-    short: "Simple Dom."
+    short: "Simple Dom.",
+    description: "Only one dominant allele is needed to produce the dominant trait. "
   },
   "LG1.C2b": {
     long: "Recessive",
-    short: "Reces."
+    short: "Reces.",
+    description: "Two recessive alleles are needed to produce a recessive trait."
   },
   "LG1.C3": {
     long: "Incomplete Dom.",
-    short: "Inc. Dom."
+    short: "Inc. Dom.",
+    description: "For some traits, both alleles will have some effect, with neither being completely dominant."
   },
   "LG1.C4": {
     long: "Epistasis",
     short: "Epistasis",
-    description: "There are traits that result from a single gene and others that result from the interaction between multiple genes."
+    description: "A gene can mask the effect of other genes"
   },
   "LG1.P1": {
     long: "Geno-to-Pheno Mapp.",
-    short: "Geno - Pheno"
+    short: "Geno - Pheno",
+    description: "Given a genotype predict the phenotype of an organism. "
   },
   "LG1.P2": {
     long: "Pheno-to-Geno Mapp.",
-    short: "Pheno - Geno"
+    short: "Pheno - Geno",
+    description: "Given a phenotype, determine possible genotypes of an organism."
   },
   "LG2.P1": {
     long: "Gamete selection",
@@ -389,5 +395,12 @@ class StudentDataStore {
     return false;
   }
 }
+
+const concepts = [];
+Object.keys(conceptLabels).forEach(id => {
+  concepts.push({long: conceptLabels[id].long, description: conceptLabels[id].description});
+});
+
+StudentDataStore.concepts = concepts;
 
 module.exports = StudentDataStore;

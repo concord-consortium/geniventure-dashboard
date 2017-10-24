@@ -5,7 +5,10 @@ body {
 }
 
 .top-row {
-  padding: 5px 0 0 5px
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px 5px 10px;
 }
 
 .right-panel-wrapper {
@@ -101,16 +104,115 @@ body {
   background-color: rgba(255,255,255,0.7);
   width: 1016px;
   display: flex;
-  margin: 9px 0 0 37px;
+  margin: 18px 0 0 37px;
+  padding: 5px;
 }
 
 .drawer .tips .tips-title {
   align-self: center;
   font-weight: bold;
-  padding-left: 10px;
+  padding: 0 20px 0 10px;
 }
 
-.drawer .tips .tip-word {
+.tip-word {
   font-weight: bold;
   text-decoration: underline;
+}
+
+button {
+  border: 2px solid #fff;
+  /*color: #fff;*/
+  background: none;
+  cursor: pointer;
+  padding: 5px 16px;
+  display: inline-block;
+  margin: 3px 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+button:hover {
+  color: #fee9aa;
+  background: #fff;
+}
+
+.modal {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 640px;
+  max-width: 100%;
+  height: 480px;
+  max-height: 100%;
+  padding: 20px 50px 20px 20px;
+  z-index: 1100;
+  border: 5px solid #fee9aa;
+}
+
+#modal-overlay {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  margin: -10 0 5 10;
+  color: #3a878b;
+  font-size: 1.5em;
+  font-family: museo-slab,georgia,"times new roman",times,serif;
+  font-weight: 700;
+}
+
+dl {
+  border: 3px double #ccc;
+  padding: 0.5em;
+}
+dt {
+  float: left;
+  clear: left;
+  width: 160px;
+  text-align: right;
+  font-weight: bold;
+  color: green;
+}
+dt::after {
+  content: ":";
+}
+dd {
+  margin: 0 0 0 170px;
+  padding: 0 0 0.5em 0;
+}
+
+ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+ul li {
+  padding: 3px;
+}
+
+ul li:before {
+  content: "\0BB \020";
+  font-weight: bold;
+}
+
+#close-help {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-color: black;
 }

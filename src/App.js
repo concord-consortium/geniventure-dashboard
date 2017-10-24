@@ -14,6 +14,7 @@ const GAEvents = {
   OPENED_CHALLENGE: 'Opened challenge table',
   OPENED_STUDENT: 'Opened student row',
   OPENED_PREVIEW: 'Viewed challenge preview',
+  OPENED_HELP: 'Viewed challenge preview',
   SORTED: 'Sorted table'
 };
 
@@ -33,12 +34,14 @@ export default class App extends Component {
       selectedRow: null,
       transitionToChallenge: false,
       viewingPreview: false,
+      viewingHelp: false,
       time: Date.now(),
       drawerOpen: false
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
     this.onBackToOverview = this.onBackToOverview.bind(this);
     this.onTogglePreview = this.onTogglePreview.bind(this);
+    this.onToggleHelp = this.onToggleHelp.bind(this);
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
@@ -103,10 +106,20 @@ export default class App extends Component {
     this.setState({
       viewingPreview: !this.state.viewingPreview
     }, () => {
-      if (gaInitialized) {
+      if (gaInitialized && this.state.viewingPreview) {
         gtag('event', GAEvents.OPENED_PREVIEW, {
           challenge: this.challengeString('.')
         });
+      }
+    });
+  }
+
+  onToggleHelp() {
+    this.setState({
+      viewingHelp: !this.state.viewingHelp
+    }, () => {
+      if (gaInitialized && this.state.viewingHelp) {
+        gtag('event', GAEvents.OPENED_HELP);
       }
     });
   }
@@ -170,16 +183,21 @@ export default class App extends Component {
     const location = selectedChallenge === null ? "Overview"
       : `Challenge ${this.challengeString('.')}`;
 
-    let links;
+    let buttons;
     if (selectedChallenge !== null && !viewingPreview) {
-      links = <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onBackToOverview}>Back to Overview</a>;
+      buttons = <button style={{marginLeft: "15px"}} onClick={this.onBackToOverview}>Back to Overview</button>;
     } else if (viewingPreview) {
-      links = <a style={{padding: "15px", cursor: "pointer"}} onClick={this.onTogglePreview}>Back to table</a>
+      buttons = <button style={{marginLeft: "15px"}} onClick={this.onTogglePreview}>Back to table</button>;
     }
     return (
       <div className="top-row">
-        <span style={{paddingRight: "10px", fontWeight: "bold", fontSize: "1.2em"}}>{location}</span>
-        {links}
+        <div>
+          <span style={{paddingRight: "10px", fontWeight: "bold", fontSize: "1.2em"}}>{location}</span>
+          {buttons}
+        </div>
+        <div>
+          <button id="help" onClick={this.onToggleHelp}>Help</button>
+        </div>
       </div>
     );
   }
@@ -249,19 +267,11 @@ export default class App extends Component {
           </div>
           <div>
             <div className="tips">
-              <div className="tips-title">Tips</div>
+              <div className="tips-title">Tip:</div>
               <div>
-                <ul>
-                  <li>
-                    You can change the <span className="tip-word">sorting</span> to &quot;struggling&quot; to show
-                    those students who are behind and those who have been having trouble
-                    with recent activities.
-                  </li>
-                  <li>
-                    Click on a <span className="tip-word">column heading</span> to show a detailed report and information
-                    for that challenge.
-                  </li>
-                </ul>
+                You can change the <span className="tip-word">sorting</span> to &quot;struggling&quot; to show
+                those students who are behind and those who have been having trouble
+                with recent activities.
               </div>
             </div>
           </div>
@@ -277,6 +287,44 @@ export default class App extends Component {
     );
   }
 
+  renderHelp() {
+    return (
+      <div id="help-modal" className="modal">
+        <h1>Help</h1>
+        <div>
+          <ul>
+            <li>
+              Click on the <span className="tip-word">drawer handle</span> at the top of the chart to view sorting options.
+            </li>
+            <li>
+              Click on a <span className="tip-word">column heading</span> to show a detailed
+              report and information for that challenge.
+            </li>
+            <li>
+              Click on the <span className="tip-word">toggle</span> next to a student name to
+              show a detailed report for that student
+              for that challenge.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2>Concept key:</h2>
+          <dl>
+            {
+              StudentDataStore.concepts.map(concept =>
+                [
+                  <dt>{concept.long}</dt>,
+                  <dd>{concept.description}</dd>
+                ]
+              )
+            }
+          </dl>
+        </div>
+        <button id="close-help" onClick={this.onToggleHelp}>Close</button>
+      </div>
+    );
+  }
+
   render() {
     const {
       authoring,
@@ -287,6 +335,7 @@ export default class App extends Component {
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
       viewingPreview,
+      viewingHelp,
       time
     } = this.state;
     const sortStruggling = sort === "struggling";
@@ -299,6 +348,8 @@ export default class App extends Component {
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
     const sorting = this.renderSortPanel();
+    const help = viewingHelp ? this.renderHelp() : null;
+    const modalOverlay = viewingHelp ? <div id="modal-overlay" onClick={this.onToggleHelp} /> : null;
 
     this.dataStore.update(
       authoring,
@@ -338,6 +389,8 @@ export default class App extends Component {
         {topRow}
         {sorting}
         {body}
+        {help}
+        {modalOverlay}
       </div>
     );
   }
