@@ -49,11 +49,6 @@ const conceptLabels = {
     short: "Inc. Dom.",
     description: "For some traits, both alleles will have some effect, with neither being completely dominant."
   },
-  "LG1.C4": {
-    long: "Epistasis",
-    short: "Epistasis",
-    description: "A gene can mask the effect of other genes"
-  },
   "LG1.P1": {
     long: "Geno-to-Pheno Mapp.",
     short: "Geno - Pheno",
@@ -64,12 +59,17 @@ const conceptLabels = {
     short: "Pheno - Geno",
     description: "Given a phenotype, determine possible genotypes of an organism."
   },
+  "LG1.C4a": {
+    long: "Epistasis",
+    short: "Epistasis",
+    description: "A gene can mask the effect of other genes"
+  },
   "LG2.P1": {
     long: "Gamete selection",
     short: "Gamete sel.",
     description: "Create or select parental gametes to create an individual offspring with a specific phenotype."
   },
-  "LG3.P1": {
+  "LG3.P2": {
     long: "Parent genotypes",
     short: "Parent gene",
     description: "Set parental genotypes to produce a specific pattern of offspring."
@@ -283,16 +283,24 @@ class StudentDataStore {
         studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
       }
 
-      studentData.concepts = [];
-      if (student.itsData && student.itsData.studentModel) {
-        if (student.itsData.studentModel.conceptsAggregated) {
-          studentData.concepts = student.itsData.studentModel.conceptsAggregated.map(d => ({
-            code: d.conceptId,
-            label: getConceptLabel(d.conceptId),
-            value: d.score
-          }));
+
+      studentData.concepts = StudentDataStore.concepts.map(c => {
+        let data;
+        if (student.itsData && student.itsData.studentModel
+            && student.itsData.studentModel.conceptsAggregated
+            && (data = student.itsData.studentModel.conceptsAggregated.find(d => c.id === d.conceptId))) {
+          return {
+            code: c.id,
+            label: getConceptLabel(c.id),
+            value: data.score
+          };
         }
-      }
+        return {
+          code: c.id,
+          label: getConceptLabel(c.id),
+          value: -1
+        };
+      });
 
       this.data[id] = studentData;
     });
@@ -329,8 +337,10 @@ class StudentDataStore {
         if (conceptsMap[c.code] === undefined) {
           conceptsMap[c.code] = {count: 0, total: 0};
         }
-        conceptsMap[c.code].count += 1;
-        conceptsMap[c.code].total += c.value;
+        if (c.value !== -1) {
+          conceptsMap[c.code].count += 1;
+          conceptsMap[c.code].total += c.value;
+        }
       });
     });
     Object.keys(conceptsMap).forEach(code => {
@@ -398,7 +408,7 @@ class StudentDataStore {
 
 const concepts = [];
 Object.keys(conceptLabels).forEach(id => {
-  concepts.push({long: conceptLabels[id].long, description: conceptLabels[id].description});
+  concepts.push({id, long: conceptLabels[id].long, description: conceptLabels[id].description});
 });
 
 StudentDataStore.concepts = concepts;

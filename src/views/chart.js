@@ -6,6 +6,7 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
   const totalWidth = labelWidth + barWidth;
   const rows = data.map((d, i) => {
     const barLength = d.value * barWidth;
+    let unseen = false;
     let color;
     if (d.value < 0.33) {
       color = Chart.colors.low;
@@ -14,16 +15,28 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
     } else {
       color = Chart.colors.high;
     }
-    const style = {
+    if (d.value === -1 || isNaN(d.value)) {
+      unseen = true;
+    }
+    const barStyle = {
       width: barLength,
       backgroundColor: color.bar,
       borderColor: color.border
     };
+    const labelStyle = {
+      width: labelWidth
+    };
+    if (unseen) {
+      barStyle.width = "0";
+      barStyle.border = "0";
+      labelStyle.color = "#999";
+    }
+
     return (
       <div className="row" key={`row-${i}`}>
-        <div className="label" style={{width: labelWidth}}>{d.label.long}</div>
-        <div className="bar-wrapper" style={{width: barWidth + 8}}>
-          <div className="bar" style={style} />
+        <div className="label" style={labelStyle}>{d.label.long}</div>
+        <div className="bar-wrapper" style={{width: barWidth + 10}}>
+          <div className="bar" style={barStyle} />
           <div className="tick tick-0" />
           <div className="tick tick-50" />
           <div className="tick tick-100" />

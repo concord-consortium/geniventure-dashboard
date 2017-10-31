@@ -8,6 +8,9 @@ import Chart from './chart';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
+const headingHeight = 19;
+const expandedRowHight = 325;
+
 // Finishes the phrase starting with: "Last seen:"
 const timeAgoString = (timeInS) => {
   if (isNaN(timeInS)) {
@@ -94,12 +97,12 @@ class GemTable extends Component {
   subRowHeightGetter(index) {
     if (index === this.props.selectedRow) {
       if (!this.props.dataStore.getActivityHeadingForRow(index)) {
-        return 288;
+        return expandedRowHight;
       }
-      return 307;
+      return expandedRowHight + headingHeight;
     }
     if (this.props.dataStore.getActivityHeadingForRow(index)) {
-      return 19;
+      return headingHeight;
     }
     return 0;
   }
@@ -340,7 +343,7 @@ const styles = StyleSheet.create({
     padding: '20px',
     overflow: 'hidden',
     width: '100%',
-    height: '288px'
+    height: `${expandedRowHight}px`
   },
   padding: {
     padding: '6px'
