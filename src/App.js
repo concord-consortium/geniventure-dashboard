@@ -6,6 +6,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import addDataListener from './data/api';
 import StudentDataStore from './data/student-data-store';
 import GemTable from './views/gem-table';
+import { renderHelp } from './views/static-views';
 
 import './css/main.css';
 
@@ -290,44 +291,6 @@ export default class App extends Component {
     );
   }
 
-  renderHelp() {
-    return (
-      <div id="help-modal" className="modal">
-        <h1>Help</h1>
-        <div>
-          <ul>
-            <li>
-              Click on the <span className="tip-word">drawer handle</span> at the top of the chart to view sorting options.
-            </li>
-            <li>
-              Click on a <span className="tip-word">column heading</span> to show a detailed
-              report and information for that challenge.
-            </li>
-            <li>
-              Click on the <span className="tip-word">toggle</span> next to a student name to
-              show a detailed report for that student
-              for that challenge.
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>Concept key:</h2>
-          <dl>
-            {
-              StudentDataStore.concepts.map(concept =>
-                [
-                  <dt>{concept.long}</dt>,
-                  <dd>{concept.description}</dd>
-                ]
-              )
-            }
-          </dl>
-        </div>
-        <button id="close-help" onClick={this.onToggleHelp}>Close</button>
-      </div>
-    );
-  }
-
   render() {
     const {
       authoring,
@@ -352,7 +315,7 @@ export default class App extends Component {
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
     const sorting = this.renderSortPanel();
-    const help = viewingHelp ? this.renderHelp() : null;
+    const help = viewingHelp ? renderHelp(this.onToggleHelp) : null;
     const modalOverlay = viewingHelp ? <div id="modal-overlay" onClick={this.onToggleHelp} /> : null;
 
     this.dataStore.update(
