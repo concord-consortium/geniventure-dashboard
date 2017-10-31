@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Dimensions from 'react-dimensions';
 import {StyleSheet, css} from 'aphrodite';
-import { ExpandCell, StudentNameCell, GemCell, ConceptCell } from './cells';
+import { ExpandCell, StudentNameCell, GemCell } from './cells';
 import Chart from './chart';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
@@ -60,7 +60,7 @@ class GemTable extends Component {
 
   shrink() {
     const widthPercent = this.state.widthPercent;
-    if (widthPercent > 50) {
+    if (widthPercent > 30) {
       this.setState({
         widthPercent: widthPercent - 5
       });
@@ -173,11 +173,8 @@ class GemTable extends Component {
         <div className={css(styles.expandStyles)}>
           <div className={css(styles.studentData)}>
             {timeEl}
-            <div className={css(styles.padding)}>
-              <img width="20px" src="https://www.umass.edu/research/sites/default/files/red_flag.jpeg" />
-            </div>
           </div>
-          <div>
+          <div style={{display: "flex"}}>
             {conceptChart}
           </div>
         </div>
@@ -280,34 +277,6 @@ class GemTable extends Component {
             width={45}
             flexGrow={3}
           />
-          <Column
-            columnKey={"concept-1"}
-            header={<Cell>Sex Det.</Cell>}
-            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
-            width={10}
-            flexGrow={1}
-          />
-          <Column
-            columnKey={"concept-2"}
-            header={<Cell>Simple Dom.</Cell>}
-            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
-            width={10}
-            flexGrow={1}
-          />
-          <Column
-            columnKey={"concept-3"}
-            header={<Cell>Reces.</Cell>}
-            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
-            width={10}
-            flexGrow={1}
-          />
-          <Column
-            columnKey={"concept-4"}
-            header={<Cell>Geno&ndash; Pheno</Cell>}
-            cell={<ConceptCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
-            width={10}
-            flexGrow={1}
-          />
         </ColumnGroup>
       );
     }
@@ -320,7 +289,7 @@ class GemTable extends Component {
     const {containerWidth, containerHeight} = this.props;
     let {widthPercent} = this.state;
     if (startSmall) {
-      widthPercent = 50;
+      widthPercent = 30;
     }
     const columns = this.createColumns();
     const isLarge = selectedChallenge === null || transitionToChallenge;
