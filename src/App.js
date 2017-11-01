@@ -228,7 +228,7 @@ export default class App extends Component {
           </div>
         </div>
         <div style={{position: "relative"}}>
-          <img key="img1" className="preview-image" width="620px" src={imgSrc} alt="Play challenge preview" />
+          <img key="img1" className="preview-image" style={{width: "100%", maxWidth: "640px"}} src={imgSrc} alt="Play challenge preview" />
           <CSSTransitionGroup
             transitionName="fade"
             transitionAppear={true}
@@ -236,7 +236,7 @@ export default class App extends Component {
             transitionEnter={false}
             transitionLeave={false}
           >
-            <img key="img2" className="preview-image" onClick={this.onTogglePreview} width="620px" src="assets/img/play-overlay.png" alt="Play challenge preview" />
+            <img key="img2" className="preview-image" onClick={this.onTogglePreview} style={{width: "100%", maxWidth: "640px"}} src="assets/img/play-overlay.png" alt="Play challenge preview" />
           </CSSTransitionGroup>
         </div>
       </div>

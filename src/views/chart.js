@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../css/chart.css';
 
-const Chart = ({data, labelWidth, barWidth, title}) => {
+const Chart = ({data, labelWidth, barWidth, title, narrowAxis}) => {
   const totalWidth = labelWidth + barWidth;
   const rows = data.map((d, i) => {
-    const barLength = d.value * barWidth;
+    const barLength = Math.min(d.value * 100, 99.2);
     let unseen = false;
     let color;
     if (d.value < 0.33) {
@@ -19,9 +19,13 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
       unseen = true;
     }
     const barStyle = {
-      width: barLength,
+      width: `${barLength}%`,
       backgroundColor: color.bar,
       borderColor: color.border
+    };
+    const barWrapperStyle = {
+      width: "100%",
+      maxWidth: barWidth + 10
     };
     const labelStyle = {
       width: labelWidth
@@ -35,7 +39,7 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
     return (
       <div className="row" key={`row-${i}`}>
         <div className="label" style={labelStyle}>{d.label.long}</div>
-        <div className="bar-wrapper" style={{width: barWidth + 10}}>
+        <div className="bar-wrapper" style={barWrapperStyle}>
           <div className="bar" style={barStyle} />
           <div className="tick tick-0" />
           <div className="tick tick-50" />
@@ -45,13 +49,14 @@ const Chart = ({data, labelWidth, barWidth, title}) => {
     );
   });
 
+  const xAxisClass = narrowAxis ? "x-axis narrow" : "x-axis";
   return (
     <div className="chart" style={{width: totalWidth, padding: '5px', border: '1px solid #DDD'}}>
       <div className="title">{title}</div>
       <div className="body">
         {rows}
       </div>
-      <div className="x-axis">
+      <div className={xAxisClass}>
         <div>Low</div>
         <div>Medium</div>
         <div>High</div>
@@ -70,7 +75,8 @@ Chart.propTypes = {
   })),
   labelWidth: PropTypes.number,
   barWidth: PropTypes.number,
-  title: PropTypes.string
+  title: PropTypes.string,
+  narrowAxis: PropTypes.bool
 };
 
 Chart.colors = {

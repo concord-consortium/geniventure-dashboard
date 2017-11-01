@@ -53,7 +53,11 @@
 .chart .x-axis {
   display: flex;
   justify-content: space-between;
-  margin-left: 167px;
+  margin-left: 33%;
   font-size: 0.8em;
   color: #444;
+}
+
+.chart .x-axis.narrow {
+  margin-left: 29%;
 }

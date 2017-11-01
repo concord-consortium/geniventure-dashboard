@@ -10,6 +10,7 @@ import '../css/gem-table.css';
 
 const headingHeight = 19;
 const expandedRowHight = 325;
+const challengeChartWidth = 35;
 
 // Finishes the phrase starting with: "Last seen:"
 const timeAgoString = (timeInS) => {
@@ -63,7 +64,7 @@ class GemTable extends Component {
 
   shrink() {
     const widthPercent = this.state.widthPercent;
-    if (widthPercent > 30) {
+    if (widthPercent > challengeChartWidth) {
       this.setState({
         widthPercent: widthPercent - 5
       });
@@ -128,18 +129,13 @@ class GemTable extends Component {
       const timeString = timeAgoString(timeSinceLastAction);
       timeEl = (
         <div>
-          Last seen: <span className={css(styles[activityLevel])}>{timeString}</span>
+          Last seen:<br /><span className={css(styles[activityLevel])}>{timeString}</span>
         </div>
       );
       title = "Concept understanding";
     } else {
       title = "Average concept understanding";
     }
-
-    const style = {
-      height,
-      width: width - 2,
-    };
 
     let activityHeading = null;
     if (this.props.dataStore.getActivityHeadingForRow(rowIndex)) {
@@ -150,6 +146,8 @@ class GemTable extends Component {
       );
     }
 
+    const tableWidth = this.props.containerWidth * (this.state.widthPercent / 100);
+    const narrowAxis = tableWidth > 450 && tableWidth < 600;
     let conceptChart;
     if (concepts && Object.keys(concepts).length > 0) {
       conceptChart = (
@@ -158,11 +156,12 @@ class GemTable extends Component {
           barWidth={300}
           data={concepts}
           title={title}
+          narrowAxis={narrowAxis}
         />
       );
     } else {
       conceptChart = (
-        <div className="chart" style={{width: 470, padding: '5px', border: '1px solid #DDD'}}>
+        <div className="chart" style={{width: "100%", padding: '5px', border: '1px solid #DDD'}}>
           <div className="title">{title}</div>
           <div style={{padding: 20}}>
             Not enough data yet.
@@ -170,6 +169,18 @@ class GemTable extends Component {
         </div>
       );
     }
+    let fontSize = "1em";
+    if (tableWidth < 490) {
+      fontSize = "0.7em";
+    } else if (tableWidth < 580) {
+      fontSize = "0.8em";
+    }
+
+    const style = {
+      height,
+      width: width - 2,
+      fontSize
+    };
 
     return (
       <div style={style}>
@@ -177,7 +188,7 @@ class GemTable extends Component {
           <div className={css(styles.studentData)}>
             {timeEl}
           </div>
-          <div style={{display: "flex"}}>
+          <div style={{display: "flex", width: "85%"}}>
             {conceptChart}
           </div>
         </div>
@@ -292,11 +303,11 @@ class GemTable extends Component {
     const {containerWidth, containerHeight} = this.props;
     let {widthPercent} = this.state;
     if (startSmall) {
-      widthPercent = 30;
+      widthPercent = challengeChartWidth;
     }
     const columns = this.createColumns();
     const isLarge = selectedChallenge === null || transitionToChallenge;
-    const width = containerWidth * (widthPercent / 100);
+    const width = Math.max(containerWidth * (widthPercent / 100), 430);
     const height = containerHeight;
 
     return (
