@@ -210,9 +210,22 @@ ul li:before {
   font-weight: bold;
 }
 
+.button-on-white {
+  border-color: black;
+}
+
+button.button-on-white:hover {
+  color: #fff;
+  background: #ccc;
+}
+
+.button-narrow {
+  padding: 0px 14px;
+  margin: 4px 6px;
+}
+
 #close-help {
   position: absolute;
   top: 10px;
   right: 10px;
-  border-color: black;
 }

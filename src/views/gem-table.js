@@ -157,6 +157,7 @@ class GemTable extends Component {
           data={concepts}
           title={title}
           narrowAxis={narrowAxis}
+          onToggleHelp={this.props.onToggleHelp}
         />
       );
     } else {
@@ -342,7 +343,8 @@ GemTable.propTypes = {
   startSmall: PropTypes.bool,
   onSelectChallenge: PropTypes.func,
   onExpandClick: PropTypes.func,
-  // drom Dimensions
+  onToggleHelp: PropTypes.func,
+  // from Dimensions
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number
 };

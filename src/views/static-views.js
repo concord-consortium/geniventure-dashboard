@@ -39,7 +39,7 @@ const renderHelp = (toggleHelp) =>
         </ul>
       </div>
       { renderConceptKey() }
-      <button id="close-help" onClick={toggleHelp}>Close</button>
+      <button id="close-help" className="button-on-white" onClick={toggleHelp}>Close</button>
     </div>
   );
 

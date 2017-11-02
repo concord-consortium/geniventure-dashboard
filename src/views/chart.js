@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../css/chart.css';
 
-const Chart = ({data, labelWidth, barWidth, title, narrowAxis}) => {
+const Chart = ({data, labelWidth, barWidth, title, narrowAxis, onToggleHelp}) => {
   const totalWidth = labelWidth + barWidth;
   const rows = data.map((d, i) => {
     const barLength = Math.max(Math.min(d.value * 100, 99.2), 2);
@@ -52,7 +52,10 @@ const Chart = ({data, labelWidth, barWidth, title, narrowAxis}) => {
   const xAxisClass = narrowAxis ? "x-axis narrow" : "x-axis";
   return (
     <div className="chart" style={{width: totalWidth, padding: '5px', border: '1px solid #DDD'}}>
-      <div className="title">{title}</div>
+      <div className="concept-chart-top-bar">
+        <div className="title">{title}</div>
+        <button className="button-on-white button-narrow" onClick={onToggleHelp}>Key</button>
+      </div>
       <div className="body">
         {rows}
       </div>
@@ -76,7 +79,8 @@ Chart.propTypes = {
   labelWidth: PropTypes.number,
   barWidth: PropTypes.number,
   title: PropTypes.string,
-  narrowAxis: PropTypes.bool
+  narrowAxis: PropTypes.bool,
+  onToggleHelp: PropTypes.func
 };
 
 Chart.colors = {

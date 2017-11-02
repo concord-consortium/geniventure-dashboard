@@ -346,6 +346,7 @@ export default class App extends Component {
             startSmall={startSmall}
             onSelectChallenge={this.onSelectChallenge}
             onExpandClick={this.onExpandClick}
+            onToggleHelp={this.onToggleHelp}
           />
           {rightPanel}
         </div>
