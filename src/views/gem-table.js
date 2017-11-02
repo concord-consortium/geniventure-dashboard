@@ -322,6 +322,7 @@ class GemTable extends Component {
           headerHeight={50}
           width={width}
           height={height}
+          touchScrollEnabled={true}
           {...this.props}
         >
           {columns}
@@ -342,7 +343,8 @@ GemTable.propTypes = {
   onSelectChallenge: PropTypes.func,
   onExpandClick: PropTypes.func,
   // drom Dimensions
-  containerWidth: PropTypes.number
+  containerWidth: PropTypes.number,
+  containerHeight: PropTypes.number
 };
 
 const styles = StyleSheet.create({
