@@ -5,7 +5,7 @@ import '../css/chart.css';
 const Chart = ({data, labelWidth, barWidth, title, narrowAxis}) => {
   const totalWidth = labelWidth + barWidth;
   const rows = data.map((d, i) => {
-    const barLength = Math.min(d.value * 100, 99.2);
+    const barLength = Math.max(Math.min(d.value * 100, 99.2), 2);
     let unseen = false;
     let color;
     if (d.value < 0.33) {
