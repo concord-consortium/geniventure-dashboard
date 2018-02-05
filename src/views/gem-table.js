@@ -226,7 +226,7 @@ class GemTable extends Component {
           cell={<StudentNameCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} />}
           fixed={true}
           width={100}
-          flexGrow={2}
+          flexGrow={8}
         />
       </ColumnGroup>
     );
