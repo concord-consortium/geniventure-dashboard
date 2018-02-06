@@ -4,10 +4,11 @@ import {StyleSheet, css} from 'aphrodite';
 
 class ExpandCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, selectedRow, callback, ...props} = this.props;
+    const { data, rowIndex, columnKey, selectedRow, callback, ...props } = this.props;
+    const linkFont = { 'fontFamily': "'Times New Roman', Times, serif" };
     return (
       <Cell onClick={() => callback(rowIndex)} {...props}>
-        <a>
+        <a style={linkFont}>
           {selectedRow === rowIndex ? '\u25BC' : '\u25BA'}
         </a>
       </Cell>
