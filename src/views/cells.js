@@ -5,11 +5,19 @@ import {StyleSheet, css} from 'aphrodite';
 class ExpandCell extends React.PureComponent {
   render() {
     const { data, rowIndex, columnKey, selectedRow, callback, ...props } = this.props;
-    const linkFont = { 'fontFamily': "'Times New Roman', Times, serif" };
+    const linkFont = { fontFamily: "'Times New Roman', Times, serif" };
+    const svgDownArrow =
+      <svg height="10" width="10"><polygon points="0,0 5,10 10,0" /></svg>;
+    const svgRightArrow =
+      <svg height="10" width="10"><polygon points="0,0 10,5 0,10" /></svg>;
     return (
       <Cell onClick={() => callback(rowIndex)} {...props}>
         <a style={linkFont}>
-          {selectedRow === rowIndex ? '\u25BC' : '\u25BA'}
+          {selectedRow === rowIndex ? <span className={"row-expanded"}>
+            {svgDownArrow}
+          </span> : <span className={"row-collapsed"}>
+            {svgRightArrow}
+          </span>}
         </a>
       </Cell>
     );

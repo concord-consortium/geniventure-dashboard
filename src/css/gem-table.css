@@ -71,3 +71,10 @@
   font-size: 1.1em;
   line-height: 0.8;
 }
+
+span.row-expanded{
+  fill:#4183C4;
+}
+span.row-collapsed{
+  fill: #4183C4;
+}
