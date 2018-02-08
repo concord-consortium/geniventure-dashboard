@@ -3,6 +3,7 @@ import 'whatwg-fetch';        // fetch polyfill
 import fakeOffering from './fake-data/offering.json';
 import fakeAuthoring from './fake-data/authoring.json';
 import fakeStudentData from './fake-data/student-data.json';
+import { initFirebase } from './firebase-auth';
 
 const urlParams = (() => {
   const query = window.location.search.substring(1);
@@ -26,15 +27,19 @@ const fbAuthoringPath = '/1/authoring/application';
 const fbClassPath = '/1/userState/https%3A%2F%2Flearn%2Econcord%2Eorg%2Fapi%2Fv1%2Fclasses%2F';
 const fbStudentPath = 'https%3A%2F%2Flearn%2Econcord%2Eorg%2F';
 
-if (!USE_FAKE_DATA) {
-  const fbConfig = {
-    apiKey: 'AIzaSyCQyZqErr-WsvaZzATcmOgxxv1wcrNQXIo',
-    authDomain: 'gvdemo-6f015.firebaseapp.com',
-    databaseURL: 'https://gvdemo-6f015.firebaseio.com',
-    storageBucket: ''
-  };
-  firebase.initializeApp(fbConfig);
-}
+const setupFirebase = () => {
+  if (!USE_FAKE_DATA) {
+    // const fbConfig = {
+    //   apiKey: 'AIzaSyCQyZqErr-WsvaZzATcmOgxxv1wcrNQXIo',
+    //   authDomain: 'gvdemo-6f015.firebaseapp.com',
+    //   databaseURL: 'https://gvdemo-6f015.firebaseio.com',
+    //   storageBucket: ''
+    // };
+    // firebase.initializeApp(fbConfig);
+    return initFirebase(urlParams);
+  }
+  return new Promise((resolve) => { resolve(); });
+};
 
 const getSnapshotVal = (snapshot) => snapshot.val();
 
@@ -63,54 +68,57 @@ const updateFakeTimes = (studentData) => {
 };
 
 export default function addDataListener(callback) {
-  return getClassData()
-    .then((classData) => {
-      const className = classData.clazz;
-      const classId = classData.clazz_id;
-      const students = classData.students;
+  return setupFirebase()
+    .then(() => {
+      getClassData()
+        .then((classData) => {
+          const className = classData.clazz;
+          const classId = classData.clazz_id;
+          const students = classData.students;
 
-      // send back the class name as soon as we have it
-      callback({
-        className
-      });
-
-      // then query Firebase for the student and authoring data
-      if (USE_FAKE_DATA) {
-        updateFakeTimes(fakeStudentData);
-        callback({
-          authoring: fakeAuthoring,
-          studentData: fakeStudentData
-        });
-      } else {
-        // get authoring data once
-        firebase.database().ref(fbAuthoringPath)
-          .once('value').then(getSnapshotVal)
-          .then((data) => {
-            callback({authoring: data});
-          })
-          .catch(console.log.bind(console));
-
-        // notify callback on all student data changes
-        firebase.database().ref(`${fbClassPath}${classId}`)
-          .on('value', (snapshot) => {
-            const fbData = snapshot.val();
-            const studentFbData = {};
-            students.forEach((s) => {
-              const data = fbData[`${fbStudentPath}${s.user_id}`];
-              const state = data ? data.state : {};
-              const stateMeta = data ? data.stateMeta : {};
-              const itsData = data ? data.itsData : {};
-              studentFbData[s.username] = {
-                name: s.name,
-                state,
-                stateMeta,
-                itsData
-              };
-            });
-            callback({studentData: studentFbData});
+          // send back the class name as soon as we have it
+          callback({
+            className
           });
-      }
-    })
-    .catch(console.log.bind(console));
+
+          // then query Firebase for the student and authoring data
+          if (USE_FAKE_DATA) {
+            updateFakeTimes(fakeStudentData);
+            callback({
+              authoring: fakeAuthoring,
+              studentData: fakeStudentData
+            });
+          } else {
+            // get authoring data once
+            firebase.database().ref(fbAuthoringPath)
+              .once('value').then(getSnapshotVal)
+              .then((data) => {
+                callback({ authoring: data });
+              })
+              .catch(console.log.bind(console));
+
+            // notify callback on all student data changes
+            firebase.database().ref(`${fbClassPath}${classId}`)
+              .on('value', (snapshot) => {
+                const fbData = snapshot.val();
+                const studentFbData = {};
+                students.forEach((s) => {
+                  const data = fbData[`${fbStudentPath}${s.user_id}`];
+                  const state = data ? data.state : {};
+                  const stateMeta = data ? data.stateMeta : {};
+                  const itsData = data ? data.itsData : {};
+                  studentFbData[s.username] = {
+                    name: s.name,
+                    state,
+                    stateMeta,
+                    itsData
+                  };
+                });
+                callback({ studentData: studentFbData });
+              });
+          }
+        })
+        .catch(console.log.bind(console));
+    });
 }
 
