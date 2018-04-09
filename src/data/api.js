@@ -63,7 +63,59 @@ const updateFakeTimes = (studentData) => {
 };
 
 export default function addDataListener(callback) {
-  return getClassData()
+  // temporary second route for testing:
+  if (window.location.hash && window.location.hash === "#test") {
+    getClassData()
+    .then((classData) => {
+      const className = classData.clazz;
+      const classId = classData.clazz_id;
+      const students = classData.students;
+
+      // send back the class name as soon as we have it
+      callback({
+        className
+      });
+
+      // then query Firebase for the student and authoring data
+      if (USE_FAKE_DATA) {
+        updateFakeTimes(fakeStudentData);
+        callback({
+          authoring: fakeAuthoring,
+          studentData: fakeStudentData
+        });
+      } else {
+        // get authoring data once
+        firebase.database().ref(fbAuthoringPath)
+          .once('value').then(getSnapshotVal)
+          .then((data) => {
+            callback({authoring: data});
+          })
+          .catch(console.log.bind(console));
+
+        // notify callback on all student data changes
+        const studentFbData = {};
+        students.forEach((s) => {
+          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}`)
+            .orderByKey()
+            .on('value', (snapshot) => {
+              const data = snapshot.val();
+              const state = data ? data.state : {};
+              const stateMeta = data ? data.stateMeta : {};
+              const itsData = data ? data.itsData : {};
+              studentFbData[s.username] = {
+                name: s.name,
+                state,
+                stateMeta,
+                itsData
+              };
+              callback({studentData: studentFbData});
+            });
+        });
+      }
+    })
+    .catch(console.log.bind(console));
+  } else {
+    getClassData()
     .then((classData) => {
       const className = classData.clazz;
       const classId = classData.clazz_id;
@@ -92,6 +144,7 @@ export default function addDataListener(callback) {
 
         // notify callback on all student data changes
         firebase.database().ref(`${fbClassPath}${classId}`)
+          .orderByKey()
           .on('value', (snapshot) => {
             const fbData = snapshot.val();
             const studentFbData = {};
@@ -112,5 +165,6 @@ export default function addDataListener(callback) {
       }
     })
     .catch(console.log.bind(console));
+  }
 }
 
