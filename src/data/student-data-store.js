@@ -1,5 +1,11 @@
 import migrate from './migrations';
 
+const Sorting = {
+  ALPHABETICAL: "alphabetical",
+  PROGRESS: "progress",
+  STRUGGLING: "struggling"
+};
+
 const migrateAllData = (data) => {
   const studentData = Object.assign({}, data);
   Object.keys(studentData).forEach(studentId => {
@@ -100,7 +106,7 @@ class StudentDataStore {
       fbStudentData: "",
       time: 0,
       sortActive: false,
-      sortStruggling: false
+      sort: Sorting.ALPHABETICAL
     };
     // simple property we can use to force rerender (hack, because we keep using same
     // datastore object, so React doesn't know to re-render columns)
@@ -109,12 +115,12 @@ class StudentDataStore {
 
   // Compare the new data we have with out cache, and return `true` if we need
   // to update.
-  checkCache(authoring, rawFBStudentData, time, sortActive, sortStruggling) {
+  checkCache(authoring, rawFBStudentData, time, sortActive, sort) {
     const authoringStr = JSON.stringify(authoring);
     const rawFBStudentDataStr = JSON.stringify(rawFBStudentData);
 
     if (time !== this.cache.time || sortActive !== this.cache.sortActive
-        || sortStruggling !== this.cache.sortStruggling
+        || sort !== this.cache.sort
         || authoringStr !== this.cache.authoring
         || rawFBStudentData !== this.cache.rawFBStudentData) {
       // update cache
@@ -123,21 +129,21 @@ class StudentDataStore {
         rawFBStudentData: rawFBStudentDataStr,
         time,
         sortActive,
-        sortStruggling
+        sort
       };
       return true;
     }
     return false;
   }
 
-  update(authoring, rawFBStudentData, time, sortActive, sortStruggling) {
-    const shouldUpdate = this.checkCache(authoring, rawFBStudentData, time, sortActive, sortStruggling);
+  update(authoring, rawFBStudentData, time, sortActive, sort) {
+    const shouldUpdate = this.checkCache(authoring, rawFBStudentData, time, sortActive, sort);
     if (shouldUpdate) {
       this.authoring = authoring;
       this.fbStudentData = migrateAllData(rawFBStudentData);
       this.studentIds = Object.keys(this.fbStudentData);
       this.sortActive = sortActive;
-      this.sortStruggling = sortStruggling;
+      this.sort = sort;
       this.time = time;
 
       // create the data object
@@ -175,8 +181,21 @@ class StudentDataStore {
         }
       }
 
-      // if they have different scores, sort if requested
-      if (this.sortStruggling) {
+      // if they have different progresses, sort if requested
+      if (this.sort === Sorting.PROGRESS) {
+        const scoreA = this.data[a].progress;
+        const scoreB = this.data[b].progress;
+
+        if (scoreA < scoreB) {
+          return -1;
+        }
+        if (scoreA > scoreB) {
+          return 1;
+        }
+      }
+
+      // if they have different scores, sort if requested, or if we are sorting by progress and are tied
+      if (this.sort === Sorting.STRUGGLING || this.sort === Sorting.PROGRESS) {
         const scoreA = this.data[a].recentScore;
         const scoreB = this.data[b].recentScore;
 
@@ -279,7 +298,9 @@ class StudentDataStore {
         });
       });
 
-      if (this.sortStruggling) {
+      studentData.progress = completedChallenges;
+
+      if (this.sort === Sorting.STRUGGLING || this.sort === Sorting.PROGRESS) {
         studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
       }
 
@@ -413,4 +434,7 @@ Object.keys(conceptLabels).forEach(id => {
 
 StudentDataStore.concepts = concepts;
 
-module.exports = StudentDataStore;
+module.exports = {
+  StudentDataStore,
+  Sorting
+};

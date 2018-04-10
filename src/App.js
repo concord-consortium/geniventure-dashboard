@@ -4,7 +4,7 @@ import {StyleSheet, css} from 'aphrodite';
 import { CSSTransitionGroup } from 'react-transition-group';
 
 import addDataListener from './data/api';
-import StudentDataStore from './data/student-data-store';
+import { StudentDataStore, Sorting } from './data/student-data-store';
 import GemTable from './views/gem-table';
 import { renderHelp } from './views/static-views';
 
@@ -28,7 +28,7 @@ export default class App extends Component {
       studentData: {},
       className: "",
       sortActive: true,
-      sort: "alphabetical",
+      sort: Sorting.ALPHABETICAL,
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
@@ -255,8 +255,9 @@ export default class App extends Component {
             <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
               <span style={{paddingRight: "3px"}}>Sort:</span>
               <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
-                <option value="alphabetical">alphabetically</option>
-                <option value="struggling">by struggling students</option>
+                <option value={Sorting.ALPHABETICAL}>alphabetically</option>
+                <option value={Sorting.PROGRESS}>by progress</option>
+                <option value={Sorting.STRUGGLING}>by struggling students</option>
               </select>
             </label>
             <label htmlFor="show-active">
@@ -273,9 +274,9 @@ export default class App extends Component {
             <div className="tips">
               <div className="tips-title">Tip:</div>
               <div>
-                You can change the <span className="tip-word">sorting</span> to &quot;struggling&quot; to show
-                those students who are behind and those who have been having trouble
-                with recent activities.
+                You can change the <span className="tip-word">sorting</span> to &quot;progress&quot; to show the students
+                who have completed the fewest challenges, or by &quot;struggling&quot; to show those students who have been
+                having trouble with recent activities.
               </div>
             </div>
           </div>
@@ -305,7 +306,6 @@ export default class App extends Component {
       viewingHelp,
       time
     } = this.state;
-    const sortStruggling = sort === "struggling";
 
     const title = [<span key="title">Geniventure Dashboard</span>];
     if (className !== null) {
@@ -323,7 +323,7 @@ export default class App extends Component {
       studentData,
       time,
       sortActive,
-      sortStruggling);
+      sort);
 
     const body = (viewingPreview ?
       (
