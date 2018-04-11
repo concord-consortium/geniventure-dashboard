@@ -67,3 +67,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+.concept-table {
+  width: 500px
+}

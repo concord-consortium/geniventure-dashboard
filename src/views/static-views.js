@@ -1,5 +1,5 @@
 import React from 'react';
-import StudentDataStore from '../data/student-data-store';
+import { StudentDataStore } from '../data/student-data-store';
 
 const renderConceptKey = () =>
   (

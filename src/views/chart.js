@@ -8,9 +8,9 @@ const Chart = ({data, labelWidth, barWidth, title, narrowAxis, onToggleHelp}) =>
     const barLength = Math.max(Math.min(d.value * 100, 99.2), 2);
     let unseen = false;
     let color;
-    if (d.value < 0.33) {
+    if (d.value < 0.5) {
       color = Chart.colors.low;
-    } else if (d.value < 0.66) {
+    } else if (d.value < 0.8) {
       color = Chart.colors.medium;
     } else {
       color = Chart.colors.high;

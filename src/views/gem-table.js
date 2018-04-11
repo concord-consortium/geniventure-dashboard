@@ -5,6 +5,7 @@ import Dimensions from 'react-dimensions';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell } from './cells';
 import Chart from './chart';
+import ConceptTable from './concept-table';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
@@ -46,7 +47,8 @@ class GemTable extends Component {
     this.handleClickGem = this.handleClickGem.bind(this);
     this.state = {
       widthPercent: 100,
-      stackGems: true
+      stackGems: true,
+      showChart: false
     };
     this.shrink = this.shrink.bind(this);
     this.grow = this.grow.bind(this);
@@ -59,6 +61,8 @@ class GemTable extends Component {
     } else if (this.props.selectedChallenge !== null && nextProps.selectedChallenge === null) {
       requestAnimationFrame(this.grow);
       this.setState({stackGems: true});
+    } else if (this.props.selectedRow !== nextProps.selectedRow) {
+      this.setState({showChart: false});
     }
   }
 
@@ -150,16 +154,28 @@ class GemTable extends Component {
     const narrowAxis = tableWidth > 450 && tableWidth < 600;
     let conceptChart;
     if (concepts && Object.keys(concepts).length > 0) {
-      conceptChart = (
-        <Chart
-          labelWidth={170}
-          barWidth={300}
-          data={concepts}
-          title={title}
-          narrowAxis={narrowAxis}
-          onToggleHelp={this.props.onToggleHelp}
-        />
-      );
+      if (this.state.showChart) {
+        conceptChart = (
+          <Chart
+            labelWidth={170}
+            barWidth={300}
+            data={concepts}
+            title={title}
+            narrowAxis={narrowAxis}
+            onToggleHelp={this.props.onToggleHelp}
+          />
+        );
+      } else {
+        conceptChart = (
+          <ConceptTable
+            data={concepts}
+            title={title}
+            allStudents={allStudents}
+            onToggleHelp={this.props.onToggleHelp}
+            onShowChart={() => this.setState({showChart: true})}
+          />
+        );
+      }
     } else {
       conceptChart = (
         <div className="chart" style={{width: "100%", padding: '5px', border: '1px solid #DDD'}}>
