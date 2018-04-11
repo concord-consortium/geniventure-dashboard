@@ -15,7 +15,7 @@ const GAEvents = {
   OPENED_CHALLENGE: 'Opened challenge table',
   OPENED_STUDENT: 'Opened student row',
   OPENED_PREVIEW: 'Viewed challenge preview',
-  OPENED_HELP: 'Viewed challenge preview',
+  OPENED_HELP: 'Viewed help',
   SORTED: 'Sorted table'
 };
 
