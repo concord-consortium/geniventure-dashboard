@@ -97,7 +97,7 @@ const getGemImage = (score, stack, number, i) => {
     return <div />;
   }
   let style;
-  let text = number > 3 ? <div className="numbered-gem">{number}</div> : "";
+  let text = number > 2 ? <div className="numbered-gem">{number}</div> : "";
   if (score !== "...") {
     const imagePath = 'http://geniventure.concord.org/resources/fablevision/venture-pad/';
     const gemNames = ["gem_blue", "gem_yellow", "gem_red", "dark_crystal"];
