@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, css} from 'aphrodite';
 import '../css/chart.css';
 
-const ConceptTable = ({data, title, allStudents, onToggleHelp, onShowChart}) => {
+const ConceptList = ({data, title, allStudents, onToggleHelp, onShowChart}) => {
   const redConceptRows = data
     .filter(d => d.value >= 0 && d.value < 0.5)
     .sort((a, b) => a.value - b.value)
@@ -55,7 +55,7 @@ const ConceptTable = ({data, title, allStudents, onToggleHelp, onShowChart}) => 
   );
 };
 
-ConceptTable.propTypes = {
+ConceptList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.shape({
       longer: PropTypes.string
@@ -83,5 +83,5 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = ConceptTable;
+module.exports = ConceptList;
 

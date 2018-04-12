@@ -5,7 +5,7 @@ import Dimensions from 'react-dimensions';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell } from './cells';
 import Chart from './chart';
-import ConceptTable from './concept-table';
+import ConceptList from './concept-list';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
 
@@ -167,7 +167,7 @@ class GemTable extends Component {
         );
       } else {
         conceptChart = (
-          <ConceptTable
+          <ConceptList
             data={concepts}
             title={title}
             allStudents={allStudents}
