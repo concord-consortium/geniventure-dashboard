@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../css/chart.css';
 
-const Chart = ({data, labelWidth, barWidth, title, narrowAxis, onToggleHelp}) => {
+const ConceptsBarChart = ({data, labelWidth, barWidth, title, narrowAxis, onToggleHelp}) => {
   const totalWidth = labelWidth + barWidth;
   const rows = data.map((d, i) => {
     const barLength = Math.max(Math.min(d.value * 100, 99.2), 2);
     let unseen = false;
     let color;
     if (d.value < 0.5) {
-      color = Chart.colors.low;
+      color = ConceptsBarChart.colors.low;
     } else if (d.value < 0.8) {
-      color = Chart.colors.medium;
+      color = ConceptsBarChart.colors.medium;
     } else {
-      color = Chart.colors.high;
+      color = ConceptsBarChart.colors.high;
     }
     if (d.value === -1 || isNaN(d.value)) {
       unseen = true;
@@ -68,7 +68,7 @@ const Chart = ({data, labelWidth, barWidth, title, narrowAxis, onToggleHelp}) =>
   );
 };
 
-Chart.propTypes = {
+ConceptsBarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.shape({
       long: PropTypes.string,
@@ -83,7 +83,7 @@ Chart.propTypes = {
   onToggleHelp: PropTypes.func
 };
 
-Chart.colors = {
+ConceptsBarChart.colors = {
   high: {
     bar: "#7AEAF5",
     border: "#5ee6f3"
@@ -98,5 +98,5 @@ Chart.colors = {
   }
 };
 
-module.exports = Chart;
+module.exports = ConceptsBarChart;
 

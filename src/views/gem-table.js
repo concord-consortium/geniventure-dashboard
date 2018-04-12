@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Dimensions from 'react-dimensions';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell } from './cells';
-import Chart from './chart';
+import ConceptsBarChart from './concepts-bar-chart';
 import ConceptList from './concept-list';
 import '../css/fixed-data-table.css';
 import '../css/gem-table.css';
@@ -156,7 +156,7 @@ class GemTable extends Component {
     if (concepts && Object.keys(concepts).length > 0) {
       if (this.state.showChart) {
         conceptChart = (
-          <Chart
+          <ConceptsBarChart
             labelWidth={170}
             barWidth={300}
             data={concepts}
