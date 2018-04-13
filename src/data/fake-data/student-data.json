@@ -103,7 +103,15 @@
         "conceptsAggregated": [
           {
             "conceptId": "LG1.A3",
-            "score": 0
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.C3",
+            "score": 1
+          },
+          {
+            "conceptId": "LG1.P2",
+            "score": 1
           },
           {
             "conceptId": "LG1.C2a",

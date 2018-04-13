@@ -38,7 +38,7 @@ const conceptLabels = {
   "LG1.A3": {
     long: "Sex Determination",
     longer: "Sex Determination",
-    short: "Sex Det.",
+    short: "Sex Determ.",
     description: "Females have two X chromosomes. Males have one X and one Y."
   },
   "LG1.C2a": {
@@ -50,25 +50,25 @@ const conceptLabels = {
   "LG1.C2b": {
     long: "Recessive",
     longer: "Recessive Traits",
-    short: "Reces.",
+    short: "Recessive",
     description: "Two recessive alleles are needed to produce a recessive trait."
   },
   "LG1.C3": {
     long: "Incomplete Dom.",
     longer: "Incomplete Dominance",
-    short: "Inc. Dom.",
+    short: "Incomp. Dom.",
     description: "For some traits, both alleles will have some effect, with neither being completely dominant."
   },
   "LG1.P1": {
     long: "Geno-to-Pheno Mapp.",
     longer: "Geno-to-Pheno Mapping",
-    short: "Geno - Pheno",
+    short: "Geno to Pheno",
     description: "Given a genotype predict the phenotype of an organism. "
   },
   "LG1.P2": {
     long: "Pheno-to-Geno Mapp.",
     longer: "Pheno-to-Geno Mapping",
-    short: "Pheno - Geno",
+    short: "Pheno to Geno",
     description: "Given a phenotype, determine possible genotypes of an organism."
   },
   "LG1.C4a": {
@@ -80,13 +80,13 @@ const conceptLabels = {
   "LG2.P1": {
     long: "Gamete selection",
     longer: "Gamete selection",
-    short: "Gamete sel.",
+    short: "Gamete selection",
     description: "Create or select parental gametes to create an individual offspring with a specific phenotype."
   },
   "LG3.P2": {
     long: "Parent genotypes",
     longer: "Parent genotypes",
-    short: "Parent gene",
+    short: "Parent geno.",
     description: "Set parental genotypes to produce a specific pattern of offspring."
   }
 };

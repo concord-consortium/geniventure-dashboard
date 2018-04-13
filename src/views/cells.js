@@ -39,7 +39,7 @@ module.exports.TextCell = TextCell;
 
 class StudentNameCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, ...props} = this.props;
+    const {data, rowIndex, columnKey, lastUpdateTime, ...props} = this.props;
     const {name, activityLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
     const className = css(
       styles[activityLevel],
@@ -158,17 +158,55 @@ class GemCell extends React.PureComponent {
 }
 module.exports.GemCell = GemCell;
 
+const conceptStyles = [
+  {
+    url: '/assets/img/red-flag.png',
+    color: 'rgba(255,0,0,0.2)'
+  },
+  {
+    url: '/assets/img/yellow-flag.png',
+    color: 'rgba(255,243,1,0.2)'
+  },
+  {
+    url: '/assets/img/blue-check.png',
+    color: 'rgba(107,235,233,0.2)'
+  }
+];
+
 class ConceptCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, ...props} = this.props;
-    const conceptScore = data.getObjectAt(rowIndex, columnKey);
-    let value = "";
-    let style = null;
-    if (conceptScore < 0.1) {
-      value = "X";
-      style = css(styles.failedConcept);
+    console.log("render concept!")
+    const {data, rowIndex, columnKey} = this.props;
+    if (window.woo) debugger;
+    const conceptScores = data.getObjectAt(rowIndex, "concepts");
+    if (!conceptScores) {
+      return null;
     }
-    return <div className={style}>{value}</div>;
+
+    if (conceptScores.studentCount) {
+      return getTotalsImage(conceptScores);
+    }
+
+    const score = conceptScores[columnKey] ? conceptScores[columnKey].value : NaN;
+    if (isNaN(score) || score < 0) {
+      return null;
+    }
+    const scoreCategory =
+      score < 0.5 ?
+        0 :
+      score < 0.8 ?
+        1 :
+        2;
+
+    const conceptStyle = conceptStyles[scoreCategory];
+
+    const style = {
+      backgroundImage: `url(${conceptStyle.url})`,
+      backgroundSize: "29px",
+      backgroundColor: conceptStyle.color
+    };
+
+    return <div className="gem-image" style={style} />;
   }
 }
 module.exports.ConceptCell = ConceptCell;

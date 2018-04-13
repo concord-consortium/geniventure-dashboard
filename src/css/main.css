@@ -11,6 +11,41 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 5px 20px 5px 10px;
+  border-bottom: 1px solid #d6c787;
+  height: 28px;
+}
+
+.top-row>div {
+  display: flex;
+}
+
+.top-row .tab {
+  position: relative;
+  left: 0px;
+  top: 4px;
+  width: 190px;
+  height: 18px;
+  text-align: center;
+  padding: 6px 6px 6px 10px;
+  border: 1px solid #777;
+  border-bottom: 1px solid #fee9aa;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0px -5px 15px -5px #0b7277;
+  background-color: #fee9aa;
+  z-index: 3;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-right: -8px;
+  cursor: pointer;
+}
+
+.top-row .tab.inactive {
+  z-index: 2;
+  height: 16px;
+  top: 6px;
+  background-color: #f3da94;
+  border-bottom: 1px solid #666;
+  box-shadow: inset 0px -10px 10px 0px #d6bc73;
 }
 
 .right-panel-wrapper {

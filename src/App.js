@@ -6,6 +6,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import addDataListener from './data/api';
 import { StudentDataStore, Sorting } from './data/student-data-store';
 import GemTable from './views/gem-table';
+import ConceptTable from './views/concept-table';
 import { renderHelp } from './views/static-views';
 
 import './css/main.css';
@@ -19,6 +20,11 @@ const GAEvents = {
   SORTED: 'Sorted table'
 };
 
+const tables = {
+  PROGRESS: "Progress",
+  CONCEPTS: "Concepts"
+};
+
 export default class App extends Component {
 
   constructor() {
@@ -29,6 +35,7 @@ export default class App extends Component {
       className: "",
       sortActive: true,
       sort: Sorting.ALPHABETICAL,
+      tableSelection: tables.PROGRESS,
       selectedLevel: null,
       selectedMission: null,
       selectedChallenge: null,
@@ -175,7 +182,7 @@ export default class App extends Component {
       selectedChallenge,
       viewingPreview
     } = this.state;
-    const location = selectedChallenge === null ? "Overview"
+    const location = selectedChallenge === null ? "Progress Report"
       : `Challenge ${this.challengeString('.')}`;
 
     let buttons;
@@ -184,16 +191,31 @@ export default class App extends Component {
     } else if (viewingPreview) {
       buttons = <button style={{marginLeft: "15px"}} onClick={this.onTogglePreview}>Back to table</button>;
     }
+
+    const progressClasses = "tab" + (this.state.tableSelection !== tables.PROGRESS ? " inactive" : "");
+    const conceptClasses = "tab" + (this.state.tableSelection !== tables.CONCEPTS ? " inactive" : "");
+
+    const conceptsTab = selectedChallenge === null ?
+      (
+        <div className={conceptClasses} onClick={() => this.setState({tableSelection: tables.CONCEPTS})}>
+          Concepts Report
+        </div>
+      ) :
+      null;
+
     return (
       <div className="top-row">
         <div>
-          <span style={{paddingRight: "10px", fontWeight: "bold", fontSize: "1.2em"}}>{location}</span>
+          <div className={progressClasses} onClick={() => this.setState({tableSelection: tables.PROGRESS})}>
+            {location}
+          </div>
+          {conceptsTab}
           {buttons}
         </div>
         <div>
         <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
               <span style={{paddingRight: "3px"}}>Sort:</span>
-              <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
+              <select id="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
                 <option value={Sorting.ALPHABETICAL}>alphabetically</option>
                 <option value={Sorting.PROGRESS}>by progress</option>
                 <option value={Sorting.STRUGGLING}>by struggling students</option>
@@ -257,6 +279,7 @@ export default class App extends Component {
       className,
       sortActive,
       sort,
+      tableSelection,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
       startSmall,
@@ -282,6 +305,28 @@ export default class App extends Component {
       sortActive,
       sort);
 
+    const table = (tableSelection === tables.PROGRESS ?
+      (
+        <GemTable
+          dataStore={this.dataStore}
+          selectedLevel={selectedLevel}
+          selectedMission={selectedMission}
+          selectedChallenge={selectedChallenge}
+          selectedRow={selectedRow}
+          transitionToChallenge={transitionToChallenge}
+          startSmall={startSmall}
+          onSelectChallenge={this.onSelectChallenge}
+          onExpandClick={this.onExpandClick}
+          onToggleHelp={this.onToggleHelp}
+        />
+      ) :
+      (
+        <ConceptTable
+          dataStore={this.dataStore}
+        />
+      )
+    );
+
     const body = (viewingPreview ?
       (
         <div>
@@ -293,18 +338,7 @@ export default class App extends Component {
       ) :
       (
         <div className={css(styles.bodyWrapper)}>
-          <GemTable
-            dataStore={this.dataStore}
-            selectedLevel={selectedLevel}
-            selectedMission={selectedMission}
-            selectedChallenge={selectedChallenge}
-            selectedRow={selectedRow}
-            transitionToChallenge={transitionToChallenge}
-            startSmall={startSmall}
-            onSelectChallenge={this.onSelectChallenge}
-            onExpandClick={this.onExpandClick}
-            onToggleHelp={this.onToggleHelp}
-          />
+          {table}
           {rightPanel}
         </div>
       )
