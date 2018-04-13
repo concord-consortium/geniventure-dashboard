@@ -25,7 +25,9 @@ const renderHelp = (toggleHelp) =>
       <div>
         <ul>
           <li>
-            Click on the <span className="tip-word">drawer handle</span> at the top of the chart to view sorting options.
+            You can change the <span className="tip-word">sorting</span> to &quot;progress&quot; to show the students
+            who have completed the fewest challenges, or by &quot;struggling&quot; to show those students who have been
+            having trouble with recent activities.
           </li>
           <li>
             Click on a <span className="tip-word">column heading</span> to show a detailed

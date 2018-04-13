@@ -1,9 +1,9 @@
 body {
   margin: 0;
-  background-color: #fee9aa;
   color: #333;
   font-family: Helvetica, Arial, sans-serif;
   font-size:0.9em;
+  background-color: #d0eaea;
 }
 
 .top-row {
@@ -53,6 +53,10 @@ body {
 .fade-appear.fade-appear-active {
   opacity: 1;
   transition: opacity .8s ease-in;
+}
+
+.drawer-wrapper {
+  background-color: #fee9aa;
 }
 
 .drawer {

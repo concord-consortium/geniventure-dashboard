@@ -37,7 +37,6 @@ export default class App extends Component {
       viewingPreview: false,
       viewingHelp: false,
       time: Date.now(),
-      drawerOpen: false,
       startSmall: false
     };
     this.onSelectChallenge = this.onSelectChallenge.bind(this);
@@ -47,7 +46,6 @@ export default class App extends Component {
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
-    this.onToggleDrawer = this.onToggleDrawer.bind(this);
 
     this.dataStore = new StudentDataStore();
   }
@@ -167,13 +165,6 @@ export default class App extends Component {
     });
   }
 
-  onToggleDrawer() {
-    this.setState({
-      drawerOpen: !this.state.drawerOpen
-    });
-    window.scrollTo(0, 0);
-  }
-
   challengeString(separator) {
     const {selectedLevel, selectedMission, selectedChallenge} = this.state;
     return [selectedLevel + 1, selectedMission + 1, selectedChallenge + 1].join(separator);
@@ -200,7 +191,23 @@ export default class App extends Component {
           {buttons}
         </div>
         <div>
-          <button id="help" onClick={this.onToggleHelp}>Help</button>
+        <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
+              <span style={{paddingRight: "3px"}}>Sort:</span>
+              <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
+                <option value={Sorting.ALPHABETICAL}>alphabetically</option>
+                <option value={Sorting.PROGRESS}>by progress</option>
+                <option value={Sorting.STRUGGLING}>by struggling students</option>
+              </select>
+            </label>
+            <label htmlFor="show-active">
+              <input
+                id="show-active"
+                type="checkbox"
+                checked={this.state.sortActive}
+                onChange={this.onSortActiveToggle}
+              />
+              Group active students
+            </label>
         </div>
       </div>
     );
@@ -243,55 +250,6 @@ export default class App extends Component {
     );
   }
 
-  renderSortPanel() {
-    let drawerClassName = "drawer";
-    if (this.state.drawerOpen) {
-      drawerClassName += " open";
-    }
-    return (
-      <div>
-        <div className={drawerClassName}>
-          <div className="drawer-contents">
-            <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
-              <span style={{paddingRight: "3px"}}>Sort:</span>
-              <select if="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
-                <option value={Sorting.ALPHABETICAL}>alphabetically</option>
-                <option value={Sorting.PROGRESS}>by progress</option>
-                <option value={Sorting.STRUGGLING}>by struggling students</option>
-              </select>
-            </label>
-            <label htmlFor="show-active">
-              <input
-                id="show-active"
-                type="checkbox"
-                checked={this.state.sortActive}
-                onChange={this.onSortActiveToggle}
-              />
-              Sort by currently-active students
-            </label>
-          </div>
-          <div>
-            <div className="tips">
-              <div className="tips-title">Tip:</div>
-              <div>
-                You can change the <span className="tip-word">sorting</span> to &quot;progress&quot; to show the students
-                who have completed the fewest challenges, or by &quot;struggling&quot; to show those students who have been
-                having trouble with recent activities.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="drawer-handle-wrapper" onClick={this.onToggleDrawer}>
-          <div className="drawer-handle">
-            <hr />
-            <hr />
-            <hr />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     const {
       authoring,
@@ -314,7 +272,6 @@ export default class App extends Component {
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
-    const sorting = this.renderSortPanel();
     const help = viewingHelp ? renderHelp(this.onToggleHelp) : null;
     const modalOverlay = viewingHelp ? <div id="modal-overlay" onClick={this.onToggleHelp} /> : null;
 
@@ -354,9 +311,13 @@ export default class App extends Component {
     );
     return (
       <div>
-        <nav className={css(styles.title)}>{title}</nav>
+        <div className={css(styles.flex)}>
+          <nav className={css(styles.title)}>{title}</nav>
+          <div>
+            <button id="help" onClick={this.onToggleHelp}>Help</button>
+          </div>
+        </div>
         {topRow}
-        {sorting}
         {body}
         {help}
         {modalOverlay}
@@ -367,12 +328,17 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   bodyWrapper: {
-    display: 'flex'
+    display: 'flex',
+    'background-color': '#fee9aa',
+    'padding-top': '1px'
+  },
+  flex: {
+    display: 'flex',
+    'justify-content': 'space-between'
   },
   title: {
-    'background-color': '#c4e7e6',
-    padding: '11px',
-    color: '#3a878b',
+    padding: '11px 0 3px 11px',
+    color: '#0b7277',
     'font-size': '1.3em',
     'font-family': 'museo-slab,georgia,"times new roman",times,serif',
     'font-weight': "700"
