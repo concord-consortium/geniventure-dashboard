@@ -27,8 +27,8 @@ const ConceptList = ({data, title, allStudents, onToggleHelp, onShowChart}) => {
     `Some students are currently struggling with the following concept${single ? ':' : 's:'}` :
     `This student is currently struggling with the following concept${single ? ':' : 's:'}`;
   const noStruggling = allStudents ?
-    "On average these students currently have no struggling concepts." :
-    "This student currently has no struggling concepts."
+    "On average these students are not having difficulties on any of the tracked concepts." :
+    "This student is not having difficulties on any of the tracked concepts."
 
   const body = redConceptRows.length + yellowConceptRows.length > 0 ? (
     <div>

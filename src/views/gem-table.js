@@ -138,7 +138,7 @@ class GemTable extends Component {
       );
       title = "Concept understanding";
     } else {
-      title = "Average concept understanding";
+      title = "Average (median) concept understanding";
     }
 
     let activityHeading = null;

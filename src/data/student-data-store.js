@@ -360,27 +360,24 @@ class StudentDataStore {
     });
 
     allStudentData.concepts = [];
-    const conceptsMap = {};
+
+    // clone concept data into new array so we can freely sort it
+    const conceptData = [];
     this.studentIds.forEach((id) => {
-      const studentConcepts = this.data[id].concepts;
-      studentConcepts.forEach((c) => {
-        if (conceptsMap[c.code] === undefined) {
-          conceptsMap[c.code] = {count: 0, total: 0};
-        }
-        if (c.value !== -1) {
-          conceptsMap[c.code].count += 1;
-          conceptsMap[c.code].total += c.value;
-        }
-      });
+      conceptData.push(Object.assign({}, this.data[id].concepts));
     });
-    Object.keys(conceptsMap).forEach(code => {
-      const concept = conceptsMap[code];
-      allStudentData.concepts.push({
-        code,
-        label: getConceptLabel(code),
-        value: concept.total / concept.count
-      });
-    });
+
+    const concepts = this.data[this.studentIds[0]].concepts;
+    for (let i = 0; i < concepts.length; i++) {
+      const sortedConcepts = conceptData
+        .filter(c => c[i].value >= 0)
+        .sort((a, b) => a[i].value - b[i].value);
+      let median = -1;
+      if (sortedConcepts.length) {
+        median = sortedConcepts[Math.floor((sortedConcepts.length - 1) / 2)][i].value;
+      }
+      allStudentData.concepts.push(Object.assign({}, concepts[i], {value: median}));
+    }
 
     const allStudentsId = "all-students";
     this.studentIds.unshift(allStudentsId);
