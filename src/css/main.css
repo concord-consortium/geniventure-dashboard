@@ -270,3 +270,38 @@ button.button-on-white:hover {
   top: 10px;
   right: 10px;
 }
+
+.concept-popup {
+  z-index: 3;
+  background-color: #eee;
+  border: 3px solid #444;
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.concept-popup h1 {
+  margin: 0 0 5 0;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #0b7277;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.concept-popup:before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  margin-left: -20px;
+  border-width: 12px;
+  border-style: solid;
+  border-color: transparent transparent #444 transparent;
+}
+
+.concept-popup-left:before {
+  margin-left: -70px;
+}
+
+.concept-popup-right:before {
+  margin-left: 30px;
+}
