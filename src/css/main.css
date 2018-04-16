@@ -6,6 +6,18 @@ body {
   background-color: #d0eaea;
 }
 
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 150px;
+  z-index: 3;
+}
+
+#loading img {
+  position: relative;
+  left: -50%;
+}
+
 .top-row {
   display: flex;
   align-items: center;

@@ -72,8 +72,8 @@ export default class App extends Component {
       }
     });
 
-    // update time state every 10 seconds to change student "last seen" state
-    this.timerInterval = setInterval(() => this.setState({time: Date.now()}), 10000);
+    // update time state every 20 seconds to change student "last seen" state
+    this.timerInterval = setInterval(() => this.setState({time: Date.now()}), 20000);
   }
 
   componentWillUnmount() {
@@ -305,6 +305,12 @@ export default class App extends Component {
       sortActive,
       sort);
 
+    const loading = (!this.dataStore || this.dataStore.getSize() === 0) && (
+      <div id="loading">
+        <img src="/assets/img/loading-icon.gif" alt="loading" />
+      </div>
+    );
+
     const table = (tableSelection === tables.PROGRESS ?
       (
         <GemTable
@@ -338,6 +344,7 @@ export default class App extends Component {
       ) :
       (
         <div className={css(styles.bodyWrapper)}>
+          {loading}
           {table}
           {rightPanel}
         </div>
