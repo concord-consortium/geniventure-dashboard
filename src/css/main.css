@@ -202,7 +202,7 @@ button:hover {
   transform: translate(-50%, -50%);
   width: 640px;
   max-width: 100%;
-  height: 480px;
+  height: 530px;
   max-height: 100%;
   padding: 20px 50px 20px 20px;
   z-index: 1100;
@@ -316,4 +316,8 @@ button.button-on-white:hover {
 
 .concept-popup-right:before {
   margin-left: 30px;
+}
+
+.concept-popup-far-right:before {
+  margin-left: 100px;
 }

@@ -145,6 +145,9 @@ class ConceptTable extends Component {
             if (style.left < 50) {
               style.left += 50;
               locationStyle = "concept-popup-left";
+            } else if (style.left > 800) {
+              style.left -= 120;
+              locationStyle = "concept-popup-far-right";
             } else if (style.left > 600) {
               style.left -= 50;
               locationStyle = "concept-popup-right";

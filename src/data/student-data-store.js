@@ -83,11 +83,23 @@ const conceptLabels = {
     short: "Gamete selection",
     description: "Create or select parental gametes to create an individual offspring with a specific phenotype."
   },
-  "LG3.P2": {
+  "LG3.P1": {
     long: "Parent genotypes",
     longer: "Parent genotypes",
     short: "Parent geno.",
-    description: "Set parental genotypes to produce a specific pattern of offspring."
+    description: "Set or select parental genotypes to produce a specific pattern of traits in offspring."
+  },
+  "LG3.P3": {
+    long: "Patterns in Offspring",
+    longer: "Patterns in Offspring",
+    short: "Offspring patterns",
+    description: "Use patterns in the phenotypes of a group of offspring to predict the genotype of the parents."
+  },
+  "LG3.P4": {
+    long: "Test Cross",
+    longer: "Test Cross",
+    short: "Test cross",
+    description: "Breed with a recessive animal to determine an unknown genotype."
   }
 };
 
