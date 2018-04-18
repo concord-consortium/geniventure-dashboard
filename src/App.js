@@ -17,13 +17,27 @@ const GAEvents = {
   OPENED_STUDENT: 'Opened student row',
   OPENED_PREVIEW: 'Viewed challenge preview',
   OPENED_HELP: 'Viewed help',
-  SORTED: 'Sorted table'
+  SORTED: 'Sorted table',
+  OPENED_CONCEPTS_TABLE: 'Opened concepts table',
+  OPENED_GEMS_TABLE: 'Opened gems table'
 };
 
 const tables = {
   PROGRESS: "Progress",
   CONCEPTS: "Concepts"
 };
+
+let className;
+
+const logEvent = (event) => {
+  if (gaInitialized) {
+    const params = {};
+    if (className) {
+      params.event_label = className;
+    }
+    gtag('event', event, params);
+  }
+}
 
 export default class App extends Component {
 
@@ -62,6 +76,7 @@ export default class App extends Component {
       this.setState(data);
 
       if (!gaInitialized && data.className) {
+        className = data.className;
         const title = `Geniventure Dashboard: ${data.className}`;
         document.title = title;
         gtag('js', new Date());
@@ -90,11 +105,7 @@ export default class App extends Component {
       selectedRow: rowIndex,
       transitionToChallenge: true
     }, () => {
-      if (gaInitialized) {
-        gtag('event', GAEvents.OPENED_CHALLENGE, {
-          challenge: this.challengeString(".")
-        });
-      }
+      logEvent(GAEvents.OPENED_CHALLENGE);
     });
 
     setTimeout(() => this.setState({transitionToChallenge: false}), 1100);
@@ -115,10 +126,8 @@ export default class App extends Component {
       viewingPreview: !this.state.viewingPreview,
       startSmall: true
     }, () => {
-      if (gaInitialized && this.state.viewingPreview) {
-        gtag('event', GAEvents.OPENED_PREVIEW, {
-          challenge: this.challengeString('.')
-        });
+      if (this.state.viewingPreview) {
+        logEvent(GAEvents.OPENED_PREVIEW);
       }
     });
   }
@@ -127,8 +136,8 @@ export default class App extends Component {
     this.setState({
       viewingHelp: !this.state.viewingHelp
     }, () => {
-      if (gaInitialized && this.state.viewingHelp) {
-        gtag('event', GAEvents.OPENED_HELP);
+      if (this.state.viewingHelp) {
+        logEvent(GAEvents.OPENED_HELP);
       }
     });
   }
@@ -141,9 +150,7 @@ export default class App extends Component {
       selectedRow
     });
 
-    if (gaInitialized) {
-      gtag('event', GAEvents.OPENED_STUDENT);
-    }
+    logEvent(GAEvents.OPENED_STUDENT);
   }
 
   onSortActiveToggle() {
@@ -151,11 +158,7 @@ export default class App extends Component {
       sortActive: !this.state.sortActive,
       selectedRow: null
     }, () => {
-      if (gaInitialized) {
-        gtag('event', GAEvents.SORTED, {
-          by_active: this.state.sortActive
-        });
-      }
+      logEvent(GAEvents.SORTED);
     });
   }
 
@@ -164,11 +167,7 @@ export default class App extends Component {
       sort: evt.target.value,
       selectedRow: null
     }, () => {
-      if (gaInitialized) {
-        gtag('event', GAEvents.SORTED, {
-          sorting: this.state.sort
-        });
-      }
+      logEvent(GAEvents.SORTED);
     });
   }
 
@@ -197,7 +196,10 @@ export default class App extends Component {
 
     const conceptsTab = selectedChallenge === null ?
       (
-        <div className={conceptClasses} onClick={() => this.setState({tableSelection: tables.CONCEPTS})}>
+        <div className={conceptClasses} onClick={() => {
+          this.setState({tableSelection: tables.CONCEPTS});
+          logEvent(GAEvents.OPENED_CONCEPTS_TABLE);
+        }}>
           Concepts Report
         </div>
       ) :
@@ -206,7 +208,10 @@ export default class App extends Component {
     return (
       <div className="top-row">
         <div>
-          <div className={progressClasses} onClick={() => this.setState({tableSelection: tables.PROGRESS})}>
+          <div className={progressClasses} onClick={() => {
+            this.setState({tableSelection: tables.PROGRESS});
+            logEvent(GAEvents.OPENED_GEMS_TABLE);
+          }}>
             {location}
           </div>
           {conceptsTab}
@@ -276,7 +281,6 @@ export default class App extends Component {
     const {
       authoring,
       studentData,
-      className,
       sortActive,
       sort,
       tableSelection,
@@ -289,7 +293,7 @@ export default class App extends Component {
     } = this.state;
 
     const title = [<span key="title">Geniventure Dashboard</span>];
-    if (className !== null) {
+    if (className.length && className.length > 0) {
       title.push(<span key="className" className={css(styles.lighter)}>{`: ${className}`}</span>);
     }
 
