@@ -78,27 +78,27 @@ const conceptLabels = {
     description: "A gene can mask the effect of other genes"
   },
   "LG2.P1": {
-    long: "Gamete selection",
-    longer: "Gamete selection",
-    short: "Gamete selection",
+    long: "Gamete Selection",
+    longer: "Gamete Selection",
+    short: "Gamete Selection",
     description: "Create or select parental gametes to create an individual offspring with a specific phenotype."
   },
   "LG3.P1": {
-    long: "Parent genotypes",
-    longer: "Parent genotypes",
-    short: "Parent geno.",
+    long: "Parent Genotypes",
+    longer: "Parent Genotypes",
+    short: "Parent Geno.",
     description: "Set or select parental genotypes to produce a specific pattern of traits in offspring."
   },
   "LG3.P3": {
     long: "Patterns in Offspring",
     longer: "Patterns in Offspring",
-    short: "Offspring patterns",
+    short: "Offspring Patterns",
     description: "Use patterns in the phenotypes of a group of offspring to predict the genotype of the parents."
   },
   "LG3.P4": {
     long: "Test Cross",
     longer: "Test Cross",
-    short: "Test cross",
+    short: "Test Cross",
     description: "Breed with a recessive animal to determine an unknown genotype."
   }
 };

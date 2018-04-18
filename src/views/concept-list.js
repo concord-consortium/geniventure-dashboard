@@ -22,13 +22,13 @@ const ConceptList = ({data, title, allStudents, onToggleHelp, onShowChart}) => {
       </li>
     ));
 
-  const single = redConceptRows.length === 1;
+  const single = (redConceptRows.length + yellowConceptRows.length) === 1;
   const heading = allStudents ?
     `Some students are currently struggling with the following concept${single ? ':' : 's:'}` :
     `This student is currently struggling with the following concept${single ? ':' : 's:'}`;
   const noStruggling = allStudents ?
     "On average these students are not having difficulties on any of the tracked concepts." :
-    "This student is not having difficulties on any of the tracked concepts."
+    "This student is not having difficulties on any of the tracked concepts.";
 
   const body = redConceptRows.length + yellowConceptRows.length > 0 ? (
     <div>
