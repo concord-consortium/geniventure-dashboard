@@ -293,7 +293,7 @@ export default class App extends Component {
     } = this.state;
 
     const title = [<span key="title">Geniventure Dashboard</span>];
-    if (className.length && className.length > 0) {
+    if (className) {
       title.push(<span key="className" className={css(styles.lighter)}>{`: ${className}`}</span>);
     }
 

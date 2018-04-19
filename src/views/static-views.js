@@ -4,7 +4,12 @@ import { StudentDataStore } from '../data/student-data-store';
 const renderConceptKey = () =>
   (
     <div>
-      <h2>Concept key:</h2>
+      <h2>Concepts Report:</h2>
+      <p>
+        Geniventure&#39;s intelligent tutoring system evaluates your students&#39; conceptual understanding.
+        Red and yellow flags indicate the degree to which students are struggling with concepts.
+        Students with a check show evidence of mastering the concept.
+      </p>
       <dl>
         {
           StudentDataStore.concepts.map(concept =>
