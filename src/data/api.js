@@ -92,23 +92,63 @@ export default function addDataListener(callback) {
 
       // notify callback on all student data changes
       const studentFbData = {};
-      students.forEach((s) => {
-        firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}`)
-          .orderByKey()
-          .on('value', (snapshot) => {
-            const data = snapshot.val();
-            const state = data ? data.state : {};
-            const stateMeta = data ? data.stateMeta : {};
-            const itsData = data ? data.itsData : {};
-            studentFbData[s.username] = {
-              name: s.name,
-              state,
-              stateMeta,
-              itsData
-            };
-            callback({studentData: studentFbData});
-          });
-      });
+
+      if (window.location.hash && window.location.hash !== "#old") {
+        students.forEach((s) => {
+          studentFbData[s.username] = {
+            name: s.name
+          };
+
+          // state
+          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/state`)
+            .orderByKey()
+            .on('value', (snapshot) => {
+              const state = snapshot.val() || {};
+              studentFbData[s.username].state = state;
+              callback({studentData: studentFbData});
+            });
+
+          // stateMeta
+          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/stateMeta`)
+            .orderByKey()
+            .on('value', (snapshot) => {
+              const stateMeta = snapshot.val() || {};
+              studentFbData[s.username].stateMeta = stateMeta;
+              callback({studentData: studentFbData});
+            });
+
+          // itsData/studentModel/conceptsAggregated
+          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
+            .orderByKey()
+            .on('value', (snapshot) => {
+              const conceptsAggregated = snapshot.val() || [];
+              studentFbData[s.username].itsData = {
+                studentModel: {
+                  conceptsAggregated
+                }
+              };
+              callback({studentData: studentFbData});
+            });
+        });
+      } else {
+        students.forEach((s) => {
+          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}`)
+            .orderByKey()
+            .on('value', (snapshot) => {
+              const data = snapshot.val();
+              const state = data ? data.state : {};
+              const stateMeta = data ? data.stateMeta : {};
+              const itsData = data ? data.itsData : {};
+              studentFbData[s.username] = {
+                name: s.name,
+                state,
+                stateMeta,
+                itsData
+              };
+              callback({studentData: studentFbData});
+            });
+        });
+      }
     }
   })
   .catch(console.log.bind(console));
