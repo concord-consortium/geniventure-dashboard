@@ -136,11 +136,13 @@ class ConceptTable extends Component {
             if (!isOpen) openPortal();
             const cell = document.getElementById(`header-${concept.label.short}`);
             const box = cell.getBoundingClientRect();
+            const bodyRect = document.body.getBoundingClientRect();
             const style = {
               position: 'absolute',
-              top: box.y + box.height + 5,
-              left: (box.x + (box.width / 2)) - (popupWidth / 2)
+              top: (box.top - bodyRect.top) + box.height + 5,
+              left: ((box.left - bodyRect.left) + (box.width / 2)) - (popupWidth / 2)
             };
+
             let locationStyle = "";
             if (style.left < 50) {
               style.left += 50;
