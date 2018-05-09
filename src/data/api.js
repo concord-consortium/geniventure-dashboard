@@ -93,7 +93,7 @@ export default function addDataListener(callback) {
       // notify callback on all student data changes
       const studentFbData = {};
 
-      if (window.location.hash && window.location.hash !== "#old") {
+      if (window.location.hash && window.location.hash !== "#slow") {
         students.forEach((s) => {
           studentFbData[s.username] = {
             name: s.name
@@ -101,7 +101,6 @@ export default function addDataListener(callback) {
 
           // state
           firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/state`)
-            .orderByKey()
             .on('value', (snapshot) => {
               const state = snapshot.val() || {};
               studentFbData[s.username].state = state;
@@ -110,7 +109,6 @@ export default function addDataListener(callback) {
 
           // stateMeta
           firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/stateMeta`)
-            .orderByKey()
             .on('value', (snapshot) => {
               const stateMeta = snapshot.val() || {};
               studentFbData[s.username].stateMeta = stateMeta;
@@ -119,7 +117,6 @@ export default function addDataListener(callback) {
 
           // itsData/studentModel/conceptsAggregated
           firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
-            .orderByKey()
             .on('value', (snapshot) => {
               const conceptsAggregated = snapshot.val() || [];
               studentFbData[s.username].itsData = {
@@ -131,23 +128,44 @@ export default function addDataListener(callback) {
             });
         });
       } else {
-        students.forEach((s) => {
-          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}`)
-            .orderByKey()
-            .on('value', (snapshot) => {
-              const data = snapshot.val();
-              const state = data ? data.state : {};
-              const stateMeta = data ? data.stateMeta : {};
-              const itsData = data ? data.itsData : {};
-              studentFbData[s.username] = {
-                name: s.name,
-                state,
-                stateMeta,
-                itsData
-              };
-              callback({studentData: studentFbData});
-            });
-        });
+        const getStudentData = () => {
+          console.log("get data!");
+          students.forEach((s) => {
+            studentFbData[s.username] = {
+              name: s.name
+            };
+
+            // state
+            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/state`)
+              .once('value', (snapshot) => {
+                const state = snapshot.val() || {};
+                studentFbData[s.username].state = state;
+                callback({studentData: studentFbData});
+              });
+
+            // stateMeta
+            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/stateMeta`)
+              .once('value', (snapshot) => {
+                const stateMeta = snapshot.val() || {};
+                studentFbData[s.username].stateMeta = stateMeta;
+                callback({studentData: studentFbData});
+              });
+
+            // itsData/studentModel/conceptsAggregated
+            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
+              .once('value', (snapshot) => {
+                const conceptsAggregated = snapshot.val() || [];
+                studentFbData[s.username].itsData = {
+                  studentModel: {
+                    conceptsAggregated
+                  }
+                };
+                callback({studentData: studentFbData});
+              });
+          });
+        };
+        setInterval(getStudentData, 30 * 1000);
+        getStudentData();
       }
     }
   })
