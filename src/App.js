@@ -299,7 +299,7 @@ export default class App extends Component {
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
-    const help = viewingHelp ? renderHelp(this.onToggleHelp) : null;
+    const help = viewingHelp ? renderHelp(this.onToggleHelp, this.state.tableSelection) : null;
     const modalOverlay = viewingHelp ? <div id="modal-overlay" onClick={this.onToggleHelp} /> : null;
 
     this.dataStore.update(
