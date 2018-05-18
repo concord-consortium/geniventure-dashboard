@@ -60,6 +60,47 @@ class ConceptTable extends Component {
     }
   }
 
+  createConceptPopupContent(concept) {
+    const title = concept.label.longer;
+    const description = concept.label.description;
+    const trait = concept.label.trait;
+    const location = concept.label.location;
+
+    if (!!trait && !!location) {
+      return (
+        <div>
+          <h1>{title}</h1>
+          <p className="concept-description">{description}</p>
+          <p className="concept-trait"><strong>Trait:</strong> {trait}</p>
+          <p className="concept-location"><strong>Where to find it:</strong> {location}</p>
+        </div>
+      );
+    } else if (!!trait) {
+      return (
+        <div>
+          <h1>{title}</h1>
+          <p className="concept-description">{description}</p>
+          <p className="concept-trait"><strong>Trait:</strong> {trait}</p>
+        </div>
+      );
+    } else if (!!location) {
+      return (
+        <div>
+          <h1>{title}</h1>
+          <p className="concept-description">{description}</p>
+          <p className="concept-location"><strong>Where to find it:</strong> {location}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1>{title}</h1>
+          <p className="concept-description">{description}</p>
+        </div>
+      );
+    }
+  }
+
   createColumns() {
     const {
       dataStore
@@ -154,12 +195,10 @@ class ConceptTable extends Component {
               style.left -= 50;
               locationStyle = "concept-popup-right";
             }
-            const title = concept.label.longer;
-            const text = concept.label.description;
+
             return portal(
               <div style={style} className={`${css(styles.popup)} concept-popup ${locationStyle}`}>
-                <h1>{title}</h1>
-                {text}
+                {this.createConceptPopupContent(concept)}
               </div>
             );
           }}

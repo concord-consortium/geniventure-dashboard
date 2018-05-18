@@ -7,7 +7,7 @@ import addDataListener from './data/api';
 import { StudentDataStore, Sorting } from './data/student-data-store';
 import GemTable from './views/gem-table';
 import ConceptTable from './views/concept-table';
-import { renderHelp } from './views/static-views';
+import { HelpModal } from './views/static-views';
 
 import './css/main.css';
 
@@ -57,6 +57,7 @@ export default class App extends Component {
       transitionToChallenge: false,
       viewingPreview: false,
       viewingHelp: false,
+      helpType: tables.PROGRESS,
       time: Date.now(),
       startSmall: false
     };
@@ -132,9 +133,15 @@ export default class App extends Component {
     });
   }
 
-  onToggleHelp() {
+  onToggleHelp(helpType) {
+    // determine which help tab to display
+    const helpTypeSelection = helpType !== 'Progress' && helpType !== 'Concepts' ? this.state.tableSelection : helpType;
+    console.log(helpType);
+    console.log(helpTypeSelection);
+
     this.setState({
-      viewingHelp: !this.state.viewingHelp
+      viewingHelp: !this.state.viewingHelp,
+      helpType: helpTypeSelection
     }, () => {
       if (this.state.viewingHelp) {
         logEvent(GAEvents.OPENED_HELP);
@@ -197,7 +204,10 @@ export default class App extends Component {
     const conceptsTab = selectedChallenge === null ?
       (
         <div className={conceptClasses} onClick={() => {
-          this.setState({tableSelection: tables.CONCEPTS});
+          this.setState({
+            tableSelection: tables.CONCEPTS,
+            helpType: tables.CONCEPTS,
+          });
           logEvent(GAEvents.OPENED_CONCEPTS_TABLE);
         }}>
           Concepts Report
@@ -209,7 +219,10 @@ export default class App extends Component {
       <div className="top-row">
         <div>
           <div className={progressClasses} onClick={() => {
-            this.setState({tableSelection: tables.PROGRESS});
+            this.setState({
+              tableSelection: tables.PROGRESS,
+              helpType: tables.PROGRESS,
+            });
             logEvent(GAEvents.OPENED_GEMS_TABLE);
           }}>
             {location}
@@ -277,6 +290,15 @@ export default class App extends Component {
     );
   }
 
+  renderHelp() {
+    return (
+      <HelpModal
+        toggleHelp={() => this.onToggleHelp()}
+        helpTypeSelection={this.state.helpType}
+      />
+    );
+  }
+
   render() {
     const {
       authoring,
@@ -289,6 +311,7 @@ export default class App extends Component {
       startSmall,
       viewingPreview,
       viewingHelp,
+      helpType,
       time
     } = this.state;
 
@@ -299,7 +322,7 @@ export default class App extends Component {
 
     const topRow = this.renderTopRow(selectedChallenge, viewingPreview);
     const rightPanel = this.renderRightPanel();
-    const help = viewingHelp ? renderHelp(this.onToggleHelp, this.state.tableSelection) : null;
+    const help = viewingHelp ? this.renderHelp() : null;
     const modalOverlay = viewingHelp ? <div id="modal-overlay" onClick={this.onToggleHelp} /> : null;
 
     this.dataStore.update(
@@ -354,12 +377,13 @@ export default class App extends Component {
         </div>
       )
     );
+
     return (
       <div>
         <div className={css(styles.flex)}>
           <nav className={css(styles.title)}>{title}</nav>
           <div>
-            <button id="help" onClick={this.onToggleHelp}>Help</button>
+            <button id="help" onClick={() => this.onToggleHelp(this.state.helpType)}>Help</button>
           </div>
         </div>
         {topRow}

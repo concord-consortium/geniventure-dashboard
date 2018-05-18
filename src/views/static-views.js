@@ -3,7 +3,7 @@ import { StudentDataStore } from '../data/student-data-store';
 
 const renderProgressHelp = () =>
   (
-    <div>
+    <div className="progress-report-help">
       <ul>
         <li>
           You can change the <span className="tip-word">sorting</span> to &quot;progress&quot; to show the students
@@ -23,10 +23,9 @@ const renderProgressHelp = () =>
     </div>
   );
 
-const renderConceptKey = () =>
-  (
-    <div>
-      <h2>Concepts Report:</h2>
+const renderConceptKey = () => {
+  return (
+    <div className="concepts-report-help">
       <p>
         Geniventure&#39;s intelligent tutoring system evaluates your students&#39; conceptual understanding.
         Red and yellow flags indicate the degree to which students are struggling with concepts.
@@ -34,16 +33,38 @@ const renderConceptKey = () =>
       </p>
       <dl>
         {
-          StudentDataStore.concepts.map(concept =>
-            [
-              <dt>{concept.long}</dt>,
-              <dd>{concept.description}</dd>
-            ]
-          )
+          StudentDataStore.concepts.map(concept => {
+            if (!!concept.trait && !!concept.location) {
+              return [
+                <dt>{concept.longer}</dt>,
+                <dd>{concept.description}</dd>,
+                <dd className="concept-trait"><strong>Trait:</strong> {concept.trait}</dd>,
+                <dd className="concept-location"><strong>Location:</strong> {concept.location}</dd>
+              ]
+            } else if (!!concept.trait) {
+              return [
+                <dt>{concept.longer}</dt>,
+                <dd>{concept.description}</dd>,
+                <dd className="concept-trait"><strong>Trait:</strong> {concept.trait}</dd>
+              ]
+            } else if (!!concept.location) {
+              return [
+                <dt>{concept.longer}</dt>,
+                <dd>{concept.description}</dd>,
+                <dd className="concept-location"><strong>Location:</strong> {concept.location}</dd>
+              ]
+            } else {
+              return [
+                <dt>{concept.longer}</dt>,
+                <dd>{concept.description}</dd>
+              ]
+            }
+          })
         }
       </dl>
     </div>
   );
+}
 
 const renderHelpTabs = (toggleHelp, helpTypeSelection) => {
   const progressTabClasses = "tab" + (helpTypeSelection !== 'Progress' ? " inactive" : "");
@@ -56,16 +77,16 @@ const renderHelpTabs = (toggleHelp, helpTypeSelection) => {
   )
 }
 
-const renderHelp = (toggleHelp, helpTypeSelection) => {
-  const helpContent = helpTypeSelection === 'Progress' ? renderProgressHelp() : renderConceptKey();
+const HelpModal = (props) => {
+  const helpContent = props.helpTypeSelection === 'Progress' ? renderProgressHelp() : renderConceptKey();
   return (
     <div id="help-modal" className="modal">
       <h1>Help</h1>
       <div className="top-row">
-        { renderHelpTabs(toggleHelp, helpTypeSelection) }
+        { renderHelpTabs(props.toggleHelp, props.helpTypeSelection) }
       </div>
       { helpContent }
-      <button id="close-help" className="button-on-white" onClick={toggleHelp}>Close</button>
+      <button id="close-help" className="button-on-white" onClick={props.toggleHelp}>Close</button>
     </div>
   );
 }
@@ -74,5 +95,5 @@ module.exports = {
   renderProgressHelp,
   renderConceptKey,
   renderHelpTabs,
-  renderHelp
+  HelpModal
 };
