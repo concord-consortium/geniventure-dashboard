@@ -169,7 +169,6 @@ body {
 
 .tip-word {
   font-weight: bold;
-  text-decoration: underline;
 }
 
 button {
@@ -202,9 +201,10 @@ button:hover {
   transform: translate(-50%, -50%);
   width: 640px;
   max-width: 100%;
-  height: 591px;
+  height: 640px;
   max-height: 100%;
-  padding: 20px 50px 20px 20px;
+  overflow: scroll;
+  padding: 20px;
   z-index: 1100;
   border: 5px solid #fee9aa;
 }
@@ -217,6 +217,13 @@ button:hover {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.inline-icon {
+  height: auto;
+  margin: 0;
+  padding: 0;
+  width: 12px;
 }
 
 h1 {
@@ -232,35 +239,36 @@ dl {
   padding: 0.5em;
 }
 dt {
-  float: left;
-  clear: left;
-  width: 160px;
-  text-align: right;
+  color: #0b7277;
+  display: inline;
   font-weight: bold;
-  color: green;
 }
-dt::after {
-  content: ":";
+dt:before {
+  content: '';
+  display: block;
+  margin: 0 0 10px;
+}
+dt:after {
+  content: ': ';
 }
 dd {
-  margin: 0 0 0 170px;
-  padding: 0 0 0.5em 0;
+  display: block;
+  margin: 10px 0 0;
+}
+dt + dd {
+  display: inline;
+  margin-top: 0;
 }
 
 ul {
   list-style: none;
   margin-left: 0;
   padding-left: 1em;
-  text-indent: -1em;
 }
 
 ul li {
+  list-style: disc;
   padding: 3px;
-}
-
-ul li:before {
-  content: "\0BB \020";
-  font-weight: bold;
 }
 
 .button-on-white {
@@ -277,6 +285,10 @@ button.button-on-white:hover {
   margin: 4px 6px;
 }
 
+.concepts-report-help .concept-trait, .concepts-report-help .concept-location {
+  margin-left: 10px;
+}
+
 #close-help {
   position: absolute;
   top: 10px;
@@ -288,7 +300,7 @@ button.button-on-white:hover {
   background-color: #eee;
   border: 3px solid #444;
   border-radius: 5px;
-  padding: 6px;
+  padding: 12px;
 }
 
 .concept-popup h1 {
@@ -297,6 +309,10 @@ button.button-on-white:hover {
   color: #0b7277;
   font-size: 1.2em;
   font-weight: 500;
+}
+
+.concept-popup .concept-trait, .concept-popup .concept-location {
+  margin-left: 22px;
 }
 
 .concept-popup:before {
