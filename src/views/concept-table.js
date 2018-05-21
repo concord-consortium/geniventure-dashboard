@@ -132,6 +132,7 @@ class ConceptTable extends Component {
 
     const columns = concepts.map((concept, k) =>
       <Column
+        key={concept}
         columnKey={k}
         header={
           <Cell
