@@ -48,13 +48,13 @@ const renderConceptKey = () => {
   );
 };
 
-const renderHelpTabs = (toggleHelp, helpTypeSelection) => {
+const renderHelpTabs = (toggleHelp, helpTypeSelection, helpTypeSelectionChange) => {
   const progressTabClasses = "tab" + (helpTypeSelection !== 'Progress' ? " inactive" : "");
   const conceptTabClasses = "tab" + (helpTypeSelection !== 'Concepts' ? " inactive" : "");
   return (
     <div>
-      <div className={progressTabClasses}>Progress Report Help</div>
-      <div className={conceptTabClasses}>Concepts Report Help</div>
+      <div className={progressTabClasses} onClick={() => helpTypeSelectionChange("Progress")}>Progress Report Help</div>
+      <div className={conceptTabClasses} onClick={() => helpTypeSelectionChange("Concepts")}>Concepts Report Help</div>
     </div>
   );
 };
@@ -65,7 +65,7 @@ const HelpModal = (props) => {
     <div id="help-modal" className="modal">
       <h1>Help</h1>
       <div className="top-row">
-        { renderHelpTabs(props.toggleHelp, props.helpTypeSelection) }
+        { renderHelpTabs(props.toggleHelp, props.helpTypeSelection, props.helpTypeSelectionChange) }
       </div>
       { helpContent }
       <button id="close-help" className="button-on-white" onClick={props.toggleHelp}>Close</button>
@@ -75,7 +75,8 @@ const HelpModal = (props) => {
 
 HelpModal.propTypes = {
   helpTypeSelection: PropTypes.string,
-  toggleHelp: PropTypes.func
+  toggleHelp: PropTypes.func,
+  helpTypeSelectionChange: PropTypes.func
 };
 
 module.exports = HelpModal;

@@ -65,6 +65,7 @@ export default class App extends Component {
     this.onBackToOverview = this.onBackToOverview.bind(this);
     this.onTogglePreview = this.onTogglePreview.bind(this);
     this.onToggleHelp = this.onToggleHelp.bind(this);
+    this.onHelpTypeSelectionChange = this.onHelpTypeSelectionChange.bind(this);
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
@@ -144,6 +145,12 @@ export default class App extends Component {
       if (this.state.viewingHelp) {
         logEvent(GAEvents.OPENED_HELP);
       }
+    });
+  }
+
+  onHelpTypeSelectionChange(helpTypeSelection) {
+    this.setState({
+      helpType: helpTypeSelection
     });
   }
 
@@ -293,6 +300,7 @@ export default class App extends Component {
       <HelpModal
         toggleHelp={this.onToggleHelp}
         helpTypeSelection={this.state.helpType}
+        helpTypeSelectionChange={this.onHelpTypeSelectionChange}
       />
     );
   }
