@@ -7,7 +7,7 @@ import addDataListener from './data/api';
 import { StudentDataStore, Sorting } from './data/student-data-store';
 import GemTable from './views/gem-table';
 import ConceptTable from './views/concept-table';
-import { HelpModal } from './views/static-views';
+import HelpModal from './views/help-modal';
 
 import './css/main.css';
 

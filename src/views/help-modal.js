@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StudentDataStore } from '../data/student-data-store';
 
 const renderProgressHelp = () =>
@@ -33,38 +34,19 @@ const renderConceptKey = () => {
       </p>
       <dl>
         {
-          StudentDataStore.concepts.map(concept => {
-            if (!!concept.trait && !!concept.location) {
-              return [
-                <dt>{concept.longer}</dt>,
-                <dd>{concept.description}</dd>,
-                <dd className="concept-trait"><strong>Trait:</strong> {concept.trait}</dd>,
-                <dd className="concept-location"><strong>Location:</strong> {concept.location}</dd>
-              ]
-            } else if (!!concept.trait) {
-              return [
-                <dt>{concept.longer}</dt>,
-                <dd>{concept.description}</dd>,
-                <dd className="concept-trait"><strong>Trait:</strong> {concept.trait}</dd>
-              ]
-            } else if (!!concept.location) {
-              return [
-                <dt>{concept.longer}</dt>,
-                <dd>{concept.description}</dd>,
-                <dd className="concept-location"><strong>Location:</strong> {concept.location}</dd>
-              ]
-            } else {
-              return [
-                <dt>{concept.longer}</dt>,
-                <dd>{concept.description}</dd>
-              ]
-            }
-          })
+          StudentDataStore.concepts.map(concept =>
+            [
+              <dt>{concept.longer}</dt>,
+              <dd>{concept.description}</dd>,
+              concept.trait && <dd className="concept-trait"><strong>Trait:</strong> {concept.trait}</dd>,
+              concept.location && <dd className="concept-location"><strong>Location:</strong> {concept.location}</dd>
+            ]
+          )
         }
       </dl>
     </div>
   );
-}
+};
 
 const renderHelpTabs = (toggleHelp, helpTypeSelection) => {
   const progressTabClasses = "tab" + (helpTypeSelection !== 'Progress' ? " inactive" : "");
@@ -74,8 +56,8 @@ const renderHelpTabs = (toggleHelp, helpTypeSelection) => {
       <div className={progressTabClasses}>Progress Report Help</div>
       <div className={conceptTabClasses}>Concepts Report Help</div>
     </div>
-  )
-}
+  );
+};
 
 const HelpModal = (props) => {
   const helpContent = props.helpTypeSelection === 'Progress' ? renderProgressHelp() : renderConceptKey();
@@ -89,11 +71,11 @@ const HelpModal = (props) => {
       <button id="close-help" className="button-on-white" onClick={props.toggleHelp}>Close</button>
     </div>
   );
-}
-
-module.exports = {
-  renderProgressHelp,
-  renderConceptKey,
-  renderHelpTabs,
-  HelpModal
 };
+
+HelpModal.propTypes = {
+  helpTypeSelection: PropTypes.string,
+  toggleHelp: PropTypes.func
+};
+
+module.exports = HelpModal;
