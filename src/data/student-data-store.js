@@ -39,67 +39,89 @@ const conceptLabels = {
     long: "Sex Determination",
     longer: "Sex Determination",
     short: "Sex Determ.",
-    description: "Females have two X chromosomes. Males have one X and one Y."
+    description: "Females have two X chromosomes. Males have one X and one Y.",
+    trait: "",
+    location: ""
   },
   "LG1.C2a": {
     long: "Simple Dominance",
     longer: "Simple Dominance",
     short: "Simple Dom.",
-    description: "Only one dominant allele is needed to produce the dominant trait. "
+    description: "Only one dominant allele is needed to produce the dominant trait.",
+    trait: "",
+    location: ""
   },
   "LG1.C2b": {
     long: "Recessive",
     longer: "Recessive Traits",
     short: "Recessive",
-    description: "Two recessive alleles are needed to produce a recessive trait."
+    description: "Two recessive alleles are needed to produce a recessive trait.",
+    trait: "Horns. If students are having trouble with this concept, it may be due to a misunderstanding of the Horns trait. Horns are a recessive trait.",
+    location: "Horns are introduced in Mission 2.2"
   },
   "LG1.C3": {
     long: "Incomplete Dom.",
     longer: "Incomplete Dominance",
     short: "Incomp. Dom.",
-    description: "For some traits, both alleles will have some effect, with neither being completely dominant."
+    description: "For some traits, both alleles will have some effect, with neither being completely dominant.",
+    trait: "Armor plates are an example of incomplete dominance.",
+    location: "Armor is introduced in Mission 2.2."
   },
   "LG1.P1": {
     long: "Geno-to-Pheno Mapp.",
     longer: "Geno-to-Pheno Mapping",
     short: "Geno to Pheno",
-    description: "Given a genotype predict the phenotype of an organism. "
+    description: "Given a genotype predict the phenotype of an organism.",
+    trait: "",
+    location: "This concept is evaluated in all the drake match challenges (like Mission 1.2 and 2.2)."
   },
   "LG1.P2": {
     long: "Pheno-to-Geno Mapp.",
     longer: "Pheno-to-Geno Mapping",
     short: "Pheno to Geno",
-    description: "Given a phenotype, determine possible genotypes of an organism."
+    description: "Given a phenotype, determine possible genotypes of an organism.",
+    trait: "",
+    location: "This concept is evaluated in all the egg sorting games (like Mission 2.1)."
   },
   "LG1.C4a": {
     long: "Epistasis",
     longer: "Epistasis",
     short: "Epistasis",
-    description: "A gene can mask the effect of other genes"
+    description: "A gene can mask the effect of other genes",
+    trait: "Albinism is an example of an epistatic trait. If the drake is albino, no other color genes take effect.",
+    location: "This trait is introduced in Mission 3.1."
   },
   "LG2.P1": {
     long: "Gamete Selection",
     longer: "Gamete Selection",
     short: "Gamete Selection",
-    description: "Create or select parental gametes to create an individual offspring with a specific phenotype."
+    description: "Create or select parental gametes to create an individual offspring with a specific phenotype.",
+    trait: "",
+    location: "This concept is evaluated in all the meiosis challenges of Mission 4.1."
   },
   "LG3.P1": {
     long: "Parent Genotypes",
     longer: "Parent Genotypes",
     short: "Parent Geno.",
-    description: "Set or select parental genotypes to produce a specific pattern of traits in offspring."
+    description: "Set or select parental genotypes to produce a specific pattern of traits in offspring.",
+    trait: "",
+    location: "This concept is evaluated in the basic breeding challenges (Missions 4.2 and 4.3)."
   },
   "LG3.P3": {
     long: "Patterns in Offspring",
     longer: "Patterns in Offspring",
     short: "Offspring Patterns",
-    description: "Use patterns in the phenotypes of a group of offspring to predict the genotype of the parents."
+    description: "Use patterns in the phenotypes of a group of offspring to predict the genotype of the parents.",
+    trait: "",
+    location: "This concept is evaluated in the advanced breeding challenges, which are sibling pairs (Mission 4.3) and test cross (Mission 5.1)."
   },
   "LG3.P4": {
     long: "Test Cross",
     longer: "Test Cross",
     short: "Test Cross",
-    description: "Breed with a recessive animal to determine an unknown genotype."
+    description: "Breed with a recessive animal to determine an unknown genotype.",
+    trait: "",
+    location: "This concept is evaluated in Mission 5.1.3, the final test-cross challenge."
   }
 };
 
@@ -447,7 +469,7 @@ class StudentDataStore {
 
 const concepts = [];
 Object.keys(conceptLabels).forEach(id => {
-  concepts.push({id, long: conceptLabels[id].long, description: conceptLabels[id].description});
+  concepts.push({id, long: conceptLabels[id].long, longer: conceptLabels[id].longer, description: conceptLabels[id].description, trait: conceptLabels[id].trait, location: conceptLabels[id].location});
 });
 
 StudentDataStore.concepts = concepts;
