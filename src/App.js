@@ -135,9 +135,7 @@ export default class App extends Component {
 
   onToggleHelp(helpType) {
     // determine which help tab to display
-    const helpTypeSelection = helpType !== 'Progress' && helpType !== 'Concepts' ? this.state.tableSelection : helpType;
-    console.log(helpType);
-    console.log(helpTypeSelection);
+    const helpTypeSelection = typeof helpType === "string" ? helpType : this.state.tableSelection;
 
     this.setState({
       viewingHelp: !this.state.viewingHelp,
@@ -293,7 +291,7 @@ export default class App extends Component {
   renderHelp() {
     return (
       <HelpModal
-        toggleHelp={() => this.onToggleHelp()}
+        toggleHelp={this.onToggleHelp}
         helpTypeSelection={this.state.helpType}
       />
     );
@@ -383,7 +381,7 @@ export default class App extends Component {
         <div className={css(styles.flex)}>
           <nav className={css(styles.title)}>{title}</nav>
           <div>
-            <button id="help" onClick={() => this.onToggleHelp(this.state.helpType)}>Help</button>
+            <button id="help" onClick={this.onToggleHelp}>Help</button>
           </div>
         </div>
         {topRow}

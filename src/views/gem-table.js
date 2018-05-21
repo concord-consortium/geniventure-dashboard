@@ -162,7 +162,7 @@ class GemTable extends Component {
             data={concepts}
             title={title}
             narrowAxis={narrowAxis}
-            onToggleHelp={this.props.onToggleHelp}
+            onToggleHelp={() => this.props.onToggleHelp("Concepts")}
           />
         );
       } else {
@@ -171,7 +171,7 @@ class GemTable extends Component {
             data={concepts}
             title={title}
             allStudents={allStudents}
-            onToggleHelp={this.props.onToggleHelp}
+            onToggleHelp={() => this.props.onToggleHelp("Concepts")}
             onShowChart={() => this.setState({showChart: true})}
           />
         );
