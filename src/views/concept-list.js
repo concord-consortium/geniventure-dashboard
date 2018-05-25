@@ -45,7 +45,7 @@ const ConceptList = ({data, title, allStudents, onToggleHelp, onShowChart}) => {
     <div className="chart concept-table" style={{padding: '5px', border: '1px solid #DDD'}}>
       <div className="concept-chart-top-bar">
         <div className="title">{title}</div>
-        <button className="button-on-white button-narrow" onClick={onToggleHelp}>Key</button>
+        <button className="button-on-white button-narrow" onClick={onToggleHelp}>HELP</button>
       </div>
       {body}
       <div>
@@ -84,4 +84,3 @@ const styles = StyleSheet.create({
 });
 
 module.exports = ConceptList;
-
