@@ -127,10 +127,14 @@ class GemCell extends React.PureComponent {
 
     if (cellData.score === undefined) return null;
 
-    const {score, isHere} = cellData;
+    const {score, isHere, inRemediation} = cellData;
     let isHereStyle;
     if (isHere) {
-      isHereStyle = styles.isHere;
+      if (inRemediation) {
+        isHereStyle = styles.inRemediation;
+      } else {
+        isHereStyle = styles.isHere;
+      }
     }
 
     if (!showAll) {
@@ -236,6 +240,18 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     'border-radius': '20px'
+  },
+  inRemediation: {
+    'background-color': '#ffc091',
+    width: "100%",
+    height: "100%",
+    'border-radius': '20px',
+    ':after': {
+      content: '"R"',
+      top: '0',
+      left: '39px',
+      position: 'absolute'
+    }
   },
   multiGems: {
     display: 'flex',
