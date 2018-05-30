@@ -358,7 +358,15 @@ class StudentDataStore {
             label: getConceptLabel(c.id),
             value: data.score
           };
-        }
+        } else if (student.itsData && student.itsData.studentModel
+            && student.itsData.studentModel.concepts
+            && (data = student.itsData.studentModel.concepts.find(d => c.id === d.conceptId))) {
+          return {
+            code: c.id,
+            label: getConceptLabel(c.id),
+            value: data.probabilityLearned
+          };
+      }
         return {
           code: c.id,
           label: getConceptLabel(c.id),
