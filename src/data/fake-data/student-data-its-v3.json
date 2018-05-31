@@ -1,0 +1,987 @@
+{
+  "student-0": {
+    "name": "Student 0",
+    "state": {
+
+    }
+  },
+  "student-1": {
+    "name": "Student 1",
+    "stateMeta": {
+      "lastActionTime": 1503934111000,
+      "inRemediation": true,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 3
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            [0, 0]
+          ]
+        ],
+        [
+          [
+            [2, 0],
+            [1]
+          ],
+          [
+            [2, 3, 2, 0],
+            [1, 0]
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            3
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.8,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.6,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 0.65,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-2": {
+    "name": "Student 2",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 0,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
+    "state": {
+
+    }
+  },
+  "student-3": {
+    "name": "Student 3",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 3
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            0,
+            3
+          ]
+        ]
+      ]
+    }
+  },
+  "student-4": {
+    "name": "Student 4",
+    "stateMeta": {
+      "lastActionTime": 1505228920538,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 3
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  "student-5": {
+    "name": "Student 5",
+    "stateMeta": {
+    },
+    "state": {
+    }
+  },
+  "student-6": {
+    "name": "Student 6",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 2
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            2,
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  "student-7": {
+    "name": "Student 7",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  "student-8": {
+    "name": "Student 8",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  "student-9": {
+    "name": "Student 9",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  "student-10": {
+    "name": "Student 10",
+    "stateMeta": {
+      "lastActionTime": 1505411363938,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 1,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            [2, 1],
+            [2, 2, 2, 1]
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.9,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.7,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 1,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-11": {
+    "name": "Student 11",
+    "stateMeta": {
+      "lastActionTime": 1505411363938,
+      "currentChallenge": {
+        "level": 0,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
+    "state": {
+
+    }
+  },
+  "student-12": {
+    "name": "Student 12",
+    "stateMeta": {
+      "lastActionTime": 1505409921002,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 2,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            [1, 0],
+            [1]
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 1,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.036487381703969465,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 0.047039319057650034,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-13": {
+    "name": "Student 13",
+    "stateMeta": {
+      "lastActionTime": 1505249383107,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            [0, 0],
+            [1, 1, 0]
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            [3, 3, 3, 3]
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 1,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.036487381703969465,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 0.047039319057650034,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-14": {
+    "name": "Student 14",
+    "stateMeta": {
+      "lastActionTime": 1505412306695,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 2,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.6,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.036487381703969465,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 0.047039319057650034,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-15": {
+    "name": "Student 15",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 1,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.036487381703969465,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 1,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-16": {
+    "name": "Student 16",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 0,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            2
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.05248754844176396,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.036487381703969465,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 1,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-17": {
+    "name": "Student 17",
+    "stateMeta": {
+      "lastActionTime": 1505413943944,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2]
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1
+          ]
+        ]
+      ]
+    },
+    "itsData": {
+      "studentModel": {
+        "concepts": [
+           {
+             "conceptId": "LG1.A3",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 10,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.05248754844176396,
+             "L0": 0.849
+           },
+           {
+             "conceptId": "LG1.C2b",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 0,
+             "probabilityLearned": 0.036487381703969465,
+             "L0": 0.863
+           },
+           {
+             "conceptId": "LG1.C2a",
+             "timestamp": "2018-05-24T02:36:32.448Z",
+             "totalAttempts": 13,
+             "totalCorrect": 7,
+             "probabilityLearned": 0.6,
+             "L0": 0.819
+           }
+         ]
+       }
+    }
+  },
+  "student-18": {
+    "name": "Student 18",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 2,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            [2, 2, 1, 0],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 2]
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  "student-19": {
+    "name": "Student 19",
+    "state": {
+
+    }
+  },
+  "student-20": {
+    "name": "Student 20",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 1,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  "student-21": {
+    "name": "Student 21",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 0,
+        "challenge": 1
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ]
+        ]
+      ]
+    }
+  },
+  "student-22": {
+    "name": "Student 22",
+    "stateMeta": {
+      "lastActionTime": 1504193311000,
+      "currentChallenge": {
+        "level": 1,
+        "mission": 2,
+        "challenge": 0
+      }
+    },
+    "state": {
+      "gems": [
+        [
+          [
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3
+          ]
+        ]
+      ]
+    }
+  }
+}

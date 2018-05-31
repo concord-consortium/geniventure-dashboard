@@ -3,6 +3,7 @@ import 'whatwg-fetch';        // fetch polyfill
 import fakeOffering from './fake-data/offering.json';
 import fakeAuthoring from './fake-data/authoring.json';
 import fakeStudentData from './fake-data/student-data.json';
+import fakeStudentDataITSV3 from './fake-data/student-data-its-v3.json';
 
 const urlParams = (() => {
   const query = window.location.search.substring(1);
@@ -76,11 +77,19 @@ export default function addDataListener(callback) {
 
     // then query Firebase for the student and authoring data
     if (USE_FAKE_DATA) {
-      updateFakeTimes(fakeStudentData);
-      callback({
-        authoring: fakeAuthoring,
-        studentData: fakeStudentData
-      });
+      if (window.location.hash.indexOf("itsv3") === -1) {
+        updateFakeTimes(fakeStudentData);
+        callback({
+          authoring: fakeAuthoring,
+          studentData: fakeStudentData
+        });
+      } else {
+        updateFakeTimes(fakeStudentDataITSV3);
+        callback({
+          authoring: fakeAuthoring,
+          studentData: fakeStudentDataITSV3
+        });
+      }
     } else {
       // get authoring data once
       firebase.database().ref(fbAuthoringPath)
@@ -93,7 +102,7 @@ export default function addDataListener(callback) {
       // notify callback on all student data changes
       const studentFbData = {};
 
-      if (window.location.hash && window.location.hash !== "#slow") {
+      if (window.location.hash.indexOf("slow") === -1) {
         students.forEach((s) => {
           studentFbData[s.username] = {
             name: s.name
@@ -115,17 +124,31 @@ export default function addDataListener(callback) {
               callback({studentData: studentFbData});
             });
 
-          // itsData/studentModel/conceptsAggregated
-          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
-            .on('value', (snapshot) => {
-              const conceptsAggregated = snapshot.val() || [];
-              studentFbData[s.username].itsData = {
-                studentModel: {
-                  conceptsAggregated
-                }
-              };
-              callback({studentData: studentFbData});
-            });
+          if (window.location.hash.indexOf("itsv3") === -1) {
+            // itsData/studentModel/conceptsAggregated
+            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
+              .on('value', (snapshot) => {
+                const conceptsAggregated = snapshot.val() || [];
+                studentFbData[s.username].itsData = {
+                  studentModel: {
+                    conceptsAggregated
+                  }
+                };
+                callback({studentData: studentFbData});
+              });
+          } else {
+            // itsData/studentModel/concepts
+            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/concepts`)
+              .on('value', (snapshot) => {
+                const concepts = snapshot.val() || [];
+                studentFbData[s.username].itsData = {
+                  studentModel: {
+                    concepts
+                  }
+                };
+                callback({studentData: studentFbData});
+              });
+          }
         });
       } else {
         const getStudentData = () => {
@@ -151,17 +174,32 @@ export default function addDataListener(callback) {
                 callback({studentData: studentFbData});
               });
 
-            // itsData/studentModel/conceptsAggregated
-            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
-              .once('value', (snapshot) => {
-                const conceptsAggregated = snapshot.val() || [];
-                studentFbData[s.username].itsData = {
-                  studentModel: {
-                    conceptsAggregated
-                  }
-                };
-                callback({studentData: studentFbData});
-              });
+
+            if (window.location.hash.indexOf("itsv3") === -1) {
+              // itsData/studentModel/conceptsAggregated
+              firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/conceptsAggregated`)
+                .once('value', (snapshot) => {
+                  const conceptsAggregated = snapshot.val() || [];
+                  studentFbData[s.username].itsData = {
+                    studentModel: {
+                      conceptsAggregated
+                    }
+                  };
+                  callback({studentData: studentFbData});
+                });
+            } else {
+              // itsData/studentModel/concepts
+              firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/concepts`)
+                .once('value', (snapshot) => {
+                  const concepts = snapshot.val() || [];
+                  studentFbData[s.username].itsData = {
+                    studentModel: {
+                      concepts
+                    }
+                  };
+                  callback({studentData: studentFbData});
+                });
+            }
           });
         };
         setInterval(getStudentData, 30 * 1000);
