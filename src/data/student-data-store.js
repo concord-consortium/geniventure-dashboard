@@ -73,7 +73,7 @@ const conceptLabels = {
     short: "Geno to Pheno",
     description: "Given a genotype predict the phenotype of an organism.",
     trait: "",
-    location: "This concept is evaluated in all the drake match challenges (like Mission 1.2 and 2.2)."
+    location: "This concept is evaluated in all the egg sorting games (like Mission 2.1)."
   },
   "LG1.P2": {
     long: "Pheno-to-Geno Mapp.",
@@ -81,7 +81,7 @@ const conceptLabels = {
     short: "Pheno to Geno",
     description: "Given a phenotype, determine possible genotypes of an organism.",
     trait: "",
-    location: "This concept is evaluated in all the egg sorting games (like Mission 2.1)."
+    location: "This concept is evaluated in all the drake match challenges (like Mission 1.2 and 2.2)."
   },
   "LG1.C4a": {
     long: "Epistasis",
