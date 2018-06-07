@@ -210,10 +210,11 @@ button:hover {
 }
 
 .modal figure {
+  clear: right;
   display: block;
   float: right;
   height: auto;
-  margin: 0 0 0 10px;
+  margin: 0 0 20px 10px;
   width: 45%;
 }
 .modal figure img {
@@ -226,6 +227,7 @@ button:hover {
   margin-top: 5px;
 }
 .modal ul li {
+  clear: left;
   margin-bottom: 5px;
 }
 table.help-key {
