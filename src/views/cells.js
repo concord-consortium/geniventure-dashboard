@@ -127,14 +127,16 @@ class GemCell extends React.PureComponent {
 
     if (cellData.score === undefined) return null;
 
-    const {score, isHere, inRemediation} = cellData;
+    const {score, isHere, hadRemediation} = cellData;
     let isHereStyle;
     if (isHere) {
-      if (inRemediation) {
-        isHereStyle = styles.inRemediation;
+      if (hadRemediation > 0) {
+        isHereStyle = styles.isHereWithRemediation;
       } else {
         isHereStyle = styles.isHere;
       }
+    } else if (hadRemediation > 0) {
+      isHereStyle = styles.hadRemediation;
     }
 
     if (!showAll) {
@@ -179,9 +181,7 @@ const conceptStyles = [
 
 class ConceptCell extends React.PureComponent {
   render() {
-    console.log("render concept!")
     const {data, rowIndex, columnKey} = this.props;
-    if (window.woo) debugger;
     const conceptScores = data.getObjectAt(rowIndex, "concepts");
     if (!conceptScores) {
       return null;
@@ -241,15 +241,23 @@ const styles = StyleSheet.create({
     height: "100%",
     'border-radius': '20px'
   },
-  inRemediation: {
-    'background-color': '#ffc091',
+  hadRemediation: {
+    ':after': {
+      content: '"R"',
+      top: '2px',
+      left: '30px',
+      position: 'absolute'
+    }
+  },
+  isHereWithRemediation: {
+    'background-color': '#ccf39b',
     width: "100%",
     height: "100%",
     'border-radius': '20px',
     ':after': {
       content: '"R"',
-      top: '0',
-      left: '39px',
+      top: '2px',
+      left: '30px',
       position: 'absolute'
     }
   },
