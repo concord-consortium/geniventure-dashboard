@@ -56,7 +56,7 @@ const conceptLabels = {
     longer: "Recessive Traits",
     short: "Recessive",
     description: "Two recessive alleles are needed to produce a recessive trait.",
-    trait: "Horns. If students are having trouble with this concept, it may be due to a misunderstanding of the Horns trait. Horns are a recessive trait.",
+    trait: "For most traits, the absense is recessive. Horns is surprising as the presence of horns is recessive. If students are having trouble with this concept, it may be due to a misunderstanding of the Horns trait.",
     location: "Horns are introduced in Mission 2.2"
   },
   "LG1.C3": {
@@ -122,6 +122,22 @@ const conceptLabels = {
     description: "Breed with a recessive animal to determine an unknown genotype.",
     trait: "",
     location: "This concept is evaluated in Mission 5.1.3, the final test-cross challenge."
+  },
+  "LG1.C2d": {
+    long: "Polyallelic",
+    longer: "Polyallelic Traits",
+    short: "Polyallelic",
+    description: "Some traits have multiple alleles, which can form a ranked series in terms of dominance.",
+    trait: "Tails are an example of a polallelic trait. Long tail is dominant to kinked tail and kinked tail is dominant to short tail.",
+    location: "This concept is evaluated in the challenges in Level 6."
+  },
+  "LG1.C2c": {
+    long: "X Linked",
+    longer: "X Linked Traits",
+    short: "X Linked",
+    description: "Genes on the X chromosome are referred to as X-linked. Males receive only one copy of the X chromosome, and pass on their X only to their daughters.",
+    trait: "Nose spikes and deep color are an example of a X linked traits",
+    location: "This concept is evaluated in the challenges in Level 6."
   }
 };
 
