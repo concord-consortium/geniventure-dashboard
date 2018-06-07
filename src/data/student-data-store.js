@@ -309,7 +309,7 @@ class StudentDataStore {
 
       const gems = student.state && student.state.gems ? student.state.gems : [];
       const loc = student.stateMeta ? student.stateMeta.currentChallenge : null;
-      const inRemediation = student.stateMeta ? student.stateMeta.inRemediation : false;
+      const remediationHistory = student.state && student.state.remediationHistory ? student.state.remediationHistory : [];
 
       let completedChallenges = 0;
       // If student has fewer than three gems, pretend previous were blue
@@ -324,11 +324,15 @@ class StudentDataStore {
             const isHere = activityLevel !== this.activityLevels.GONE
                             && loc && loc.level === i && loc.mission === j
                             && loc.challenge === k;
+            const hadRemediation = remediationHistory[i] && remediationHistory[i][j] &&
+                    remediationHistory[i][j][k] ?
+                    remediationHistory[i][j][k] :
+                    [];
 
             studentData[key] = {
               score,
-              isHere,
-              inRemediation
+              hadRemediation,
+              isHere
             };
 
             totalChallenges += 1;

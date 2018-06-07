@@ -9,7 +9,6 @@
     "name": "Student 1",
     "stateMeta": {
       "lastActionTime": 1503934111000,
-      "inRemediation": true,
       "currentChallenge": {
         "level": 2,
         "mission": 1,
@@ -17,6 +16,7 @@
       }
     },
     "state": {
+      "remediationHistory": [[[1]], [[0, 2]]],
       "gems": [
         [
           [
@@ -109,6 +109,15 @@
       }
     },
     "state": {
+      "remediationHistory":  [
+        [
+          [],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
       "gems": [
         [
           [
