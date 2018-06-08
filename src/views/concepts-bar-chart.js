@@ -54,7 +54,7 @@ const ConceptsBarChart = ({data, labelWidth, barWidth, title, narrowAxis, onTogg
     <div className="chart" style={{width: totalWidth, padding: '5px', border: '1px solid #DDD'}}>
       <div className="concept-chart-top-bar">
         <div className="title">{title}</div>
-        <button className="button-on-white button-narrow" onClick={onToggleHelp}>Key</button>
+        <button className="button-on-white button-narrow" onClick={onToggleHelp}>HELP</button>
       </div>
       <div className="body">
         {rows}
@@ -99,4 +99,3 @@ ConceptsBarChart.colors = {
 };
 
 module.exports = ConceptsBarChart;
-

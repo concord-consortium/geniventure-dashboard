@@ -209,6 +209,50 @@ button:hover {
   border: 5px solid #fee9aa;
 }
 
+.modal figure {
+  clear: right;
+  display: block;
+  float: right;
+  height: auto;
+  margin: 0 0 20px 10px;
+  width: 45%;
+}
+.modal figure img {
+  border: solid 1px #ddd;
+  height: auto;
+  width: 100%;
+}
+.modal figcaption {
+  font-size: 10px;
+  margin-top: 5px;
+}
+.modal ul li {
+  clear: left;
+  margin-bottom: 5px;
+}
+table.help-key {
+  border-collapse: collapse;
+  border-top: solid 1px #ccc;
+  border-right: solid 1px #ccc;
+  font-size: .9em;
+  margin: 10px 0;
+  width: 100%;
+}
+table.help-key img {
+  display: block;
+  margin: auto;
+}
+table.help-key td, table.help-key th {
+  border-bottom: solid 1px #ccc;
+  border-left: solid 1px #ccc;
+  padding: 5px;
+  text-align: left;
+  vertical-align: center;
+}
+table.help-key th {
+  background: #fee9aa;
+}
+
 #modal-overlay {
   z-index: 1000;
   position: fixed;
