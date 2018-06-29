@@ -8,7 +8,6 @@ install:
 - travis_retry npm install
 before_script: npm run build
 script:
-  - travis_retry npm test
   - ./deploy/s3_deploy.sh
 cache:
   bundler: true
