@@ -243,10 +243,13 @@ const styles = StyleSheet.create({
   },
   hadRemediation: {
     ':after': {
-      content: '"R"',
+      content: '"B"',
       top: '2px',
       left: '30px',
-      position: 'absolute'
+      position: 'absolute',
+      'background-color': '#FFFB',
+      border: '1px solid #0006',
+      'border-radius': '4px'
     }
   },
   isHereWithRemediation: {
@@ -255,10 +258,13 @@ const styles = StyleSheet.create({
     height: "100%",
     'border-radius': '20px',
     ':after': {
-      content: '"R"',
+      content: '"B"',
       top: '2px',
       left: '30px',
-      position: 'absolute'
+      position: 'absolute',
+      'background-color': '#FFFB',
+      border: '1px solid #0006',
+      'border-radius': '4px'
     }
   },
   multiGems: {
