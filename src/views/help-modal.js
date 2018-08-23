@@ -72,7 +72,7 @@ const renderProgressHelp = () => {
           <figure>
             <img src="assets/img/crystals-with-numbers.jpg" alt="Crystals with numbers" />
           </figure>
-          A <span className="tip-word">B next to a crystal</span> indicates the student received a bonus challenge during the challenge.
+          A <span className="tip-word">B next to a crystal</span> indicates that the student was directed to a remedial &quot;Bonus&quot; challenge
         </li>
         <li>
           A <span className="tip-word">number in a crystal</span> shows how many attempts a student made on that challenge. Click the crystal to see
