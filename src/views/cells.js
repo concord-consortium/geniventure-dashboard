@@ -196,7 +196,7 @@ class ConceptCell extends React.PureComponent {
       return null;
     }
     const scoreCategory =
-      score < 0.5 ?
+      score < 0.4 ?
         0 :
       score < 0.8 ?
         1 :
