@@ -1,10 +1,12 @@
+import {StyleSheet, css} from 'aphrodite';
+
 const { Cell } = require('fixed-data-table-2');
 const React = require('react');
-import {StyleSheet, css} from 'aphrodite';
 
 class ExpandCell extends React.PureComponent {
   render() {
-    const { data, rowIndex, columnKey, selectedRow, callback, ...props } = this.props;
+    // eslint-disable-next-line react/prop-types
+    const { rowIndex, selectedRow, callback, ...props } = this.props;
     const linkFont = { fontFamily: "'Times New Roman', Times, serif" };
     const svgDownArrow =
       <svg height="10" width="10"><polygon points="0,0 5,10 10,0" /></svg>;
@@ -27,6 +29,7 @@ module.exports.ExpandCell = ExpandCell;
 
 class TextCell extends React.PureComponent {
   render() {
+    // eslint-disable-next-line react/prop-types
     const {data, rowIndex, columnKey, ...props} = this.props;
     return (
       <Cell {...props}>
@@ -39,7 +42,8 @@ module.exports.TextCell = TextCell;
 
 class StudentNameCell extends React.PureComponent {
   render() {
-    const {data, rowIndex, columnKey, lastUpdateTime, ...props} = this.props;
+    // eslint-disable-next-line react/prop-types
+    const {data, rowIndex, columnKey, ...props} = this.props;
     const {name, activityLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
     const className = css(
       styles[activityLevel],
@@ -117,6 +121,7 @@ const getGemImage = (score, stack, number, i) => {
 
 class GemCell extends React.PureComponent {
   render() {
+    // eslint-disable-next-line react/prop-types
     const {data, rowIndex, columnKey, showAll, stack, callback, transparent} = this.props;
     const cellData = data.getObjectAt(rowIndex, columnKey);
     if (!cellData) return null;
@@ -181,6 +186,7 @@ const conceptStyles = [
 
 class ConceptCell extends React.PureComponent {
   render() {
+    // eslint-disable-next-line react/prop-types
     const {data, rowIndex, columnKey} = this.props;
     const conceptScores = data.getObjectAt(rowIndex, "concepts");
     if (!conceptScores) {

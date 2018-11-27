@@ -37,7 +37,7 @@ const logEvent = (event) => {
     }
     gtag('event', event, params);
   }
-}
+};
 
 export default class App extends Component {
 
@@ -214,7 +214,8 @@ export default class App extends Component {
             helpType: tables.CONCEPTS,
           });
           logEvent(GAEvents.OPENED_CONCEPTS_TABLE);
-        }}>
+        }}
+        >
           Concepts Report
         </div>
       ) :
@@ -229,30 +230,31 @@ export default class App extends Component {
               helpType: tables.PROGRESS,
             });
             logEvent(GAEvents.OPENED_GEMS_TABLE);
-          }}>
+          }}
+          >
             {location}
           </div>
           {conceptsTab}
           {buttons}
         </div>
         <div>
-        <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
-              <span style={{paddingRight: "3px"}}>Sort:</span>
-              <select id="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
-                <option value={Sorting.ALPHABETICAL}>alphabetically</option>
-                <option value={Sorting.PROGRESS}>by progress</option>
-                <option value={Sorting.STRUGGLING}>by struggling students</option>
-              </select>
-            </label>
-            <label htmlFor="show-active">
-              <input
-                id="show-active"
-                type="checkbox"
-                checked={this.state.sortActive}
-                onChange={this.onSortActiveToggle}
-              />
-              Group active students
-            </label>
+          <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
+            <span style={{paddingRight: "3px"}}>Sort:</span>
+            <select id="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
+              <option value={Sorting.ALPHABETICAL}>alphabetically</option>
+              <option value={Sorting.PROGRESS}>by progress</option>
+              <option value={Sorting.STRUGGLING}>by struggling students</option>
+            </select>
+          </label>
+          <label htmlFor="show-active">
+            <input
+              id="show-active"
+              type="checkbox"
+              checked={this.state.sortActive}
+              onChange={this.onSortActiveToggle}
+            />
+            Group active students
+          </label>
         </div>
       </div>
     );
@@ -317,7 +319,6 @@ export default class App extends Component {
       startSmall,
       viewingPreview,
       viewingHelp,
-      helpType,
       time
     } = this.state;
 

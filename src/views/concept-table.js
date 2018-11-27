@@ -139,7 +139,7 @@ class ConceptTable extends Component {
             id={`header-${concept.label.short}`}
             className={css(styles.clickable)}
             onClick={() => this.showConceptPopup(concept)}
-            >
+          >
             {concept.label.short}
           </Cell>
         }

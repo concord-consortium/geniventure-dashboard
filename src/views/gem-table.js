@@ -272,7 +272,7 @@ class GemTable extends Component {
                 </Cell>
               }
               cell={
-                <GemCell data={dataStore}  lastUpdateTime={dataStore.lastUpdateTime} callback={this.handleClickGem} transparent={transparent} />
+                <GemCell data={dataStore} lastUpdateTime={dataStore.lastUpdateTime} callback={this.handleClickGem} transparent={transparent} />
               }
               width={45}
               flexGrow={1}
@@ -294,7 +294,7 @@ class GemTable extends Component {
         mission: selectedMission,
         challenge: selectedChallenge
       });
-      const challengeName = `Challenge ${selectedLevel+1}.${selectedMission+1}.${selectedChallenge+1}`;
+      const challengeName = `Challenge ${selectedLevel + 1}.${selectedMission + 1}.${selectedChallenge + 1}`;
       columnGroups.push(
         <ColumnGroup
           key={challengeName}

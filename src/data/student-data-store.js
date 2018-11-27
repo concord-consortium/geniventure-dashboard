@@ -388,7 +388,7 @@ class StudentDataStore {
             label: getConceptLabel(c.id),
             value: data.probabilityLearned
           };
-      }
+        }
         return {
           code: c.id,
           label: getConceptLabel(c.id),
