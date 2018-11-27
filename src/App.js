@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import { CSSTransitionGroup } from 'react-transition-group';
-
+import debounce from 'lodash/debounce';
+import assign from 'lodash/assign';
 import addDataListener from './data/api';
 import { StudentDataStore, Sorting } from './data/student-data-store';
 import GemTable from './views/gem-table';
@@ -10,6 +11,9 @@ import ConceptTable from './views/concept-table';
 import HelpModal from './views/help-modal';
 
 import './css/main.css';
+
+// amount of time in milliseconds to wait to save the combined state in the Firebase listener callback
+const COMBINED_STATE_SAVE_DELAY = 1000;
 
 let gaInitialized = false;
 const GAEvents = {
@@ -74,8 +78,17 @@ export default class App extends Component {
   }
 
   componentWillMount() {
+    let combinedState = {};
+
+    // debounce for exactly COMBINED_STATE_SAVE_DELAY (maxWait sets maximum time allowed)
+    const saveCombinedState = debounce(() => {
+      this.setState(combinedState);
+      combinedState = {};
+    }, COMBINED_STATE_SAVE_DELAY, {maxWait: COMBINED_STATE_SAVE_DELAY});
+
     addDataListener((data) => {
-      this.setState(data);
+      assign(combinedState, data);
+      saveCombinedState();
 
       if (!gaInitialized && data.className) {
         className = data.className;
