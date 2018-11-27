@@ -8,7 +8,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
 fi
 
 if [ "$TRAVIS_BRANCH" = "production" ]; then
-  mv / _site
+  mv ./ _site
 else
   # the 2> is to prevent error messages when no match is found
   CURRENT_TAG=`git describe --tags --exact-match $TRAVIS_COMMIT 2> /dev/null`
@@ -20,7 +20,7 @@ else
     mkdir -p _site/branch
     DEPLOY_DIR=branch/$TRAVIS_BRANCH
   fi
-  mv / _site/$DEPLOY_DIR
+  mv ./ _site/$DEPLOY_DIR
   export DEPLOY_DIR
 fi
 s3_website push --site _site --config-dir deploy
