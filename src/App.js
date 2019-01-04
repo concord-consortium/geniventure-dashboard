@@ -279,7 +279,7 @@ export default class App extends Component {
     const about = authoring.levels[selectedLevel]
             .missions[selectedMission].challenges[selectedChallenge].about || {};
     const {type, description, tip} = about;
-    const imgSrc = `assets/img/challenges/${this.challengeString('-')}.png`;
+    const imgSrc = `assets/img/challenges/${this.challengeString('-')}.jpg`;
     setTimeout(() => this.setState({in: true}), 500);
     return (
       <div className="right-panel-wrapper">
