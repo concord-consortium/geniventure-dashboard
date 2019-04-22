@@ -1,9 +1,14 @@
 import migrate from './migrations';
+import { parseFullName } from 'parse-full-name';
 
 const Sorting = {
-  ALPHABETICAL: "alphabetical",
-  PROGRESS: "progress",
-  STRUGGLING: "struggling"
+  FIRST_NAME: "first-name",
+  LAST_NAME: "last-name",
+  OVERALL_PROGRESS: "overall-progress",
+  RECENT_PERFORMANCE: "recent-performance",
+
+  ASCENDING: "ascending",
+  DESCENDING: "descending"
 };
 
 const migrateAllData = (data) => {
@@ -165,7 +170,7 @@ class StudentDataStore {
       fbStudentData: "",
       time: 0,
       sortActive: false,
-      sort: Sorting.ALPHABETICAL
+      sort: Sorting.LAST_NAME
     };
     // simple property we can use to force rerender (hack, because we keep using same
     // datastore object, so React doesn't know to re-render columns)
@@ -195,7 +200,7 @@ class StudentDataStore {
     return false;
   }
 
-  update(authoring, rawFBStudentData, time, sortActive, sort) {
+  update(authoring, rawFBStudentData, time, sortActive, sort, ascending) {
     const shouldUpdate = this.checkCache(authoring, rawFBStudentData, time, sortActive, sort);
     if (shouldUpdate) {
       this.authoring = authoring;
@@ -209,7 +214,7 @@ class StudentDataStore {
       this.createDataMap();
 
       // sort
-      this.sortStudentIds();
+      this.sortStudentIds(sort, ascending);
 
       if (this.sortActive) {
         this.calculateActivityCategoryRows();
@@ -220,7 +225,7 @@ class StudentDataStore {
   }
 
   // returns an array of ids, sorted by student name
-  sortStudentIds() {
+  sortStudentIds(sort, ascending) {
     this.studentIds.sort((a, b) => {
       if (a === "all-students") {
         return -1;
@@ -240,41 +245,51 @@ class StudentDataStore {
         }
       }
 
-      // if they have different progresses, sort if requested
-      if (this.sort === Sorting.PROGRESS) {
-        const scoreA = this.data[a].progress;
-        const scoreB = this.data[b].progress;
+      const parseName = (name) => {
+        const { first, last, suffix } = parseFullName(name);
+        // parseFullName treats "2" as a suffix, like "II" or "Jr."
+        return (suffix === "2")
+                ? { first: last, last: suffix }
+                : { first, last };
+      };
 
-        if (scoreA < scoreB) {
-          return -1;
+      const getValuesForSorting = (student) => {
+        const { name, progress, recentScore } = student;
+        const { first, last } = parseName(name.name);
+        const firstValue = first && isFinite(Number(first)) ? Number(first) : first;
+        const lastValue = last && isFinite(Number(last)) ? Number(last) : last;
+
+        switch (sort) {
+          case Sorting.OVERALL_PROGRESS:
+            return [progress, recentScore, lastValue, firstValue];
+          case Sorting.RECENT_PERFORMANCE:
+            return [recentScore, progress, lastValue, firstValue];
+          case Sorting.FIRST_NAME:
+            return [firstValue, lastValue, progress, recentScore];
+          case Sorting.LAST_NAME:
+          default:
+            return [lastValue, firstValue, progress, recentScore];
         }
-        if (scoreA > scoreB) {
-          return 1;
+      };
+
+      const valueComparator = (v1, v2) => {
+        if ((typeof v1 === "number") && (typeof v2 === "number")) {
+          return v1 - v2;
         }
-      }
+        const v1Str = String(v1);
+        const v2Str = String(v2);
+        if (v1Str < v2Str) return -1;
+        if (v2Str < v1Str) return 1;
+        return 0;
+      };
 
-      // if they have different scores, sort if requested, or if we are sorting by progress and are tied
-      if (this.sort === Sorting.STRUGGLING || this.sort === Sorting.PROGRESS) {
-        const scoreA = this.data[a].recentScore;
-        const scoreB = this.data[b].recentScore;
+      const studentAValues = getValuesForSorting(studentA);
+      const studentBValues = getValuesForSorting(studentB);
+      const ascendingFactor = ascending === Sorting.ASCENDING ? 1 : -1;
 
-        if (scoreA < scoreB) {
-          return -1;
-        }
-        if (scoreA > scoreB) {
-          return 1;
-        }
-      }
-
-      // sort alphabetically last
-      const nameA = studentA.name.name.toUpperCase();
-      const nameB = studentB.name.name.toUpperCase();
-
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
+      for (let i = 0; i < studentAValues.length; ++i) {
+        const compareValue = valueComparator(studentAValues[i], studentBValues[i]);
+        if (compareValue) return compareValue * ascendingFactor;
       }
       return 0;
     });
@@ -365,10 +380,7 @@ class StudentDataStore {
 
       studentData.progress = completedChallenges;
 
-      if (this.sort === Sorting.STRUGGLING || this.sort === Sorting.PROGRESS) {
-        studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
-      }
-
+      studentData.recentScore = calculateRecentScore(completedChallenges, lastThreeScores);
 
       studentData.concepts = StudentDataStore.concepts.map(c => {
         let data;

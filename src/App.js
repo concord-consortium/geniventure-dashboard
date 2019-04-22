@@ -52,7 +52,8 @@ export default class App extends Component {
       studentData: {},
       className: "",
       sortActive: true,
-      sort: Sorting.ALPHABETICAL,
+      sort: Sorting.LAST_NAME,
+      ascending: Sorting.ASCENDING,
       tableSelection: tables.PROGRESS,
       selectedLevel: null,
       selectedMission: null,
@@ -73,6 +74,7 @@ export default class App extends Component {
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
+    this.onSortDirectionChange = this.onSortDirectionChange.bind(this);
 
     this.dataStore = new StudentDataStore();
   }
@@ -196,6 +198,15 @@ export default class App extends Component {
     });
   }
 
+  onSortDirectionChange(evt) {
+    this.setState({
+      ascending: evt.target.value,
+      selectedRow: null
+    }, () => {
+      logEvent(GAEvents.SORTED);
+    });
+  }
+
   challengeString(separator) {
     const {selectedLevel, selectedMission, selectedChallenge} = this.state;
     return [selectedLevel + 1, selectedMission + 1, selectedChallenge + 1].join(separator);
@@ -249,23 +260,29 @@ export default class App extends Component {
           {buttons}
         </div>
         <div>
-        <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
-              <span style={{paddingRight: "3px"}}>Sort:</span>
-              <select id="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
-                <option value={Sorting.ALPHABETICAL}>alphabetically</option>
-                <option value={Sorting.PROGRESS}>by progress</option>
-                <option value={Sorting.STRUGGLING}>by struggling students</option>
-              </select>
-            </label>
-            <label htmlFor="show-active">
-              <input
-                id="show-active"
-                type="checkbox"
-                checked={this.state.sortActive}
-                onChange={this.onSortActiveToggle}
-              />
-              Group active students
-            </label>
+          <label htmlFor="sort-by" style={{padding: "0 12px"}}>
+            <span style={{paddingRight: "3px"}}>Sort by:</span>
+            <select id="sort-by" value={this.state.sort} onChange={this.onSortChange}>
+              <option value={Sorting.FIRST_NAME}>first name</option>
+              <option value={Sorting.LAST_NAME}>last name</option>
+              <option value={Sorting.OVERALL_PROGRESS}>overall progress</option>
+              <option value={Sorting.RECENT_PERFORMANCE}>recent performance</option>
+            </select>
+            <span style={{paddingRight: "3px"}} />
+            <select id="sort-direction" value={this.state.ascending} onChange={this.onSortDirectionChange}>
+              <option value={Sorting.ASCENDING}>ascending</option>
+              <option value={Sorting.DESCENDING}>descending</option>
+            </select>
+          </label>
+          <label htmlFor="show-active">
+            <input
+              id="show-active"
+              type="checkbox"
+              checked={this.state.sortActive}
+              onChange={this.onSortActiveToggle}
+            />
+            Group active students
+          </label>
         </div>
       </div>
     );
@@ -324,6 +341,7 @@ export default class App extends Component {
       studentData,
       sortActive,
       sort,
+      ascending,
       tableSelection,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
@@ -349,7 +367,8 @@ export default class App extends Component {
       studentData,
       time,
       sortActive,
-      sort);
+      sort,
+      ascending);
 
     const loading = (!this.dataStore || this.dataStore.getSize() === 0) && (
       <div id="loading">

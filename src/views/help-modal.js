@@ -7,9 +7,9 @@ const renderProgressHelp = () => {
     <div className="progress-report-help">
       <ul>
         <li>
-          You can change the <span className="tip-word">sorting</span> to &quot;progress&quot; to show students
-          who have completed the fewest challenges, or by &quot;struggling&quot; to show students who have had
-          trouble with recent activities.
+          You can change the <span className="tip-word">sorting</span> to &quot;overall progress&quot; to order
+          students by the number of challenges completed, or to &quot;recent performance&quot; to order students
+          by their performance on recent challenges. Students can also be sorted by first or last name.
         </li>
         <li>
           Click on a <span className="tip-word">challenge number</span> to get more information on each challenge.
