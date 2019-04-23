@@ -1,14 +1,18 @@
 sudo: false
 language: node_js
-node_js:
-  - node
+node_js: lts/*
+cache:
+  bundler: true
+  pip: true
+  npm: true
+  yarn: true
+# cf. https://stackoverflow.com/a/52387639
 install:
 - travis_retry gem install s3_website -v 3.4.0
 - travis_retry pip install awscli --upgrade --user
-- travis_retry npm install
-before: npm run build
-after_script: ./deploy/s3_deploy.sh
-cache:
-  bundler: true
-  directories:
-    - node_modules
+- travis_retry yarn install --frozen-lockfile
+script:
+- npm run test
+- npm run build
+after_script:
+- ./deploy/s3_deploy.sh

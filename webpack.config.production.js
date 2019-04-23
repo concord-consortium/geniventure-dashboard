@@ -46,12 +46,13 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index',
   output: {
-    path: path.join(__dirname, 'static'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, 'dist'),
+    filename: 'static/bundle.js',
     publicPath: '/'
   },
   resolve: {
@@ -59,12 +60,16 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
     }),
+    new CopyPlugin([
+      { from: 'index.html' },
+      { from: 'assets', to: 'assets/' }
+    ]),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
