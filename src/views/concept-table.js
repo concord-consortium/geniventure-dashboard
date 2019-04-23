@@ -75,7 +75,7 @@ class ConceptTable extends Component {
           <p className="concept-location"><strong>Where to find it:</strong> {location}</p>
         </div>
       );
-    } else if (!!trait) {
+    } else if (trait) {
       return (
         <div>
           <h1>{title}</h1>
@@ -83,7 +83,7 @@ class ConceptTable extends Component {
           <p className="concept-trait"><strong>Trait:</strong> {trait}</p>
         </div>
       );
-    } else if (!!location) {
+    } else if (location) {
       return (
         <div>
           <h1>{title}</h1>
@@ -245,7 +245,7 @@ ConceptTable.propTypes = {
   containerHeight: PropTypes.number
 };
 
-module.exports = Dimensions({
+export default Dimensions({
   // elementResize: true,
   getWidth() {
     // const widthOffset = window.innerWidth < 100 ? 0 : 20;

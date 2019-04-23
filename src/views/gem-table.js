@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Dimensions({
+export default Dimensions({
   // elementResize: true,
   getWidth() {
     // const widthOffset = window.innerWidth < 100 ? 0 : 20;

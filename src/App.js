@@ -41,7 +41,7 @@ const logEvent = (event) => {
     }
     gtag('event', event, params);
   }
-}
+};
 
 export default class App extends Component {
 
@@ -305,7 +305,7 @@ export default class App extends Component {
           <div style={{padding: "4px"}}>{description}</div>
           <div style={{fontStyle: "italic", bottom: "4px", display: "flex", position: "absolute"}}>
             {tip ? <img src="assets/img/alert.png" width="30px" style={{paddingRight: "5px", alignSelf: "center"}} alt="Tip" />
-                    : null}
+                 : null}
             {tip}
           </div>
         </div>
@@ -348,7 +348,7 @@ export default class App extends Component {
       startSmall,
       viewingPreview,
       viewingHelp,
-      helpType,
+      // helpType,
       time
     } = this.state;
 

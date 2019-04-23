@@ -2,7 +2,7 @@ const { Cell } = require('fixed-data-table-2');
 const React = require('react');
 import {StyleSheet, css} from 'aphrodite';
 
-class ExpandCell extends React.PureComponent {
+export class ExpandCell extends React.PureComponent {
   render() {
     const { data, rowIndex, columnKey, selectedRow, callback, ...props } = this.props;
     const linkFont = { fontFamily: "'Times New Roman', Times, serif" };
@@ -23,9 +23,8 @@ class ExpandCell extends React.PureComponent {
     );
   }
 }
-module.exports.ExpandCell = ExpandCell;
 
-class TextCell extends React.PureComponent {
+export class TextCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
     return (
@@ -35,9 +34,8 @@ class TextCell extends React.PureComponent {
     );
   }
 }
-module.exports.TextCell = TextCell;
 
-class StudentNameCell extends React.PureComponent {
+export class StudentNameCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, lastUpdateTime, ...props} = this.props;
     const {name, activityLevel, allStudents} = data.getObjectAt(rowIndex, columnKey);
@@ -53,7 +51,6 @@ class StudentNameCell extends React.PureComponent {
     );
   }
 }
-module.exports.StudentNameCell = StudentNameCell;
 
 const getTotalsImage = (data, multiGemColumn, transparent) => {
   const height = 40;
@@ -115,7 +112,7 @@ const getGemImage = (score, stack, number, i) => {
   return <div key={i} className={className} style={style}>{text}</div>;
 };
 
-class GemCell extends React.PureComponent {
+export class GemCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey, showAll, stack, callback, transparent} = this.props;
     const cellData = data.getObjectAt(rowIndex, columnKey);
@@ -162,7 +159,6 @@ class GemCell extends React.PureComponent {
     );
   }
 }
-module.exports.GemCell = GemCell;
 
 const conceptStyles = [
   {
@@ -179,7 +175,7 @@ const conceptStyles = [
   }
 ];
 
-class ConceptCell extends React.PureComponent {
+export class ConceptCell extends React.PureComponent {
   render() {
     const {data, rowIndex, columnKey} = this.props;
     const conceptScores = data.getObjectAt(rowIndex, "concepts");
@@ -213,7 +209,6 @@ class ConceptCell extends React.PureComponent {
     return <div className="gem-image" style={style} />;
   }
 }
-module.exports.ConceptCell = ConceptCell;
 
 const styles = StyleSheet.create({
   never: {

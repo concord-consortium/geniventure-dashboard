@@ -1,5 +1,10 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:promise/recommended",
+    "plugin:react/recommended"
+  ],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -22,21 +27,18 @@
     "consistent-return": "off",
     "comma-dangle": "off",
     "dot-notation": 0,
-    "generator-star-spacing": "off",
-    "import/no-unresolved": ["error", { "ignore": ["electron"] }],
-    "import/no-extraneous-dependencies": "off",
+    "eqeqeq": ["error", "smart"],
     "no-console": 0,
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
     "no-use-before-define": "off",
     "object-curly-spacing": 0,
     "one-var": 0,
-    "promise/param-names": 2,
-    "promise/always-return": 0,
-    "promise/catch-or-return": 2,
-    "promise/no-native": 0,
+    "promise/always-return": "off",
+    "promise/no-callback-in-promise": "off",
+    "promise/no-nesting": "off",
     "quotes": 0,
-    "react/jsx-boolean-value": 0,
-    "react/jsx-no-bind": "off",
+    "semi": "error",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": "off"
+    "react/prop-types": "off"
   }
 }

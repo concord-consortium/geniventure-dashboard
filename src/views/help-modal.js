@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StudentDataStore } from '../data/student-data-store';
 
 const renderProgressHelp = () => {
   return (
@@ -89,7 +88,7 @@ const renderProgressHelp = () => {
       </ul>
     </div>
   );
-}
+};
 const renderConceptKey = () => {
   return (
     <div className="concepts-report-help">
@@ -143,4 +142,4 @@ HelpModal.propTypes = {
   helpTypeSelectionChange: PropTypes.func
 };
 
-module.exports = HelpModal;
+export default HelpModal;

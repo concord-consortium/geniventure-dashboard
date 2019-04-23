@@ -98,4 +98,4 @@ ConceptsBarChart.colors = {
   }
 };
 
-module.exports = ConceptsBarChart;
+export default ConceptsBarChart;

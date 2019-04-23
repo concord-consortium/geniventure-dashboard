@@ -1,7 +1,7 @@
 import migrate from './migrations';
 import { parseFullName } from 'parse-full-name';
 
-const Sorting = {
+export const Sorting = {
   FIRST_NAME: "first-name",
   LAST_NAME: "last-name",
   OVERALL_PROGRESS: "overall-progress",
@@ -151,7 +151,7 @@ const getConceptLabel = (code) => {
   return label || {long: code, short: code};
 };
 
-class StudentDataStore {
+export class StudentDataStore {
   constructor() {
     this.activityLevels = {
       HERE: "here",
@@ -400,7 +400,7 @@ class StudentDataStore {
             label: getConceptLabel(c.id),
             value: data.probabilityLearned
           };
-      }
+        }
         return {
           code: c.id,
           label: getConceptLabel(c.id),
@@ -515,8 +515,3 @@ Object.keys(conceptLabels).forEach(id => {
 });
 
 StudentDataStore.concepts = concepts;
-
-module.exports = {
-  StudentDataStore,
-  Sorting
-};
