@@ -4,6 +4,7 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   font-size:0.9em;
   background-color: #d0eaea;
+  overflow-y: hidden;
 }
 
 #loading {
@@ -19,6 +20,7 @@ body {
 }
 
 .top-row {
+  flex: "0 0 auto";
   display: flex;
   align-items: center;
   justify-content: space-between;

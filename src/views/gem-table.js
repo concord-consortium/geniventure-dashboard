@@ -403,5 +403,6 @@ module.exports = Dimensions({
   getWidth() {
     // const widthOffset = window.innerWidth < 100 ? 0 : 20;
     return window.innerWidth;
-  }
+  },
+  elementResize: true
 })(GemTable);

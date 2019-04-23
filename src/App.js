@@ -417,15 +417,17 @@ export default class App extends Component {
     );
 
     return (
-      <div>
-        <div className={css(styles.flex)}>
-          <nav className={css(styles.title)}>{title}</nav>
-          <div>
-            <button id="help" onClick={this.onToggleHelp}>Help</button>
+      <div className="app-root">
+        <div className={css(styles.appFlex)}>
+          <div className={css(styles.flex)}>
+            <nav className={css(styles.title)}>{title}</nav>
+            <div>
+              <button id="help" onClick={this.onToggleHelp}>Help</button>
+            </div>
           </div>
+          {topRow}
+          {body}
         </div>
-        {topRow}
-        {body}
         {help}
         {modalOverlay}
       </div>
@@ -434,12 +436,19 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
+  appFlex: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   bodyWrapper: {
+    flex: '1 1 auto',
     display: 'flex',
     'background-color': '#fee9aa',
     'padding-top': '1px'
   },
   flex: {
+    flex: "0 0 auto",
     display: 'flex',
     'justify-content': 'space-between'
   },
