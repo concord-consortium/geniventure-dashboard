@@ -244,6 +244,21 @@ export default class App extends Component {
       ) :
       null;
 
+    const getAscendingDescendingText = (ascending) => {
+      const isAscending = ascending === Sorting.ASCENDING;
+      switch (this.state.sort) {
+        case Sorting.FIRST_NAME:
+        case Sorting.LAST_NAME:
+          return isAscending ? "A => Z" : "Z => A";
+        case Sorting.OVERALL_PROGRESS:
+          return isAscending ? "less => more" : "more => less";
+        case Sorting.RECENT_PERFORMANCE:
+          return isAscending ? "worse => better" : "better => worse";
+        default:
+          return isAscending ? "ascending" : "descending";
+      }
+    };
+
     return (
       <div className="top-row">
         <div>
@@ -269,9 +284,9 @@ export default class App extends Component {
               <option value={Sorting.RECENT_PERFORMANCE}>recent performance</option>
             </select>
             <span style={{paddingRight: "3px"}} />
-            <select id="sort-direction" value={this.state.ascending} onChange={this.onSortDirectionChange}>
-              <option value={Sorting.ASCENDING}>ascending</option>
-              <option value={Sorting.DESCENDING}>descending</option>
+            <select id="sort-direction" value={this.state.ascending} style={{width:120}} onChange={this.onSortDirectionChange}>
+              <option value={Sorting.ASCENDING}>{getAscendingDescendingText(Sorting.ASCENDING)}</option>
+              <option value={Sorting.DESCENDING}>{getAscendingDescendingText(Sorting.DESCENDING)}</option>
             </select>
           </label>
           <label htmlFor="show-active">
