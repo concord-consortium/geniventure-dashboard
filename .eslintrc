@@ -18,10 +18,6 @@
     "compat",
     "react"
   ],
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
   "rules": {
     "arrow-parens": ["off"],
     "consistent-return": "off",
@@ -42,6 +38,9 @@
     "react/prop-types": "off"
   },
   "settings": {
-    "polyfills": [ "fetch", "promises" ]
+    "polyfills": [ "fetch", "Object.assign", "Promise" ],
+    "react": {
+      "version": "detect"
+    }
   }
 }

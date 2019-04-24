@@ -18,8 +18,8 @@ const renderProgressHelp = () => {
           show a detailed report for that student for that challenge.
         </li>
         <li>
-          An <span className="tip-word">hourglass</span> icon <img src="assets/img/hourglass.svg" alt="Hourglass" /> next to a student's name indicates the student has
-          been idle for at least five minutes.
+          An <span className="tip-word">hourglass</span> icon <img src="assets/img/hourglass.svg" alt="Hourglass" />
+          &nbsp;next to a student&apos;s name indicates the student has been idle for at least five minutes.
         </li>
         <li>
           The <span className="tip-word">All Students</span> row shows a summary of how many
