@@ -1,17 +1,10 @@
 {
-  "presets": ["es2015", "stage-0", "react"],
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
   "env": {
-      "development": {
-          "plugins": [
-            "transform-runtime",
-            ["react-transform", {
-              "transforms": [{
-                "transform" : "react-transform-hmr",
-                "imports"   : ["react"],
-                "locals"    : ["module"]
-          }]
-        }]
-      ]
+    "development": {
+        "plugins": [
+          "@babel/transform-runtime"
+        ]
     }
   }
 }

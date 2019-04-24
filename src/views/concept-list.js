@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = ConceptList;
+export default ConceptList;

@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StudentDataStore } from '../data/student-data-store';
 
 const renderProgressHelp = () => {
   return (
     <div className="progress-report-help">
       <ul>
         <li>
-          You can change the <span className="tip-word">sorting</span> to &quot;progress&quot; to show students
-          who have completed the fewest challenges, or by &quot;struggling&quot; to show students who have had
-          trouble with recent activities.
+          You can change the <span className="tip-word">sorting</span> to &quot;overall progress&quot; to order
+          students by the number of challenges completed, or to &quot;recent performance&quot; to order students
+          by their performance on recent challenges. Students can also be sorted by first or last name.
         </li>
         <li>
           Click on a <span className="tip-word">challenge number</span> to get more information on each challenge.
@@ -19,8 +18,8 @@ const renderProgressHelp = () => {
           show a detailed report for that student for that challenge.
         </li>
         <li>
-          An <span className="tip-word">hourglass</span> icon <img src="assets/img/hourglass.svg" alt="Hourglass" /> next to a student's name indicates the student has
-          been idle for at least five minutes.
+          An <span className="tip-word">hourglass</span> icon <img src="assets/img/hourglass.svg" alt="Hourglass" />
+          &nbsp;next to a student&apos;s name indicates the student has been idle for at least five minutes.
         </li>
         <li>
           The <span className="tip-word">All Students</span> row shows a summary of how many
@@ -89,7 +88,7 @@ const renderProgressHelp = () => {
       </ul>
     </div>
   );
-}
+};
 const renderConceptKey = () => {
   return (
     <div className="concepts-report-help">
@@ -143,4 +142,4 @@ HelpModal.propTypes = {
   helpTypeSelectionChange: PropTypes.func
 };
 
-module.exports = HelpModal;
+export default HelpModal;

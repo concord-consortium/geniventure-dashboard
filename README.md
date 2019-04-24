@@ -1,9 +1,9 @@
 # Geniventure Dashboard
 
 ```
-yarn / npm install
+npm install
 npm start
-Open http://localhost:5000
+Open http://localhost:5000?fake to run with simulated data
 ```
 
 ### Linting

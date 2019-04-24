@@ -41,7 +41,7 @@ const logEvent = (event) => {
     }
     gtag('event', event, params);
   }
-}
+};
 
 export default class App extends Component {
 
@@ -52,7 +52,8 @@ export default class App extends Component {
       studentData: {},
       className: "",
       sortActive: true,
-      sort: Sorting.ALPHABETICAL,
+      sort: Sorting.LAST_NAME,
+      ascending: Sorting.ASCENDING,
       tableSelection: tables.PROGRESS,
       selectedLevel: null,
       selectedMission: null,
@@ -73,6 +74,7 @@ export default class App extends Component {
     this.onExpandClick = this.onExpandClick.bind(this);
     this.onSortActiveToggle = this.onSortActiveToggle.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
+    this.onSortDirectionChange = this.onSortDirectionChange.bind(this);
 
     this.dataStore = new StudentDataStore();
   }
@@ -196,6 +198,15 @@ export default class App extends Component {
     });
   }
 
+  onSortDirectionChange(evt) {
+    this.setState({
+      ascending: evt.target.value,
+      selectedRow: null
+    }, () => {
+      logEvent(GAEvents.SORTED);
+    });
+  }
+
   challengeString(separator) {
     const {selectedLevel, selectedMission, selectedChallenge} = this.state;
     return [selectedLevel + 1, selectedMission + 1, selectedChallenge + 1].join(separator);
@@ -233,6 +244,21 @@ export default class App extends Component {
       ) :
       null;
 
+    const getAscendingDescendingText = (ascending) => {
+      const isAscending = ascending === Sorting.ASCENDING;
+      switch (this.state.sort) {
+        case Sorting.FIRST_NAME:
+        case Sorting.LAST_NAME:
+          return isAscending ? "A => Z" : "Z => A";
+        case Sorting.OVERALL_PROGRESS:
+          return isAscending ? "less => more" : "more => less";
+        case Sorting.RECENT_PERFORMANCE:
+          return isAscending ? "worse => better" : "better => worse";
+        default:
+          return isAscending ? "ascending" : "descending";
+      }
+    };
+
     return (
       <div className="top-row">
         <div>
@@ -249,23 +275,29 @@ export default class App extends Component {
           {buttons}
         </div>
         <div>
-        <label htmlFor="sort-struggle" style={{padding: "0 17px"}}>
-              <span style={{paddingRight: "3px"}}>Sort:</span>
-              <select id="sort-struggle" value={this.state.sort} onChange={this.onSortChange}>
-                <option value={Sorting.ALPHABETICAL}>alphabetically</option>
-                <option value={Sorting.PROGRESS}>by progress</option>
-                <option value={Sorting.STRUGGLING}>by struggling students</option>
-              </select>
-            </label>
-            <label htmlFor="show-active">
-              <input
-                id="show-active"
-                type="checkbox"
-                checked={this.state.sortActive}
-                onChange={this.onSortActiveToggle}
-              />
-              Group active students
-            </label>
+          <label htmlFor="sort-by" style={{padding: "0 12px"}}>
+            <span style={{paddingRight: "3px"}}>Sort by:</span>
+            <select id="sort-by" value={this.state.sort} onChange={this.onSortChange}>
+              <option value={Sorting.FIRST_NAME}>first name</option>
+              <option value={Sorting.LAST_NAME}>last name</option>
+              <option value={Sorting.OVERALL_PROGRESS}>overall progress</option>
+              <option value={Sorting.RECENT_PERFORMANCE}>recent performance</option>
+            </select>
+            <span style={{paddingRight: "3px"}} />
+            <select id="sort-direction" value={this.state.ascending} style={{width:120}} onChange={this.onSortDirectionChange}>
+              <option value={Sorting.ASCENDING}>{getAscendingDescendingText(Sorting.ASCENDING)}</option>
+              <option value={Sorting.DESCENDING}>{getAscendingDescendingText(Sorting.DESCENDING)}</option>
+            </select>
+          </label>
+          <label htmlFor="show-active">
+            <input
+              id="show-active"
+              type="checkbox"
+              checked={this.state.sortActive}
+              onChange={this.onSortActiveToggle}
+            />
+            Group active students
+          </label>
         </div>
       </div>
     );
@@ -288,7 +320,7 @@ export default class App extends Component {
           <div style={{padding: "4px"}}>{description}</div>
           <div style={{fontStyle: "italic", bottom: "4px", display: "flex", position: "absolute"}}>
             {tip ? <img src="assets/img/alert.png" width="30px" style={{paddingRight: "5px", alignSelf: "center"}} alt="Tip" />
-                    : null}
+                 : null}
             {tip}
           </div>
         </div>
@@ -324,13 +356,14 @@ export default class App extends Component {
       studentData,
       sortActive,
       sort,
+      ascending,
       tableSelection,
       selectedLevel, selectedMission, selectedChallenge, selectedRow,
       transitionToChallenge,
       startSmall,
       viewingPreview,
       viewingHelp,
-      helpType,
+      // helpType,
       time
     } = this.state;
 
@@ -349,7 +382,8 @@ export default class App extends Component {
       studentData,
       time,
       sortActive,
-      sort);
+      sort,
+      ascending);
 
     const loading = (!this.dataStore || this.dataStore.getSize() === 0) && (
       <div id="loading">
@@ -398,15 +432,17 @@ export default class App extends Component {
     );
 
     return (
-      <div>
-        <div className={css(styles.flex)}>
-          <nav className={css(styles.title)}>{title}</nav>
-          <div>
-            <button id="help" onClick={this.onToggleHelp}>Help</button>
+      <div className="app-root">
+        <div className={css(styles.appFlex)}>
+          <div className={css(styles.flex)}>
+            <nav className={css(styles.title)}>{title}</nav>
+            <div>
+              <button id="help" onClick={this.onToggleHelp}>Help</button>
+            </div>
           </div>
+          {topRow}
+          {body}
         </div>
-        {topRow}
-        {body}
         {help}
         {modalOverlay}
       </div>
@@ -415,12 +451,19 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
+  appFlex: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   bodyWrapper: {
+    flex: '1 1 auto',
     display: 'flex',
     'background-color': '#fee9aa',
     'padding-top': '1px'
   },
   flex: {
+    flex: "0 0 auto",
     display: 'flex',
     'justify-content': 'space-between'
   },
