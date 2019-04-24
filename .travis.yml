@@ -5,13 +5,12 @@ cache:
   bundler: true
   pip: true
   npm: true
-  yarn: true
 before_install:
 - pyenv local 3.6
 install:
 - travis_retry gem install s3_website -v 3.4.0
 - travis_retry pip install awscli --upgrade --user
-- travis_retry yarn install --frozen-lockfile
+- travis_retry npm ci
 script:
 - npm run test
 - npm run build
