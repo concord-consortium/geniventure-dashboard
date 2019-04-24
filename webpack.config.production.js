@@ -49,6 +49,7 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: './src/index',
   output: {
     path: path.join(__dirname, 'dist'),
@@ -59,6 +60,7 @@ module.exports = {
     extensions: ['.js']
   },
   devtool: 'source-map',
+  performance: { hints: false },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -69,12 +71,7 @@ module.exports = {
       { from: 'index.html' },
       { from: 'assets', to: 'assets/' }
     ]),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
+    new webpack.optimize.OccurrenceOrderPlugin()
   ],
   module: {
     rules: [
