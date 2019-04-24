@@ -1,6 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:compat/recommended",
     "plugin:import/errors",
     "plugin:promise/recommended",
     "plugin:react/recommended"
@@ -23,7 +24,6 @@
   },
   "rules": {
     "arrow-parens": ["off"],
-    "compat/compat": 2,
     "consistent-return": "off",
     "comma-dangle": "off",
     "dot-notation": 0,
@@ -40,5 +40,8 @@
     "semi": "error",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prop-types": "off"
+  },
+  "settings": {
+    "polyfills": [ "fetch", "promises" ]
   }
 }
