@@ -244,16 +244,18 @@ export default class App extends Component {
       ) :
       null;
 
+    const kArrow = "→"; // RIGHTWARDS ARROW, Unicode: U+2192
+
     const getAscendingDescendingText = (ascending) => {
       const isAscending = ascending === Sorting.ASCENDING;
       switch (this.state.sort) {
         case Sorting.FIRST_NAME:
         case Sorting.LAST_NAME:
-          return isAscending ? "A => Z" : "Z => A";
+          return isAscending ? `A ${kArrow} Z` : `Z ${kArrow} A`;
         case Sorting.OVERALL_PROGRESS:
-          return isAscending ? "less => more" : "more => less";
+          return isAscending ? `less ${kArrow} more` : `more ${kArrow} less`;
         case Sorting.RECENT_PERFORMANCE:
-          return isAscending ? "worse => better" : "better => worse";
+          return isAscending ? `worse ${kArrow} better` : `better ${kArrow} worse`;
         default:
           return isAscending ? "ascending" : "descending";
       }
