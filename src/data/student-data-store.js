@@ -24,9 +24,11 @@ let totalChallenges = 0;
 // returns a score based on how well the student is doing at the moment
 const calculateRecentScore = (completedChallenges, lastThreeScores) => {
   const percComplete = completedChallenges / totalChallenges;
+  const recentScoreCount = lastThreeScores.length;
+  const recentMaxScore = 4 * recentScoreCount;  // Three 4s is the worst score
   const totalScore = lastThreeScores.reduce((a, b) => a + b, 0);
-  const positiveScore = (4 * 3) - totalScore;   // Three 4s is the worst score
-  const percScore = positiveScore / (4 * 3);
+  const positiveScore = recentMaxScore - totalScore;
+  const percScore = recentMaxScore > 0 ? positiveScore / recentMaxScore : 0;
 
   // weight recent scores most, and settle differences by completion
   return (percComplete * 0.05) + (percScore * 0.95);
@@ -343,8 +345,7 @@ export class StudentDataStore {
       const remediationHistory = student.state && student.state.remediationHistory ? student.state.remediationHistory : [];
 
       let completedChallenges = 0;
-      // If student has fewer than three gems, pretend previous were blue
-      const lastThreeScores = [0, 0, 0];
+      const lastThreeScores = [];
       totalChallenges = 0;
 
       this.authoring.levels.forEach((level, i) => {
