@@ -92,7 +92,7 @@ export default function addDataListener(callback) {
       const studentFbData = {};
 
       if (window.location.hash.indexOf("slow") === -1) {
-        students.forEach((s) => {
+        students && students.forEach((s) => {
           studentFbData[s.username] = {
             name: s.name,
             firstName: s.first_name,
@@ -130,7 +130,7 @@ export default function addDataListener(callback) {
       } else {
         const getStudentData = () => {
           console.log("get data!");
-          students.forEach((s) => {
+          students && students.forEach((s) => {
             studentFbData[s.username] = {
               name: s.name,
               firstName: s.first_name,
