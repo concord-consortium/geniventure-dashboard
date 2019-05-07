@@ -247,8 +247,12 @@ export class StudentDataStore {
         }
       }
 
-      const parseName = (name) => {
-        const { first, last, suffix } = parseFullName(name);
+      const parseStudentName = (student) => {
+        const { name: { name, firstName, lastName } } = student;
+        // use first/last name if we have them; otherwise parse them out
+        const { first, last, suffix } = firstName || lastName
+                                          ? { first: firstName, last: lastName }
+                                          : parseFullName(name);
         // parseFullName treats "2" as a suffix, like "II" or "Jr."
         return (suffix === "2")
                 ? { first: last, last: suffix }
@@ -256,8 +260,8 @@ export class StudentDataStore {
       };
 
       const getValuesForSorting = (student) => {
-        const { name, progress, recentScore } = student;
-        const { first, last } = parseName(name.name);
+        const { progress, recentScore } = student;
+        const { first, last } = parseStudentName(student);
         const firstValue = first && isFinite(Number(first)) ? Number(first) : first;
         const lastValue = last && isFinite(Number(last)) ? Number(last) : last;
 
@@ -334,8 +338,11 @@ export class StudentDataStore {
           activityLevel = this.activityLevels.GONE;
         }
       }
+      const { name, firstName, lastName } = student;
       studentData.name = {
-        name: student.name,
+        name,
+        firstName,
+        lastName,
         timeSinceLastAction,
         activityLevel
       };
