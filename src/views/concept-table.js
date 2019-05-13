@@ -2,7 +2,7 @@ import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import { PortalWithState } from 'react-portal';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Dimensions from 'react-dimensions';
+import { withSize } from 'react-sizeme';
 import {StyleSheet, css} from 'aphrodite';
 import { StudentNameCell, ConceptCell } from './cells';
 import '../css/fixed-data-table.css';
@@ -164,7 +164,7 @@ class ConceptTable extends Component {
 
   render() {
     const {dataStore} = this.props;
-    const {containerWidth, containerHeight} = this.props;
+    const { size: { width: containerWidth, height: containerHeight } } = this.props;
     const columns = this.createColumns();
     const width = Math.max(containerWidth, 430);
     const height = containerHeight;
@@ -240,15 +240,11 @@ const styles = StyleSheet.create({
 
 ConceptTable.propTypes = {
   dataStore: PropTypes.object,
-  // from Dimensions
-  containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number
+  // from withSize() (React-SizeMe)
+  size: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number
+  })
 };
 
-export default Dimensions({
-  // elementResize: true,
-  getWidth() {
-    // const widthOffset = window.innerWidth < 100 ? 0 : 20;
-    return window.innerWidth;
-  }
-})(ConceptTable);
+export default withSize({ monitorWidth: true, monitorHeight: true })(ConceptTable);

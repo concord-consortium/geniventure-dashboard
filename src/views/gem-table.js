@@ -1,7 +1,7 @@
 import { Table, Column, ColumnGroup, Cell } from 'fixed-data-table-2';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Dimensions from 'react-dimensions';
+import { withSize } from 'react-sizeme';
 import {StyleSheet, css} from 'aphrodite';
 import { ExpandCell, StudentNameCell, GemCell } from './cells';
 import ConceptsBarChart from './concepts-bar-chart';
@@ -150,7 +150,8 @@ class GemTable extends Component {
       );
     }
 
-    const tableWidth = this.props.containerWidth * (this.state.widthPercent / 100);
+    const { size: { width: containerWidth } } = this.props;
+    const tableWidth = containerWidth * (this.state.widthPercent / 100);
     const narrowAxis = tableWidth > 450 && tableWidth < 600;
     let conceptChart;
     if (concepts && Object.keys(concepts).length > 0) {
@@ -317,7 +318,7 @@ class GemTable extends Component {
 
   render() {
     const {dataStore, selectedChallenge, selectedRow, transitionToChallenge, startSmall} = this.props;
-    const {containerWidth, containerHeight} = this.props;
+    const { size: { width: containerWidth, height: containerHeight } } = this.props;
     let {widthPercent} = this.state;
     if (startSmall) {
       widthPercent = challengeChartWidth;
@@ -360,9 +361,11 @@ GemTable.propTypes = {
   onSelectChallenge: PropTypes.func,
   onExpandClick: PropTypes.func,
   onToggleHelp: PropTypes.func,
-  // from Dimensions
-  containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number
+  // from withSize() (React-SizeMe)
+  size: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number
+  })
 };
 
 const styles = StyleSheet.create({
@@ -398,11 +401,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Dimensions({
-  // elementResize: true,
-  getWidth() {
-    // const widthOffset = window.innerWidth < 100 ? 0 : 20;
-    return window.innerWidth;
-  },
-  elementResize: true
-})(GemTable);
+export default withSize({ monitorWidth: true, monitorHeight: true })(GemTable);
