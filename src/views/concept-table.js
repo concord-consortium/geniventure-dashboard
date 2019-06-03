@@ -208,7 +208,7 @@ class ConceptTable extends Component {
     }
 
     return (
-      <div>
+      <div className="concept-table">
         <Table
           rowHeight={50}
           rowsCount={dataStore.getSize()}
@@ -218,6 +218,8 @@ class ConceptTable extends Component {
           groupHeaderHeight={45}
           width={width}
           height={height}
+          overflowX="auto"
+          overflowY="auto"
           touchScrollEnabled={true}
           {...this.props}
         >

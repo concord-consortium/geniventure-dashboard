@@ -80,7 +80,7 @@ class GemTable extends Component {
     const widthPercent = this.state.widthPercent;
     if (widthPercent < 100) {
       this.setState({
-        widthPercent: widthPercent + 10
+        widthPercent: Math.min(100, widthPercent + 10)
       });
       requestAnimationFrame(this.grow);
     }
@@ -329,7 +329,7 @@ class GemTable extends Component {
     const height = containerHeight;
 
     return (
-      <div>
+      <div className="gem-table">
         <Table
           scrollToRow={selectedRow}
           rowHeight={50}
@@ -340,6 +340,8 @@ class GemTable extends Component {
           headerHeight={50}
           width={width}
           height={height}
+          overflowX="auto"
+          overflowY="auto"
           touchScrollEnabled={true}
           {...this.props}
         >
