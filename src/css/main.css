@@ -4,7 +4,7 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   font-size:0.9em;
   background-color: #d0eaea;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 #loading {
@@ -329,6 +329,11 @@ button.button-on-white:hover {
 .button-narrow {
   padding: 0px 14px;
   margin: 4px 6px;
+}
+
+.concept-table {
+  width: 100%;
+  max-width: 100%;
 }
 
 .concepts-report-help .concept-trait, .concepts-report-help .concept-location {
