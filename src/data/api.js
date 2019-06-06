@@ -25,12 +25,19 @@ const fbClassPath = '/1/userState/https%3A%2F%2Flearn%2Econcord%2Eorg%2Fapi%2Fv1
 const fbStudentPath = 'https%3A%2F%2Flearn%2Econcord%2Eorg%2F';
 
 if (!USE_FAKE_DATA) {
-  const fbConfig = {
+  const fbStagingConfig = {
+    apiKey: "AIzaSyCr8UbzmHqWVuOIQrU2_1_CIIwT-GphnYo",
+    authDomain: "gvstaging.firebaseapp.com",
+    databaseURL: "https://gvstaging.firebaseio.com",
+    storageBucket: ''
+  };
+  const fbProductionConfig = {
     apiKey: 'AIzaSyCQyZqErr-WsvaZzATcmOgxxv1wcrNQXIo',
     authDomain: 'gvdemo-6f015.firebaseapp.com',
     databaseURL: 'https://gvdemo-6f015.firebaseio.com',
     storageBucket: ''
   };
+  const fbConfig = urlParams.db === 'staging' ? fbStagingConfig : fbProductionConfig;
   firebase.initializeApp(fbConfig);
 }
 
