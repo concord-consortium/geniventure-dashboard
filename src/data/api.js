@@ -21,8 +21,7 @@ const AUTH_HEADER = `Bearer ${urlParams.token}`;
 const USE_FAKE_DATA = urlParams.fake != null;
 
 const fbAuthoringPath = '/1/authoring/application';
-const fbClassPath = '/1/userState/https%3A%2F%2Flearn%2Econcord%2Eorg%2Fapi%2Fv1%2Fclasses%2F';
-const fbStudentPath = 'https%3A%2F%2Flearn%2Econcord%2Eorg%2F';
+const fbUserStatePath = '/1/userState';
 
 if (!USE_FAKE_DATA) {
   const fbStagingConfig = {
@@ -40,6 +39,16 @@ if (!USE_FAKE_DATA) {
   const fbConfig = urlParams.db === 'staging' ? fbStagingConfig : fbProductionConfig;
   firebase.initializeApp(fbConfig);
 }
+
+const encodeFirebasePathComponent = (path) => {
+  return encodeURIComponent(path).replace(/\./g, "%2E");
+};
+
+const extractDomainFromClassInfoUrl = (classInfoUrl) => {
+  // extract domain into match[1], class id into match[2]
+  const match = /(.*)\/api\/v1\/classes\/(.*)/.exec(classInfoUrl);
+  return match && match[1];
+};
 
 const getSnapshotVal = (snapshot) => snapshot.val();
 
@@ -71,7 +80,9 @@ export default function addDataListener(callback) {
   getClassData()
   .then((classData) => {
     const className = classData.clazz;
-    const classId = classData.clazz_id;
+    // const classId = classData.clazz_id;
+    const classInfoUrl = classData.clazz_info_url;
+    const classDomain = extractDomainFromClassInfoUrl(classInfoUrl);
     const students = classData.students;
 
     // send back the class name as soon as we have it
@@ -96,6 +107,8 @@ export default function addDataListener(callback) {
         .catch(console.log.bind(console));
 
       // notify callback on all student data changes
+      const userStateRef = firebase.database().ref(fbUserStatePath);
+      const classRef = userStateRef.child(encodeFirebasePathComponent(classInfoUrl));
       const studentFbData = {};
 
       if (window.location.hash.indexOf("slow") === -1) {
@@ -106,8 +119,12 @@ export default function addDataListener(callback) {
             lastName: s.last_name
           };
 
+          // assume students are in same domain as class
+          const studentPath = encodeFirebasePathComponent(`${classDomain}/${s.user_id}`);
+          const studentUserRef = classRef.child(studentPath);
+
           // state
-          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/state`)
+          studentUserRef.child("state")
             .on('value', (snapshot) => {
               const state = snapshot.val() || {};
               studentFbData[s.username].state = state;
@@ -115,7 +132,7 @@ export default function addDataListener(callback) {
             });
 
           // stateMeta
-          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/stateMeta`)
+          studentUserRef.child("stateMeta")
             .on('value', (snapshot) => {
               const stateMeta = snapshot.val() || {};
               studentFbData[s.username].stateMeta = stateMeta;
@@ -123,7 +140,7 @@ export default function addDataListener(callback) {
             });
 
           // itsData/studentModel/concepts
-          firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/concepts`)
+          studentUserRef.child("itsData/studentModel/concepts")
             .on('value', (snapshot) => {
               const concepts = snapshot.val() || [];
               studentFbData[s.username].itsData = {
@@ -144,8 +161,11 @@ export default function addDataListener(callback) {
               lastName: s.last_name
             };
 
+          const studentPath = encodeFirebasePathComponent(`${classDomain}/${s.user_id}`);
+          const studentUserRef = classRef.child(studentPath);
+
             // state
-            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/state`)
+            studentUserRef.child("state")
               .once('value', (snapshot) => {
                 const state = snapshot.val() || {};
                 studentFbData[s.username].state = state;
@@ -153,7 +173,7 @@ export default function addDataListener(callback) {
               });
 
             // stateMeta
-            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/stateMeta`)
+            studentUserRef.child("stateMeta")
               .once('value', (snapshot) => {
                 const stateMeta = snapshot.val() || {};
                 studentFbData[s.username].stateMeta = stateMeta;
@@ -161,7 +181,7 @@ export default function addDataListener(callback) {
               });
 
             // itsData/studentModel/concepts
-            firebase.database().ref(`${fbClassPath}${classId}/${fbStudentPath}${s.user_id}/itsData/studentModel/concepts`)
+            studentUserRef.child("itsData/studentModel/concepts")
               .once('value', (snapshot) => {
                 const concepts = snapshot.val() || [];
                 studentFbData[s.username].itsData = {
