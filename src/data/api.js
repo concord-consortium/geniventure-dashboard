@@ -25,13 +25,13 @@ const fbUserStatePath = '/1/userState';
 
 if (!USE_FAKE_DATA) {
   const fbStagingConfig = {
-    apiKey: "AIzaSyCr8UbzmHqWVuOIQrU2_1_CIIwT-GphnYo",
+    apiKey: atob("QUl6YVN5Q3I4VWJ6bUhxV1Z1T0lRclUyXzFfQ0lJd1QtR3Bobllv"),
     authDomain: "gvstaging.firebaseapp.com",
     databaseURL: "https://gvstaging.firebaseio.com",
     storageBucket: ''
   };
   const fbProductionConfig = {
-    apiKey: 'AIzaSyCQyZqErr-WsvaZzATcmOgxxv1wcrNQXIo',
+    apiKey: atob("QUl6YVN5Q1F5WnFFcnItV3N2YVp6QVRjbU9neHh2MXdjck5RWElv"),
     authDomain: 'gvdemo-6f015.firebaseapp.com',
     databaseURL: 'https://gvdemo-6f015.firebaseio.com',
     storageBucket: ''
